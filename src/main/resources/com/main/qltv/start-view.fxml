@@ -23,9 +23,9 @@
 
         <HBox prefHeight="26.0" prefWidth="262.0" spacing="10">
          <children>
-               <Button prefWidth="100" text="Login" />
-               <Button prefWidth="100" text="Register" />
-               <Button fx:id="Exit" onAction="#Exit" prefWidth="100" text="Exit" />
+               <Button fx:id="DangNhap" onAction="#DangNhap" prefWidth="100" text="Đăng Nhập" />
+               <Button fx:id="DangKy" prefWidth="100" text="Đăng Ký" />
+               <Button fx:id="Exit" onAction="#Exit" prefWidth="100" text="Thoát" />
          </children></HBox>
     </VBox>
 </AnchorPane>
