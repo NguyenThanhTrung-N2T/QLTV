@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="482.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to bottom right, #d0f0fd, #a0d7e7);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.qltv.controller.Dang_Nhap_Controller">
+
+    <!-- Logo hoặc biểu tượng thư viện -->
+    <ImageView fitHeight="80" fitWidth="80" layoutX="260" layoutY="20">
+        <image>
+            <Image url="@book.png"/>
+        </image>
+    </ImageView>
+
+    <VBox alignment="CENTER" layoutX="100.0" layoutY="102.0" prefWidth="400" spacing="20" style="-fx-background-color: white; -fx-padding: 30; -fx-border-radius: 10; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);">
+
+        <!-- Tiêu đề -->
+        <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #00796b;" text="ĐĂNG NHẬP HỆ THỐNG" />
+
+        <!-- Tên đăng nhập -->
+        <VBox alignment="CENTER_LEFT" spacing="5">
+            <Label style="-fx-text-fill: #555;" text="Tên đăng nhập:" />
+            <TextField fx:id="txtTenDangNhap" promptText="Nhập tên đăng nhập" style="-fx-background-radius: 5; -fx-border-color: #ccc;" />
+        </VBox>
+
+        <!-- Mật khẩu -->
+        <VBox alignment="CENTER_LEFT" spacing="5">
+            <Label style="-fx-text-fill: #555;" text="Mật khẩu:" />
+            <PasswordField fx:id="txtMatKhau" promptText="Nhập mật khẩu" style="-fx-background-radius: 5; -fx-border-color: #ccc;" />
+        </VBox>
+
+        <!-- Nút đăng nhập -->
+        <Button fx:id="btnDangNhap" onAction="#DanhNhap" prefWidth="150" style="-fx-background-color: #00796b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Đăng nhập" />
+    </VBox>
+
+</AnchorPane>

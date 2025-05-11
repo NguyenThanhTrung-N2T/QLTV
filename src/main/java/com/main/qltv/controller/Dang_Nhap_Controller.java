@@ -11,7 +11,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -27,10 +26,12 @@ public class Dang_Nhap_Controller {
         if (DatabaseConnection.KiemTraTK(tenDangNhap, matKhau)) {
             // Hiển thị thông báo thành công
             QLTVApplication.nguoidangnhap = DatabaseConnection.LayThongTinTK(tenDangNhap,matKhau);
+            System.out.println(getClass().getClassLoader().getResource("Man_Hinh_Chinh-view.fxml"));
             try {
                 Stage currentStage = (Stage) ((Node) txtTenDangNhap).getScene().getWindow();
                 currentStage.close();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Man_Hinh_Chinh-view.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Man_Hinh_Chinh-view.fxml"));
+
                 Parent root = loader.load();
                 Stage stage = new Stage();
                 stage.setTitle("Hệ thống quản lý thư viện");

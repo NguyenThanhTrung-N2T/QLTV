@@ -1,6 +1,5 @@
 package com.main.qltv;
 
-import com.main.qltv.model.TaiKhoan;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,7 +34,7 @@ public class QLTVController {
             setPreviousStage(currentStage); // Lưu cửa sổ trước đó
             currentStage.hide(); // Ẩn cửa sổ hiện tại nhưng không đóng
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Dang_Nhap-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Dang_Nhap-view.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Đăng Nhập");
@@ -50,6 +49,6 @@ public class QLTVController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(getClass().getResource("/view/Dang_Nhap-view.fxml"));
+        System.out.println(getClass().getResource("Dang_Nhap-view.fxml"));
     }
 }
