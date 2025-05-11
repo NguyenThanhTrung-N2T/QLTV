@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400" prefWidth="600" style="-fx-background-color: #f0f8ff;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.qltv.controller.Dang_Ky_Controller">
+
+    <HBox spacing="0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+           <!-- Ảnh bên trái -->
+           <ImageView fitHeight="261.0" fitWidth="251.0">
+               <image>
+                   <Image url="@user.png" />
+               </image>
+           </ImageView>
+      
+           <!-- Form đăng ký -->
+           <VBox alignment="CENTER" prefHeight="343.0" prefWidth="350" spacing="15" style="-fx-background-color: #ffffff;">
+               <Label style="-fx-font-size: 20px; -fx-text-fill: #2a4d69; -fx-font-weight: bold;" text="Đăng ký tài khoản" />
+               <TextField fx:id="txtMaSinhVien" promptText="Mã sinh viên" />
+               <TextField fx:id="txtTenDangNhap" promptText="Tên đăng nhập" />
+               <PasswordField fx:id="txtMatKhau" promptText="Mật khẩu" />
+               <PasswordField fx:id="txtXacNhanMatKhau" promptText="Xác nhận mật khẩu" />
+      
+               <Button fx:id="btnDangKy" onAction="#DangKy" prefWidth="150" style="-fx-background-color: #2a9d8f; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Đăng ký" />
+      
+               <Label fx:id="lblThongBao" textFill="red" />
+           </VBox>
+      </children>
+    </HBox>
+
+</AnchorPane>

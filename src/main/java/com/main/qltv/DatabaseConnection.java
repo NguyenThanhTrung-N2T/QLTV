@@ -58,4 +58,64 @@ public class DatabaseConnection {
         return nguoidung; // Trả về thông tin tài khoản (null nếu không tồn tại)
     }
 
+    public static boolean kiemTraSinhVienTonTai(String maSinhVien) {
+        String sql = "SELECT COUNT(*) FROM SinhVien WHERE maSinhVien = ?";
+
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, maSinhVien);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean kiemTraTaiKhoanDaTonTai(String maSinhVien) {
+        String sql = "SELECT COUNT(*) FROM TaiKhoan WHERE maSinhVien = ?";
+
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, maSinhVien);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean themTaiKhoan(TaiKhoan tk) {
+        // Tự tạo maTaiKhoan mới
+        String maTKMoi = "TK" + System.currentTimeMillis(); // Ví dụ đơn giản
+
+        String sql = "INSERT INTO TaiKhoan(maTaiKhoan, tenDangNhap, matKhau, loaiNguoiDung, maSinhVien) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, maTKMoi);
+            pstmt.setString(2, tk.tenDangNhap);
+            pstmt.setString(3, tk.matKhauTK);
+            pstmt.setString(4, "sinhvien"); // Gán mặc định là "user"
+            pstmt.setString(5, tk.MSSV);
+
+            int rows = pstmt.executeUpdate();
+            return rows > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+
 }

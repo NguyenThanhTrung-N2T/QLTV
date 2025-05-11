@@ -51,4 +51,28 @@ public class QLTVController {
         }
         System.out.println(getClass().getResource("Dang_Nhap-view.fxml"));
     }
+
+    @FXML void DangKy(){
+        try {
+            // Lấy cửa sổ hiện tại và lưu lại
+            Stage currentStage = (Stage) ((Node) DangNhap).getScene().getWindow();
+            setPreviousStage(currentStage); // Lưu cửa sổ trước đó
+            currentStage.hide(); // Ẩn cửa sổ hiện tại nhưng không đóng
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Dang_Ky-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Đăng Ký");
+            stage.setScene(new Scene(root));
+            // Nếu người dùng nhấn "X", cửa sổ trước đó sẽ hiển thị lại
+            stage.setOnCloseRequest(event -> {
+                if (previousStage != null) {
+                    previousStage.show();
+                }
+            });
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

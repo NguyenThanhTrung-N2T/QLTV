@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 public class Dang_Nhap_Controller {
     @FXML TextField txtTenDangNhap;
@@ -26,11 +27,10 @@ public class Dang_Nhap_Controller {
         if (DatabaseConnection.KiemTraTK(tenDangNhap, matKhau)) {
             // Hiển thị thông báo thành công
             QLTVApplication.nguoidangnhap = DatabaseConnection.LayThongTinTK(tenDangNhap,matKhau);
-            System.out.println(getClass().getClassLoader().getResource("Man_Hinh_Chinh-view.fxml"));
             try {
                 Stage currentStage = (Stage) ((Node) txtTenDangNhap).getScene().getWindow();
                 currentStage.close();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("Man_Hinh_Chinh-view.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/main/qltv/Man_Hinh_Chinh-view.fxml"));
 
                 Parent root = loader.load();
                 Stage stage = new Stage();
