@@ -170,14 +170,22 @@ public class QuanLySinhVienController {
         }
 
         // Xóa sinh viên
-        if (DatabaseConnection.xoaSinhVien(selected.getMSSV())) {
-            // Nếu có tài khoản thì xóa luôn
+        if (DatabaseConnection.kiemTraTaiKhoanDaTonTai(selected.getMSSV())) {
+            // Nếu có tài khoản thì xóa tài khoản trước
             DatabaseConnection.xoaTaiKhoan(selected.getMSSV());
-
+            // xóa sịnh viên
+            DatabaseConnection.xoaSinhVien(selected.getMSSV());
             showAlert(Alert.AlertType.INFORMATION, "Xóa thành công.");
             loadSinhVienTuDB();
             LamMoi();
-        } else {
+        } else if(DatabaseConnection.kiemTraSinhVienTonTai(selected.getMSSV())) {
+            // xóa sịnh viên
+            DatabaseConnection.xoaSinhVien(selected.getMSSV());
+            showAlert(Alert.AlertType.INFORMATION, "Xóa thành công.");
+            loadSinhVienTuDB();
+            LamMoi();
+        }
+        else {
             showAlert(Alert.AlertType.ERROR, "Xóa thất bại.");
         }
     }
