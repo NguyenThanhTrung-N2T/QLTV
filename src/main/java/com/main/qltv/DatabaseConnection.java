@@ -1,6 +1,9 @@
 package com.main.qltv;
 
+import com.main.qltv.model.SinhVien;
 import com.main.qltv.model.TaiKhoan;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 
@@ -116,6 +119,102 @@ public class DatabaseConnection {
         return false;
     }
 
+    public static ObservableList<SinhVien> LayDanhSachSinhVien() {
+        ObservableList<SinhVien> danhSach = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM SinhVien";
 
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                SinhVien sinhVien = new SinhVien();
+                sinhVien.MSSV = rs.getString("maSinhVien");
+                sinhVien.tenSinhVien = rs.getString("tenSinhVien");
+                sinhVien.gioiTinh = rs.getString("gioiTinh");
+                sinhVien.ngaySinh = rs.getDate("ngaySinh");
+                sinhVien.diaChi = rs.getString("diaChi");
+                sinhVien.email = rs.getString("email");
+                sinhVien.SDT = rs.getString("soDienThoai");
+
+                danhSach.add(sinhVien);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return danhSach;
+    }
+
+    public static boolean themSinhVien(SinhVien sv) {
+        String sql = "INSERT INTO SinhVien(maSinhVien, tenSinhVien, gioiTinh, ngaySinh, diaChi, email, soDienThoai) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, sv.MSSV);
+            pstmt.setString(2, sv.tenSinhVien);
+            pstmt.setString(3, sv.gioiTinh);
+            pstmt.setDate(4, sv.ngaySinh);
+            pstmt.setString(5, sv.diaChi);
+            pstmt.setString(6, sv.email);
+            pstmt.setString(7, sv.SDT);
+
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean capNhatSinhVien(SinhVien sv) {
+        String sql = "UPDATE SinhVien SET tenSinhVien = ?, gioiTinh = ?, ngaySinh = ?, diaChi = ?, email = ?, soDienThoai = ? " +
+                "WHERE maSinhVien = ?";
+
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, sv.tenSinhVien);
+            pstmt.setString(2, sv.gioiTinh);
+            pstmt.setDate(3, sv.ngaySinh);
+            pstmt.setString(4, sv.diaChi);
+            pstmt.setString(5, sv.email);
+            pstmt.setString(6, sv.SDT);
+            pstmt.setString(7, sv.MSSV);
+
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean xoaSinhVien(String maSinhVien) {
+        String sql = "DELETE FROM SinhVien WHERE maSinhVien = ?";
+
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, maSinhVien);
+            return pstmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean xoaTaiKhoan(String maSinhVien) {
+        String sql = "DELETE FROM TaiKhoan WHERE maSinhVien = ?";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, maSinhVien);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

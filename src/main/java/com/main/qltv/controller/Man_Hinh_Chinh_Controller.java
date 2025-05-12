@@ -39,10 +39,11 @@ public class Man_Hinh_Chinh_Controller {
         }
 
         // Gán sự kiện cho từng nút
-        btnQLSinhVien.setOnAction(event -> loadContent("/com/main/qltv/view/QuanLySinhVien.fxml"));
-        btnQLSach.setOnAction(event -> loadContent("/com/main/qltv/view/QuanLySach.fxml"));
-        btnQLPhieuMuon.setOnAction(event -> loadContent("/com/main/qltv/view/QuanLyPhieuMuon.fxml"));
-        btnTaiKhoan.setOnAction(event -> loadContent("/com/main/qltv/view/TaiKhoan.fxml"));
+        btnQLSinhVien.setOnAction(event -> loadContent("/com/main/qltv/QuanLySinhVien.fxml"));
+        btnQLSach.setOnAction(event -> loadContent("/com/main/qltv/QuanLySach.fxml"));
+        btnQLPhieuMuon.setOnAction(event -> loadContent("/com/main/qltv/QuanLyPhieuMuon.fxml"));
+        btnQLTaiKhoan.setOnAction(actionEvent -> loadContent("com/main/qltv/QuanLyTaiKhoan.fxml"));
+        btnTaiKhoan.setOnAction(event -> loadContent("/com/main/qltv/TaiKhoan.fxml"));
         btnDangXuat.setOnAction(event -> {
             Stage currentStage = (Stage) ((Node) btnDangXuat).getScene().getWindow();
             currentStage.close();
