@@ -1,11 +1,14 @@
 package com.main.qltv;
 
+import com.main.qltv.model.Sach;
 import com.main.qltv.model.SinhVien;
 import com.main.qltv.model.TaiKhoan;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseConnection {
     private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=QUANLYTHUVIEN;encrypt=false";
@@ -215,6 +218,124 @@ public class DatabaseConnection {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static ObservableList<Sach> LayDanhSachSach() {
+        ObservableList<Sach> danhSach = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM Sach";
+
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Sach sach = new Sach();
+                sach.maSach = rs.getString("maSach");
+                sach.tenSach = rs.getString("tenSach");
+                sach.maTacGia = rs.getString("maTacGia");
+                sach.maTheLoai = rs.getString("maTheLoai");
+                sach.maNXB = rs.getString("maNXB");
+                sach.soLuong = rs.getInt("soLuong");
+                sach.ngayXuatBan = rs.getDate("ngayXuatBan");
+                sach.soTrang = rs.getInt("soTrang");
+                sach.moTa = rs.getString("moTa");
+                sach.anhBia = rs.getString("anhBia");
+                danhSach.add(sach);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return danhSach;
+    }
+
+    public static String layTenTacGia(String maTacGia) {
+        String sql = "SELECT tenTacGia FROM TacGia WHERE maTacGia = ?";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, maTacGia);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("tenTacGia");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String layTenTheLoai(String maTheLoai) {
+        String sql = "SELECT tenTheLoai FROM TheLoai WHERE maTheLoai = ?";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, maTheLoai);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("tenTheLoai");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String layTenNXB(String maNXB) {
+        String sql = "SELECT tenNXB FROM NhaXuatBan WHERE maNXB = ?";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, maNXB);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("tenNXB");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<String> layDanhSachTenTacGia() {
+        List<String> ds = new ArrayList<>();
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement("SELECT TenTacGia FROM TacGia");
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                ds.add(rs.getString("TenTacGia"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ds;
+    }
+
+    public static List<String> layDanhSachTenTheLoai() {
+        List<String> ds = new ArrayList<>();
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement("SELECT TenTheLoai FROM TheLoai");
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                ds.add(rs.getString("TenTheLoai"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ds;
+    }
+
+    public static List<String> layDanhSachTenNXB() {
+        List<String> ds = new ArrayList<>();
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement("SELECT TenNXB FROM NhaXuatBan");
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                ds.add(rs.getString("TenNXB"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ds;
     }
 
 }

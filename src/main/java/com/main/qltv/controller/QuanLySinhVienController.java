@@ -151,7 +151,6 @@ public class QuanLySinhVienController {
         }
     }
 
-
     @FXML
     private void XoaSinhVien() {
         SinhVien selected = tableSinhVien.getSelectionModel().getSelectedItem();
