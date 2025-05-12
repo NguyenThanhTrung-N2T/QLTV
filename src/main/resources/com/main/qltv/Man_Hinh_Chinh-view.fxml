@@ -1,14 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
             fx:controller="com.main.qltv.controller.Man_Hinh_Chinh_Controller"
-            prefHeight="400.0" prefWidth="600.0">
+            prefWidth="1000" prefHeight="600">
+
+    <!-- Sidebar -->
+    <VBox prefWidth="200" spacing="10" style="-fx-background-color: #2C3E50;"
+          AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0">
+
+        <Label text="📚 Thư Viện"
+               style="-fx-font-size: 18px; -fx-text-fill: white;"
+               alignment="CENTER" maxWidth="Infinity" />
+
+        <Button fx:id="btnQLSinhVien" text="👤 Quản lý Sinh Viên"
+                styleClass="menu-button"
+                style="-fx-background-color: #3498DB; -fx-text-fill: white;"
+                prefWidth="180" prefHeight="50"/>
+
+        <Button fx:id="btnQLSach" text="📘 Quản lý Sách"
+                styleClass="menu-button"
+                style="-fx-background-color: #1ABC9C; -fx-text-fill: white;"
+                prefWidth="180" prefHeight="50"/>
+
+        <Button fx:id="btnQLPhieuMuon" text="📄 Quản lý Phiếu Mượn"
+                styleClass="menu-button"
+                style="-fx-background-color: #F39C12; -fx-text-fill: white;"
+                prefWidth="180" prefHeight="50"/>
+
+        <Button fx:id="btnQLTaiKhoan" text="👥 Quản lý Tài khoản"
+                styleClass="menu-button"
+                style="-fx-background-color: #E67E22; -fx-text-fill: white;"
+                prefWidth="180" prefHeight="50"/>
+
+        <Button fx:id="btnTaiKhoan" text="🔑 Tài khoản"
+                styleClass="menu-button"
+                style="-fx-background-color: #9B59B6; -fx-text-fill: white;"
+                prefWidth="180" prefHeight="50"/>
+
+        <Button fx:id="btnDangXuat" text="🚪 Đăng xuất"
+                styleClass="menu-button"
+                style="-fx-background-color: #E74C3C; -fx-text-fill: white;"
+                prefWidth="180" prefHeight="50"/>
+    </VBox>
+
+    <!-- Top bar -->
+    <HBox spacing="10" alignment="CENTER_RIGHT"
+          style="-fx-background-color: #34495E;"
+          prefHeight="50" AnchorPane.leftAnchor="200" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0">
+        <Label fx:id="lBthongbao" text="Xin chào, admin" style="-fx-text-fill: white; -fx-padding: 0 20 0 0;" />
+    </HBox>
+
+    <!-- Main content area -->
+    <StackPane fx:id="mainContent"
+               style="-fx-background-color: #ECF0F1;"
+               AnchorPane.topAnchor="50" AnchorPane.leftAnchor="200" AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0"/>
 
 </AnchorPane>
