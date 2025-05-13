@@ -12,6 +12,11 @@ public class TacGia {
         return tenTacGia;
     }
 
+    public TacGia(String maTacGia, String tenTacGia) {
+        this.maTacGia = maTacGia;
+        this.tenTacGia = tenTacGia;
+    }
+
     public void setMaTacGia(String maTacGia) {
         this.maTacGia = maTacGia;
     }

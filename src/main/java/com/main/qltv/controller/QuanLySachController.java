@@ -1,8 +1,7 @@
 package com.main.qltv.controller;
 
 import com.main.qltv.DatabaseConnection;
-import com.main.qltv.model.Sach;
-import com.main.qltv.model.SinhVien;
+import com.main.qltv.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
 import java.sql.Date;
+import java.sql.SQLException;
 
 public class QuanLySachController {
 
@@ -168,7 +168,91 @@ public class QuanLySachController {
             sachList.setAll(ketQuaTimKiem);
         });
 
+        btnThem.setOnAction(event -> {
+            String maSach = txtMaSach.getText().trim();
+            String tenSach = txtTenSach.getText().trim();
+            String tenTacGia = cbTacGia.getValue();
+            String tenTheLoai = cbTheLoai.getValue();
+            String tenNXB = cbNXB.getValue();
+            String soLuongStr = txtSoLuong.getText().trim();
+            String soTrangStr = txtSoTrang.getText().trim();
+            java.time.LocalDate ngayXuatBan = dpNgayXuatBan.getValue();
+            String moTa = txtMoTa.getText().trim();
+            String anhBia = txtAnhBia.getText().trim();
+
+            // Kiểm tra rỗng
+            if (maSach.isEmpty() || tenSach.isEmpty() || tenTacGia == null || tenTheLoai == null || tenNXB == null
+                    || soLuongStr.isEmpty() || soTrangStr.isEmpty() || ngayXuatBan == null) {
+                showAlert(Alert.AlertType.WARNING, "Vui lòng nhập đầy đủ thông tin sách.");
+                return;
+            }
+
+            // Kiểm tra mã sách đã tồn tại
+            if (DatabaseConnection.kiemTraMaSachTonTai(maSach)) {
+                showAlert(Alert.AlertType.ERROR, "Mã sách đã tồn tại!");
+                return;
+            }
+
+            try {
+                int soLuong = Integer.parseInt(soLuongStr);
+                int soTrang = Integer.parseInt(soTrangStr);
+
+                // Lấy mã từ tên (nếu cần)
+                try {
+                    String maTacGia = DatabaseConnection.layMaTacGiaTheoTen(tenTacGia);
+                    String maTheLoai = DatabaseConnection.layMaTheLoaiTheoTen(tenTheLoai);
+                    String maNXB = DatabaseConnection.layMaNXBTheoTen(tenNXB);
+
+                    Sach sachMoi = new Sach(maSach, tenSach, maTacGia, maTheLoai, maNXB, soLuong,
+                            Date.valueOf(ngayXuatBan), soTrang, moTa, anhBia);
+                    TacGia tacgiamoi = new TacGia(maTacGia, tenTacGia);
+                    TheLoai theloaimoi = new TheLoai(maTheLoai, tenTheLoai);
+                    NhaXuatBan nxbmoi = new NhaXuatBan(maNXB, tenNXB);
+
+                    boolean thanhCong = DatabaseConnection.themSach(sachMoi, tacgiamoi, theloaimoi, nxbmoi);
+                    if (thanhCong) {
+                        showAlert(Alert.AlertType.INFORMATION, "Thêm sách thành công.");
+                        loadSachTuDB();
+                    } else {
+                        showAlert(Alert.AlertType.ERROR, "Thêm sách thất bại!");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    showAlert(Alert.AlertType.ERROR, "Lỗi truy vấn cơ sở dữ liệu!");
+                }
+
+            } catch (NumberFormatException e) {
+                showAlert(Alert.AlertType.ERROR, "Số lượng và số trang phải là số nguyên.");
+            }
+            lamMoi();
+
+        });
 
     }
 
+    private void showAlert(Alert.AlertType type, String message) {
+        Alert alert = new Alert(type);
+        alert.setContentText(message);
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void lamMoi(){
+        txtMaSach.clear();
+        txtTenSach.clear();
+        cbTacGia.setValue(null);
+        cbTheLoai.setValue(null);
+        cbNXB.setValue(null);
+        txtSoLuong.clear();
+        txtSoTrang.clear();
+        dpNgayXuatBan.setValue(null);
+        txtMoTa.clear();
+        txtAnhBia.clear();
+        imgBia.setImage(null);
+
+        // Bỏ chọn dòng trong TableView nếu có
+        tableSach.getSelectionModel().clearSelection();
+
+    }
 }

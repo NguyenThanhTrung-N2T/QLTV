@@ -73,7 +73,7 @@
                 <Button fx:id="btnThem" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Thêm" />
                 <Button fx:id="btnSua" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Sửa" />
                 <Button fx:id="btnXoa" style="-fx-background-color: #F44336; -fx-text-fill: white;" text="Xóa" />
-                <Button fx:id="btnLammoi" style="-fx-background-color: #9E9E9E; -fx-text-fill: white;" text="Làm mới" />
+                <Button fx:id="btnLammoi" onAction="#lamMoi" style="-fx-background-color: #9E9E9E; -fx-text-fill: white;" text="Làm mới" />
             </HBox>
 
             <!-- Bảng hiển thị -->

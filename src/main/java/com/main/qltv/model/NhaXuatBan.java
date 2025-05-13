@@ -8,6 +8,11 @@ public class NhaXuatBan {
         return maNXB;
     }
 
+    public NhaXuatBan(String maNXB, String tenNXB) {
+        this.maNXB = maNXB;
+        this.tenNXB = tenNXB;
+    }
+
     public void setMaNXB(String maNXB) {
         this.maNXB = maNXB;
     }

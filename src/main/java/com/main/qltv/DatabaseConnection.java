@@ -394,6 +394,19 @@ public class DatabaseConnection {
         }
     }
 
+    public static boolean kiemTraMaSachTonTai(String maSach) {
+        try (Connection conn = connect()) {
+            String sql = "SELECT 1 FROM Sach WHERE maSach = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, maSach);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next(); // Nếu có bản ghi => tồn tại
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static boolean themSach(Sach sach, TacGia tacGia, TheLoai theLoai, NhaXuatBan nxb) {
         try (Connection conn = connect()) {
 

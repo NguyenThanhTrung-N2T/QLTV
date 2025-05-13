@@ -46,6 +46,21 @@ public class Sach {
         return maTacGia;
     }
 
+    public Sach(){}
+
+    public Sach(String tenSach, String maSach, String maTacGia, String maTheLoai, String maNXB, int soLuong, Date ngayXuatBan, int soTrang, String moTa, String anhBia) {
+        this.tenSach = tenSach;
+        this.maSach = maSach;
+        this.maTacGia = maTacGia;
+        this.maTheLoai = maTheLoai;
+        this.maNXB = maNXB;
+        this.soLuong = soLuong;
+        this.ngayXuatBan = ngayXuatBan;
+        this.soTrang = soTrang;
+        this.moTa = moTa;
+        this.anhBia = anhBia;
+    }
+
     public void setMaSach(String maSach) {
         this.maSach = maSach;
     }

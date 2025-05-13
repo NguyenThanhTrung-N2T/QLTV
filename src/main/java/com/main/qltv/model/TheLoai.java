@@ -16,6 +16,11 @@ public class TheLoai {
         this.maTheLoai = maTheLoai;
     }
 
+    public TheLoai(String maTheLoai, String tenTheLoai) {
+        this.maTheLoai = maTheLoai;
+        this.tenTheLoai = tenTheLoai;
+    }
+
     public void setTenTheLoai(String tenTheLoai) {
         this.tenTheLoai = tenTheLoai;
     }
