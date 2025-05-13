@@ -35,6 +35,10 @@ public class QuanLySachController {
     @FXML TableColumn<Sach, Date> colNgayXuatBan;
     @FXML TableColumn<Sach, Integer> colSoTrang;
     @FXML Button btnTimKiem;
+    @FXML Button btnThem;
+    @FXML Button btnSua;
+    @FXML Button btnXoa;
+    @FXML Button btnLammoi;
 
 
     private ObservableList<Sach> sachList;
@@ -112,6 +116,9 @@ public class QuanLySachController {
         cbTacGia.setItems(FXCollections.observableArrayList(DatabaseConnection.layDanhSachTenTacGia()));
         cbTheLoai.setItems(FXCollections.observableArrayList(DatabaseConnection.layDanhSachTenTheLoai()));
         cbNXB.setItems(FXCollections.observableArrayList(DatabaseConnection.layDanhSachTenNXB()));
+        cbTacGia.setEditable(true);
+        cbTheLoai.setEditable(true);
+        cbNXB.setEditable(true);
 
         // Sự kiện khi chọn dòng
         tableSach.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {

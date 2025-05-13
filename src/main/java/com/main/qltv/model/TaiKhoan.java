@@ -13,4 +13,23 @@ public class TaiKhoan {
     public String getLoaiTK() { return loaiTK; }
     public String getMSSV() { return MSSV; }
 
+    public void setMaTK(String maTK) {
+        this.maTK = maTK;
+    }
+
+    public void setTenDangNhap(String tenDangNhap) {
+        this.tenDangNhap = tenDangNhap;
+    }
+
+    public void setMatKhauTK(String matKhauTK) {
+        this.matKhauTK = matKhauTK;
+    }
+
+    public void setLoaiTK(String loaiTK) {
+        this.loaiTK = loaiTK;
+    }
+
+    public void setMSSV(String MSSV) {
+        this.MSSV = MSSV;
+    }
 }

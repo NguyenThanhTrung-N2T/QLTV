@@ -1,10 +1,9 @@
 package com.main.qltv;
 
-import com.main.qltv.model.Sach;
-import com.main.qltv.model.SinhVien;
-import com.main.qltv.model.TaiKhoan;
+import com.main.qltv.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -337,5 +336,199 @@ public class DatabaseConnection {
         }
         return ds;
     }
+
+    public static String layMaTacGiaTheoTen(String tenTacGia) throws SQLException {
+        String sql = "SELECT maTacGia FROM TacGia WHERE tenTacGia = ?";
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, tenTacGia);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return rs.getString("maTacGia");
+            return null;
+        }
+    }
+
+    public static String layMaTheLoaiTheoTen(String tenTheLoai) throws SQLException {
+        String sql = "SELECT maTheLoai FROM TheLoai WHERE tenTheLoai = ?";
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, tenTheLoai);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return rs.getString("maTheLoai");
+            return null;
+        }
+    }
+
+    public static String layMaNXBTheoTen(String tenNXB) throws SQLException {
+        String sql = "SELECT maNXB FROM NhaXuatBan WHERE tenNXB = ?";
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, tenNXB);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return rs.getString("maNXB");
+            return null;
+        }
+    }
+
+    public static void themTacGia(TacGia tg) throws SQLException {
+        String sql = "INSERT INTO TacGia (maTacGia, tenTacGia) VALUES (?, ?)";
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, tg.getMaTacGia());
+            stmt.setString(2, tg.getTenTacGia());
+            stmt.executeUpdate();
+        }
+    }
+
+    public static void themTheLoai(TheLoai tl) throws SQLException {
+        String sql = "INSERT INTO TheLoai (maTheLoai, tenTheLoai) VALUES (?, ?)";
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, tl.getMaTheLoai());
+            stmt.setString(2, tl.getTenTheLoai());
+            stmt.executeUpdate();
+        }
+    }
+
+    public static void themNXB(NhaXuatBan nxb) throws SQLException {
+        String sql = "INSERT INTO NhaXuatBan (maNXB, tenNXB) VALUES (?, ?)";
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, nxb.getMaNXB());
+            stmt.setString(2, nxb.getTenNXB());
+            stmt.executeUpdate();
+        }
+    }
+
+    public static boolean themSach(Sach sach, TacGia tacGia, TheLoai theLoai, NhaXuatBan nxb) {
+        try (Connection conn = connect()) {
+
+            // === 1. Kiểm tra & xử lý tác giả ===
+            String maTacGia = layMaTacGiaTheoTen(tacGia.getTenTacGia());
+            if (maTacGia == null) {
+                maTacGia = "TG" + System.currentTimeMillis();
+                tacGia.setMaTacGia(maTacGia);
+                themTacGia(tacGia);
+            }
+            sach.setMaTacGia(maTacGia);
+
+            // === 2. Kiểm tra & xử lý thể loại ===
+            String maTheLoai = layMaTheLoaiTheoTen(theLoai.getTenTheLoai());
+            if (maTheLoai == null) {
+                maTheLoai = "TL" + System.currentTimeMillis();
+                theLoai.setMaTheLoai(maTheLoai);
+                themTheLoai(theLoai);
+            }
+            sach.setMaTheLoai(maTheLoai);
+
+            // === 3. Kiểm tra & xử lý NXB ===
+            String maNXB = layMaNXBTheoTen(nxb.getTenNXB());
+            if (maNXB == null) {
+                maNXB = "NXB" + System.currentTimeMillis();
+                nxb.setMaNXB(maNXB);
+                themNXB(nxb);
+            }
+            sach.setMaNXB(maNXB);
+
+            // === 4. Tạo mã sách nếu chưa có ===
+            if (sach.getMaSach() == null || sach.getMaSach().isEmpty()) {
+                sach.setMaSach("S" + System.currentTimeMillis());
+            }
+
+            // === 5. Thêm sách vào bảng Sach ===
+            String sql = "INSERT INTO Sach (maSach, tenSach, maTacGia, maTheLoai, maNXB, soLuong, ngayXuatBan, soTrang, moTa, anhBia) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, sach.getMaSach());
+                stmt.setString(2, sach.getTenSach());
+                stmt.setString(3, sach.getMaTacGia());
+                stmt.setString(4, sach.getMaTheLoai());
+                stmt.setString(5, sach.getMaNXB());
+                stmt.setInt(6, sach.getSoLuong());
+                stmt.setDate(7, sach.getNgayXuatBan());
+                stmt.setInt(8, sach.getSoTrang());
+                stmt.setString(9, sach.getMoTa());
+                stmt.setString(10, sach.getAnhBia());
+                return stmt.executeUpdate() > 0;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
+    public static boolean capNhatSach(Sach sach) {
+        String sql = "UPDATE Sach SET tenSach = ?, maTacGia = ?, maTheLoai = ?, maNXB = ?, soLuong = ?, ngayXuatBan = ?, soTrang = ?, moTa = ?, anhBia = ? WHERE maSach = ?";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, sach.getTenSach());
+            stmt.setString(2, sach.getMaTacGia());
+            stmt.setString(3, sach.getMaTheLoai());
+            stmt.setString(4, sach.getMaNXB());
+            stmt.setInt(5, sach.getSoLuong());
+            stmt.setDate(6, sach.getNgayXuatBan());
+            stmt.setInt(7, sach.getSoTrang());
+            stmt.setString(8, sach.getMoTa());
+            stmt.setString(9, sach.getAnhBia());
+            stmt.setString(10, sach.getMaSach());
+            return stmt.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean xoaSach(String maSach) {
+        String checkSql = "SELECT COUNT(*) FROM MuonSach WHERE maSach = ?";
+        String deleteSql = "DELETE FROM Sach WHERE maSach = ?";
+
+        try (Connection conn = connect();
+             PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+             PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
+
+            // Kiểm tra xem sách có từng được mượn chưa
+            checkStmt.setString(1, maSach);
+            ResultSet rs = checkStmt.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                // Hiển thị cảnh báo nếu sách đã được mượn
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Không thể xóa sách");
+                alert.setHeaderText("Sách đã từng được mượn");
+                alert.setContentText("Không thể xóa sách này vì đã có lượt mượn trong hệ thống.");
+                alert.showAndWait();
+                return false;
+            }
+
+            // Xóa sách nếu không bị ràng buộc
+            deleteStmt.setString(1, maSach);
+            int rowsAffected = deleteStmt.executeUpdate();
+            if (rowsAffected > 0) {
+                // Thông báo xóa thành công (nếu muốn)
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Xóa thành công");
+                alert.setHeaderText(null);
+                alert.setContentText("Sách đã được xóa khỏi hệ thống.");
+                alert.showAndWait();
+                return true;
+            } else {
+                // Không có sách nào bị xóa
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Lỗi");
+                alert.setHeaderText("Xóa thất bại");
+                alert.setContentText("Không tìm thấy sách để xóa.");
+                alert.showAndWait();
+                return false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Thông báo lỗi nếu có exception
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi hệ thống");
+            alert.setHeaderText("Lỗi khi xóa sách");
+            alert.setContentText("Đã xảy ra lỗi: " + e.getMessage());
+            alert.showAndWait();
+            return false;
+        }
+    }
+
+
 
 }

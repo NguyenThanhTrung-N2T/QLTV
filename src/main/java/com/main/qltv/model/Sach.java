@@ -46,6 +46,46 @@ public class Sach {
         return maTacGia;
     }
 
+    public void setMaSach(String maSach) {
+        this.maSach = maSach;
+    }
+
+    public void setTenSach(String tenSach) {
+        this.tenSach = tenSach;
+    }
+
+    public void setMaTacGia(String maTacGia) {
+        this.maTacGia = maTacGia;
+    }
+
+    public void setMaTheLoai(String maTheLoai) {
+        this.maTheLoai = maTheLoai;
+    }
+
+    public void setMaNXB(String maNXB) {
+        this.maNXB = maNXB;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public void setNgayXuatBan(Date ngayXuatBan) {
+        this.ngayXuatBan = ngayXuatBan;
+    }
+
+    public void setSoTrang(int soTrang) {
+        this.soTrang = soTrang;
+    }
+
+    public void setMoTa(String moTa) {
+        this.moTa = moTa;
+    }
+
+    public void setAnhBia(String anhBia) {
+        this.anhBia = anhBia;
+    }
+
     public String getTenSach() {
         return tenSach;
     }

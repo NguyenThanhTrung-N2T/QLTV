@@ -9,6 +9,35 @@ public class SinhVien {
     public Date ngaySinh;
     public String diaChi;
     public String email;
+
+    public void setMSSV(String MSSV) {
+        this.MSSV = MSSV;
+    }
+
+    public void setTenSinhVien(String tenSinhVien) {
+        this.tenSinhVien = tenSinhVien;
+    }
+
+    public void setGioiTinh(String gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    public void setNgaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setSDT(String SDT) {
+        this.SDT = SDT;
+    }
+
     public String SDT;
 
     public String getMSSV() { return MSSV; }
