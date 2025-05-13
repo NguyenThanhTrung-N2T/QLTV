@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class QuanLySachController {
 
@@ -227,6 +228,65 @@ public class QuanLySachController {
             lamMoi();
 
         });
+
+        btnSua.setOnAction(event -> {
+            String maSach = txtMaSach.getText().trim();
+            String tenSach = txtTenSach.getText().trim();
+            String tenTacGia = cbTacGia.getValue();
+            String tenTheLoai = cbTheLoai.getValue();
+            String tenNXB = cbNXB.getValue();
+            String soLuongStr = txtSoLuong.getText().trim();
+            String soTrangStr = txtSoTrang.getText().trim();
+            LocalDate ngayXuatBan = dpNgayXuatBan.getValue();
+            String moTa = txtMoTa.getText().trim();
+            String anhBia = txtAnhBia.getText().trim();
+
+            if (maSach.isEmpty() || tenSach.isEmpty() || tenTacGia == null || tenTheLoai == null || tenNXB == null
+                    || soLuongStr.isEmpty() || soTrangStr.isEmpty() || ngayXuatBan == null) {
+                showAlert(Alert.AlertType.WARNING, "Vui lòng nhập đầy đủ thông tin sách.");
+                return;
+            }
+
+            if (!DatabaseConnection.kiemTraMaSachTonTai(maSach)) {
+                showAlert(Alert.AlertType.ERROR, "Mã sách không tồn tại để sửa!");
+                return;
+            }
+
+            try {
+                int soLuong = Integer.parseInt(soLuongStr);
+                int soTrang = Integer.parseInt(soTrangStr);
+                java.sql.Date sqlNgayXuatBan = java.sql.Date.valueOf(ngayXuatBan);
+
+                String maTacGia = DatabaseConnection.layMaTacGiaTheoTen(tenTacGia);
+                String maTheLoai = DatabaseConnection.layMaTheLoaiTheoTen(tenTheLoai);
+                String maNXB = DatabaseConnection.layMaNXBTheoTen(tenNXB);
+
+                Sach sachSua = new Sach(maSach, tenSach, maTacGia, maTheLoai, maNXB, soLuong,
+                        sqlNgayXuatBan, soTrang, moTa, anhBia);
+
+                TacGia tacgiamoi = new TacGia(maTacGia, tenTacGia);
+                TheLoai theloaimoi = new TheLoai(maTheLoai, tenTheLoai);
+                NhaXuatBan nxbmoi = new NhaXuatBan(maNXB, tenNXB);
+
+                boolean thanhCong = DatabaseConnection.capNhatSach(sachSua, tacgiamoi, theloaimoi, nxbmoi);
+                if (thanhCong) {
+                    showAlert(Alert.AlertType.INFORMATION, "Cập nhật sách thành công.");
+                    loadSachTuDB();
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Cập nhật sách thất bại!");
+                }
+            } catch (NumberFormatException e) {
+                showAlert(Alert.AlertType.ERROR, "Số lượng và số trang phải là số nguyên.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Lỗi truy vấn cơ sở dữ liệu!");
+            }
+
+            lamMoi();
+        });
+
+
+
 
     }
 

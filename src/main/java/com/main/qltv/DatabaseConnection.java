@@ -465,28 +465,210 @@ public class DatabaseConnection {
         }
     }
 
-
-
-    public static boolean capNhatSach(Sach sach) {
-        String sql = "UPDATE Sach SET tenSach = ?, maTacGia = ?, maTheLoai = ?, maNXB = ?, soLuong = ?, ngayXuatBan = ?, soTrang = ?, moTa = ?, anhBia = ? WHERE maSach = ?";
+    public static void xoaTacGiaNeuKhongDung(String maTacGia) {
+        String sql = "SELECT COUNT(*) FROM Sach WHERE maTacGia = ?";
         try (Connection conn = connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, sach.getTenSach());
-            stmt.setString(2, sach.getMaTacGia());
-            stmt.setString(3, sach.getMaTheLoai());
-            stmt.setString(4, sach.getMaNXB());
-            stmt.setInt(5, sach.getSoLuong());
-            stmt.setDate(6, sach.getNgayXuatBan());
-            stmt.setInt(7, sach.getSoTrang());
-            stmt.setString(8, sach.getMoTa());
-            stmt.setString(9, sach.getAnhBia());
-            stmt.setString(10, sach.getMaSach());
-            return stmt.executeUpdate() > 0;
+            stmt.setString(1, maTacGia);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next() && rs.getInt(1) == 0) {
+                try (PreparedStatement deleteStmt = conn.prepareStatement("DELETE FROM TacGia WHERE maTacGia = ?")) {
+                    deleteStmt.setString(1, maTacGia);
+                    deleteStmt.executeUpdate();
+                }
+            }
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            System.err.println("Lỗi khi xóa tác giả không dùng: " + e.getMessage());
         }
     }
+
+    public static void xoaTheLoaiNeuKhongDung(String maTheLoai) {
+        String sql = "SELECT COUNT(*) FROM Sach WHERE maTheLoai = ?";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, maTheLoai);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next() && rs.getInt(1) == 0) {
+                try (PreparedStatement deleteStmt = conn.prepareStatement("DELETE FROM TheLoai WHERE maTheLoai = ?")) {
+                    deleteStmt.setString(1, maTheLoai);
+                    deleteStmt.executeUpdate();
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Lỗi khi xóa thể loại không dùng: " + e.getMessage());
+        }
+    }
+
+    public static void xoaNXBNguKhongDung(String maNXB) {
+        String sql = "SELECT COUNT(*) FROM Sach WHERE maNXB = ?";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, maNXB);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next() && rs.getInt(1) == 0) {
+                try (PreparedStatement deleteStmt = conn.prepareStatement("DELETE FROM NhaXuatBan WHERE maNXB = ?")) {
+                    deleteStmt.setString(1, maNXB);
+                    deleteStmt.executeUpdate();
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Lỗi khi xóa NXB không dùng: " + e.getMessage());
+        }
+    }
+
+    public static String layMaTacGiaTheoMaSach(String maSach) {
+        String sql = "SELECT maTacGia FROM Sach WHERE maSach = ?";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, maSach);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return rs.getString("maTacGia");
+        } catch (Exception e) {
+            System.err.println("Lỗi khi lấy mã tác giả cũ: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public static String layMaTheLoaiTheoMaSach(String maSach) {
+        String sql = "SELECT maTheLoai FROM Sach WHERE maSach = ?";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, maSach);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return rs.getString("maTheLoai");
+        } catch (Exception e) {
+            System.err.println("Lỗi khi lấy mã thể loại cũ: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public static String layMaNXBTheoMaSach(String maSach) {
+        String sql = "SELECT maNXB FROM Sach WHERE maSach = ?";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, maSach);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return rs.getString("maNXB");
+        } catch (Exception e) {
+            System.err.println("Lỗi khi lấy mã NXB cũ: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public static void themTacGia(Connection conn, TacGia tg) throws SQLException {
+        String sql = "INSERT INTO TacGia(maTacGia, tenTacGia) VALUES(?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, tg.getMaTacGia());
+            stmt.setString(2, tg.getTenTacGia());
+            stmt.executeUpdate();
+        }
+    }
+
+    public static void themTheLoai(Connection conn, TheLoai tl) throws SQLException {
+        String sql = "INSERT INTO TheLoai(maTheLoai, tenTheLoai) VALUES(?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, tl.getMaTheLoai());
+            stmt.setString(2, tl.getTenTheLoai());
+            stmt.executeUpdate();
+        }
+    }
+
+    public static void themNXB(Connection conn, NhaXuatBan nxb) throws SQLException {
+        String sql = "INSERT INTO NhaXuatBan(maNXB, tenNXB) VALUES(?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, nxb.getMaNXB());
+            stmt.setString(2, nxb.getTenNXB());
+            stmt.executeUpdate();
+        }
+    }
+
+    public static boolean capNhatSach(Sach sach, TacGia tacGia, TheLoai theLoai, NhaXuatBan nxb) {
+        Connection conn = null;
+        try {
+            conn = connect();
+            conn.setAutoCommit(false); // Bắt đầu transaction
+            // === 1. Xử lý Tác Giả ===
+            String maTacGiaMoi = layMaTacGiaTheoTen(tacGia.getTenTacGia());
+            if (maTacGiaMoi == null) {
+                maTacGiaMoi = "TG" + System.currentTimeMillis();
+                tacGia.setMaTacGia(maTacGiaMoi);
+                themTacGia(conn, tacGia);
+            }
+            String maTacGiaCu = layMaTacGiaTheoMaSach(sach.getMaSach());
+            sach.setMaTacGia(maTacGiaMoi);
+
+            // === 2. Xử lý Thể Loại ===
+            String maTheLoaiMoi = layMaTheLoaiTheoTen(theLoai.getTenTheLoai());
+            if (maTheLoaiMoi == null) {
+                maTheLoaiMoi = "TL" + System.currentTimeMillis();
+                theLoai.setMaTheLoai(maTheLoaiMoi);
+                themTheLoai(conn, theLoai);
+            }
+            String maTheLoaiCu = layMaTheLoaiTheoMaSach(sach.getMaSach());
+            sach.setMaTheLoai(maTheLoaiMoi);
+
+            // === 3. Xử lý NXB ===
+            String maNXBMoi = layMaNXBTheoTen(nxb.getTenNXB());
+            if (maNXBMoi == null) {
+                maNXBMoi = "NXB" + System.currentTimeMillis();
+                nxb.setMaNXB(maNXBMoi);
+                themNXB(conn, nxb);
+            }
+
+            String maNXBCu = layMaNXBTheoMaSach(sach.getMaSach());
+            sach.setMaNXB(maNXBMoi);
+
+            String sql = "UPDATE Sach SET tenSach = ?, maTacGia = ?, maTheLoai = ?, maNXB = ?, soLuong = ?, ngayXuatBan = ?, soTrang = ?, moTa = ?, anhBia = ? WHERE maSach = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, sach.getTenSach());
+                stmt.setString(2, sach.getMaTacGia());
+                stmt.setString(3, sach.getMaTheLoai());
+                stmt.setString(4, sach.getMaNXB());
+                stmt.setInt(5, sach.getSoLuong());
+                stmt.setDate(6, sach.getNgayXuatBan());
+                stmt.setInt(7, sach.getSoTrang());
+                stmt.setString(8, sach.getMoTa());
+                stmt.setString(9, sach.getAnhBia());
+                stmt.setString(10, sach.getMaSach());
+
+                int rowsAffected = stmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    conn.commit();
+
+                    // Xóa dữ liệu cũ nếu không còn dùng
+                    xoaTacGiaNeuKhongDung(maTacGiaCu);
+                    xoaTheLoaiNeuKhongDung(maTheLoaiCu);
+                    xoaNXBNguKhongDung(maNXBCu);
+
+                    return true;
+                } else {
+                    conn.rollback();
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            try {
+                if (conn != null) conn.rollback();
+            } catch (SQLException rollbackEx) {
+                System.err.println("Lỗi khi rollback: " + rollbackEx.getMessage());
+            }
+            System.err.println("Lỗi khi cập nhật sách: " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException ex) {
+                System.err.println("Lỗi khi đóng connection: " + ex.getMessage());
+            }
+        }
+    }
+
+
+
+
+
+
 
     public static boolean xoaSach(String maSach) {
         String checkSql = "SELECT COUNT(*) FROM MuonSach WHERE maSach = ?";

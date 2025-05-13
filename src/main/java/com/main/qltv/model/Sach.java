@@ -48,9 +48,9 @@ public class Sach {
 
     public Sach(){}
 
-    public Sach(String tenSach, String maSach, String maTacGia, String maTheLoai, String maNXB, int soLuong, Date ngayXuatBan, int soTrang, String moTa, String anhBia) {
-        this.tenSach = tenSach;
+    public Sach(String maSach, String tenSach, String maTacGia, String maTheLoai, String maNXB, int soLuong, Date ngayXuatBan, int soTrang, String moTa, String anhBia) {
         this.maSach = maSach;
+        this.tenSach = tenSach;
         this.maTacGia = maTacGia;
         this.maTheLoai = maTheLoai;
         this.maNXB = maNXB;
