@@ -1,6 +1,7 @@
 package com.main.qltv.controller;
 
 import com.main.qltv.DatabaseConnection;
+import com.main.qltv.QLTVApplication;
 import com.main.qltv.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -146,6 +147,15 @@ public class QuanLySachController {
             }
         });
 
+        if(QLTVApplication.nguoidangnhap.loaiTK.equals("sinhvien")){
+            btnThem.setVisible(false);
+            btnThem.setManaged(false);
+            btnXoa.setVisible(false);
+            btnXoa.setManaged(false);
+            btnSua.setVisible(false);
+            btnSua.setManaged(false);
+        }
+
         // Tìm kiếm theo các thuộc tính
         btnTimKiem.setOnAction(event -> {
             String tenSach = txtTenSach.getText().toLowerCase();
@@ -285,7 +295,32 @@ public class QuanLySachController {
             lamMoi();
         });
 
+        btnXoa.setOnAction(event -> {
+            Sach selectedSach = tableSach.getSelectionModel().getSelectedItem();
 
+            if (selectedSach == null) {
+                showAlert(Alert.AlertType.WARNING, "Vui lòng chọn sách cần xóa.");
+                return;
+            }
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Xác nhận xóa");
+            alert.setHeaderText("Bạn có chắc chắn muốn xóa sách: " + selectedSach.getTenSach() + "?");
+            alert.setContentText("Thao tác này không thể hoàn tác!");
+
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    boolean result = DatabaseConnection.xoaSach(selectedSach.getMaSach());
+                    if (result) {
+                        showAlert(Alert.AlertType.INFORMATION, "Xóa sách thành công!");
+                        loadSachTuDB(); // Tải lại danh sách sách trong bảng
+                        lamMoi();
+                    } else {
+                        showAlert(Alert.AlertType.ERROR, "Không thể xóa sách. Có thể sách đã được mượn hoặc lỗi hệ thống.");
+                    }
+                }
+            });
+        });
 
 
     }

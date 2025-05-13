@@ -465,10 +465,9 @@ public class DatabaseConnection {
         }
     }
 
-    public static void xoaTacGiaNeuKhongDung(String maTacGia) {
+    public static void xoaTacGiaNeuKhongDung(Connection conn, String maTacGia) throws SQLException {
         String sql = "SELECT COUNT(*) FROM Sach WHERE maTacGia = ?";
-        try (Connection conn = connect();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, maTacGia);
             ResultSet rs = stmt.executeQuery();
             if (rs.next() && rs.getInt(1) == 0) {
@@ -477,15 +476,12 @@ public class DatabaseConnection {
                     deleteStmt.executeUpdate();
                 }
             }
-        } catch (Exception e) {
-            System.err.println("Lỗi khi xóa tác giả không dùng: " + e.getMessage());
         }
     }
 
-    public static void xoaTheLoaiNeuKhongDung(String maTheLoai) {
+    public static void xoaTheLoaiNeuKhongDung(Connection conn, String maTheLoai) throws SQLException {
         String sql = "SELECT COUNT(*) FROM Sach WHERE maTheLoai = ?";
-        try (Connection conn = connect();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, maTheLoai);
             ResultSet rs = stmt.executeQuery();
             if (rs.next() && rs.getInt(1) == 0) {
@@ -494,15 +490,12 @@ public class DatabaseConnection {
                     deleteStmt.executeUpdate();
                 }
             }
-        } catch (Exception e) {
-            System.err.println("Lỗi khi xóa thể loại không dùng: " + e.getMessage());
         }
     }
 
-    public static void xoaNXBNguKhongDung(String maNXB) {
+    public static void xoaNXBNeuKhongDung(Connection conn, String maNXB) throws SQLException {
         String sql = "SELECT COUNT(*) FROM Sach WHERE maNXB = ?";
-        try (Connection conn = connect();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, maNXB);
             ResultSet rs = stmt.executeQuery();
             if (rs.next() && rs.getInt(1) == 0) {
@@ -511,8 +504,6 @@ public class DatabaseConnection {
                     deleteStmt.executeUpdate();
                 }
             }
-        } catch (Exception e) {
-            System.err.println("Lỗi khi xóa NXB không dùng: " + e.getMessage());
         }
     }
 
@@ -587,6 +578,7 @@ public class DatabaseConnection {
         try {
             conn = connect();
             conn.setAutoCommit(false); // Bắt đầu transaction
+
             // === 1. Xử lý Tác Giả ===
             String maTacGiaMoi = layMaTacGiaTheoTen(tacGia.getTenTacGia());
             if (maTacGiaMoi == null) {
@@ -614,10 +606,10 @@ public class DatabaseConnection {
                 nxb.setMaNXB(maNXBMoi);
                 themNXB(conn, nxb);
             }
-
             String maNXBCu = layMaNXBTheoMaSach(sach.getMaSach());
             sach.setMaNXB(maNXBMoi);
 
+            // === 4. Cập nhật sách ===
             String sql = "UPDATE Sach SET tenSach = ?, maTacGia = ?, maTheLoai = ?, maNXB = ?, soLuong = ?, ngayXuatBan = ?, soTrang = ?, moTa = ?, anhBia = ? WHERE maSach = ?";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, sach.getTenSach());
@@ -634,12 +626,13 @@ public class DatabaseConnection {
                 int rowsAffected = stmt.executeUpdate();
 
                 if (rowsAffected > 0) {
+                    // Commit cập nhật trước khi xóa dữ liệu cũ
                     conn.commit();
 
-                    // Xóa dữ liệu cũ nếu không còn dùng
-                    xoaTacGiaNeuKhongDung(maTacGiaCu);
-                    xoaTheLoaiNeuKhongDung(maTheLoaiCu);
-                    xoaNXBNguKhongDung(maNXBCu);
+                    // Xóa dữ liệu cũ nếu không còn được dùng
+                    xoaTacGiaNeuKhongDung(conn, maTacGiaCu);
+                    xoaTheLoaiNeuKhongDung(conn, maTheLoaiCu);
+                    xoaNXBNeuKhongDung(conn, maNXBCu);
 
                     return true;
                 } else {
@@ -664,65 +657,63 @@ public class DatabaseConnection {
         }
     }
 
-
-
-
-
-
-
     public static boolean xoaSach(String maSach) {
         String checkSql = "SELECT COUNT(*) FROM MuonSach WHERE maSach = ?";
         String deleteSql = "DELETE FROM Sach WHERE maSach = ?";
+        String getTacGiaSql = "SELECT maTacGia FROM Sach WHERE maSach = ?";
+        String getTheLoaiSql = "SELECT maTheLoai FROM Sach WHERE maSach = ?";
+        String getNXBSql = "SELECT maNXB FROM Sach WHERE maSach = ?";
 
-        try (Connection conn = connect();
-             PreparedStatement checkStmt = conn.prepareStatement(checkSql);
-             PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
+        try (Connection conn = connect()) {
+            conn.setAutoCommit(false);
 
-            // Kiểm tra xem sách có từng được mượn chưa
-            checkStmt.setString(1, maSach);
-            ResultSet rs = checkStmt.executeQuery();
-            if (rs.next() && rs.getInt(1) > 0) {
-                // Hiển thị cảnh báo nếu sách đã được mượn
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Không thể xóa sách");
-                alert.setHeaderText("Sách đã từng được mượn");
-                alert.setContentText("Không thể xóa sách này vì đã có lượt mượn trong hệ thống.");
-                alert.showAndWait();
-                return false;
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+                checkStmt.setString(1, maSach);
+                ResultSet rs = checkStmt.executeQuery();
+                if (rs.next() && rs.getInt(1) > 0) {
+                    conn.rollback();
+                    return false;
+                }
             }
 
-            // Xóa sách nếu không bị ràng buộc
-            deleteStmt.setString(1, maSach);
-            int rowsAffected = deleteStmt.executeUpdate();
-            if (rowsAffected > 0) {
-                // Thông báo xóa thành công (nếu muốn)
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Xóa thành công");
-                alert.setHeaderText(null);
-                alert.setContentText("Sách đã được xóa khỏi hệ thống.");
-                alert.showAndWait();
-                return true;
-            } else {
-                // Không có sách nào bị xóa
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Lỗi");
-                alert.setHeaderText("Xóa thất bại");
-                alert.setContentText("Không tìm thấy sách để xóa.");
-                alert.showAndWait();
-                return false;
+            String maTacGia = getStringField(conn, getTacGiaSql, maSach);
+            String maTheLoai = getStringField(conn, getTheLoaiSql, maSach);
+            String maNXB = getStringField(conn, getNXBSql, maSach);
+
+            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
+                deleteStmt.setString(1, maSach);
+                int rowsAffected = deleteStmt.executeUpdate();
+                if (rowsAffected == 0) {
+                    conn.rollback();
+                    return false;
+                }
             }
+
+            // ✅ Truyền conn vào để giữ nguyên transaction
+            xoaTacGiaNeuKhongDung(conn, maTacGia);
+            xoaTheLoaiNeuKhongDung(conn, maTheLoai);
+            xoaNXBNeuKhongDung(conn, maNXB);
+
+            conn.commit();
+            return true;
 
         } catch (Exception e) {
+            System.err.println("Lỗi khi xóa sách: " + e.getMessage());
             e.printStackTrace();
-            // Thông báo lỗi nếu có exception
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Lỗi hệ thống");
-            alert.setHeaderText("Lỗi khi xóa sách");
-            alert.setContentText("Đã xảy ra lỗi: " + e.getMessage());
-            alert.showAndWait();
             return false;
         }
     }
+
+    private static String getStringField(Connection conn, String sql, String param) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, param);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next() ? rs.getString(1) : null;
+        }
+    }
+
+
+
 
 
 
