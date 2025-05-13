@@ -50,7 +50,8 @@ public class QuanLySachController {
         // load dữ liệu lên table view
         sachList = FXCollections.observableArrayList();
         tableSach.setItems(sachList);
-
+        // Tải dữ liệu
+        loadSachTuDB();
         colMaSach.setCellValueFactory(new PropertyValueFactory<>("maSach"));
         colTenSach.setCellValueFactory(new PropertyValueFactory<>("tenSach"));
         colSoLuong.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
@@ -112,6 +113,31 @@ public class QuanLySachController {
         cbTheLoai.setItems(FXCollections.observableArrayList(DatabaseConnection.layDanhSachTenTheLoai()));
         cbNXB.setItems(FXCollections.observableArrayList(DatabaseConnection.layDanhSachTenNXB()));
 
+        // Sự kiện khi chọn dòng
+        tableSach.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                txtMaSach.setText(newSelection.getMaSach());
+                txtTenSach.setText(newSelection.getTenSach());
+                txtSoLuong.setText(String.valueOf(newSelection.getSoLuong()));
+                txtSoTrang.setText(String.valueOf(newSelection.getSoTrang()));
+                dpNgayXuatBan.setValue(newSelection.getNgayXuatBan().toLocalDate());
+                txtMoTa.setText(newSelection.getMoTa());
+                txtAnhBia.setText(newSelection.getAnhBia());
+
+                // Lấy tên để set cho ComboBox
+                cbTacGia.setValue(DatabaseConnection.layTenTacGia(newSelection.getMaTacGia()));
+                cbTheLoai.setValue(DatabaseConnection.layTenTheLoai(newSelection.getMaTheLoai()));
+                cbNXB.setValue(DatabaseConnection.layTenNXB(newSelection.getMaNXB()));
+
+                // Load ảnh bìa (nếu có URL hợp lệ)
+                try {
+                    imgBia.setImage(new javafx.scene.image.Image(newSelection.getAnhBia(), true));
+                } catch (Exception e) {
+                    imgBia.setImage(null); // Trường hợp link ảnh sai
+                }
+            }
+        });
+
         // Tìm kiếm theo các thuộc tính
         btnTimKiem.setOnAction(event -> {
             String tenSach = txtTenSach.getText().toLowerCase();
@@ -136,8 +162,6 @@ public class QuanLySachController {
         });
 
 
-        // Tải dữ liệu
-        loadSachTuDB();
     }
 
 }
