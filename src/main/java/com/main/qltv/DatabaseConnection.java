@@ -3,7 +3,6 @@ package com.main.qltv;
 import com.main.qltv.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -51,11 +50,11 @@ public class DatabaseConnection {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 // Lấy dữ liệu từ database và gán vào đối tượng TaiKhoan
-                nguoidung.maTK = rs.getString("maTaiKhoan");
-                nguoidung.tenDangNhap = rs.getString("tenDangNhap");
-                nguoidung.matKhauTK = rs.getString("matKhau");
-                nguoidung.loaiTK = rs.getString("loaiNguoiDung");
-                nguoidung.MSSV = rs.getString("maSinhVien");
+                nguoidung.setMaTK(rs.getString("maTaiKhoan"));
+                nguoidung.setTenDangNhap(rs.getString("tenDangNhap"));
+                nguoidung.setMatKhauTK(rs.getString("matKhau"));
+                nguoidung.setLoaiTK(rs.getString("loaiNguoiDung"));
+                nguoidung.setMSSV(rs.getString("maSinhVien"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -107,10 +106,10 @@ public class DatabaseConnection {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, maTKMoi);
-            pstmt.setString(2, tk.tenDangNhap);
-            pstmt.setString(3, tk.matKhauTK);
+            pstmt.setString(2, tk.getTenDangNhap());
+            pstmt.setString(3, tk.getMatKhauTK());
             pstmt.setString(4, "sinhvien"); // Gán mặc định là "user"
-            pstmt.setString(5, tk.MSSV);
+            pstmt.setString(5, tk.getMSSV());
 
             int rows = pstmt.executeUpdate();
             return rows > 0;
@@ -131,13 +130,13 @@ public class DatabaseConnection {
 
             while (rs.next()) {
                 SinhVien sinhVien = new SinhVien();
-                sinhVien.MSSV = rs.getString("maSinhVien");
-                sinhVien.tenSinhVien = rs.getString("tenSinhVien");
-                sinhVien.gioiTinh = rs.getString("gioiTinh");
-                sinhVien.ngaySinh = rs.getDate("ngaySinh");
-                sinhVien.diaChi = rs.getString("diaChi");
-                sinhVien.email = rs.getString("email");
-                sinhVien.SDT = rs.getString("soDienThoai");
+                sinhVien.setMSSV(rs.getString("maSinhVien"));
+                sinhVien.setTenSinhVien(rs.getString("tenSinhVien"));
+                sinhVien.setGioiTinh(rs.getString("gioiTinh"));
+                sinhVien.setNgaySinh(rs.getDate("ngaySinh"));
+                sinhVien.setDiaChi(rs.getString("diaChi"));
+                sinhVien.setEmail(rs.getString("email"));
+                sinhVien.setSDT(rs.getString("soDienThoai"));
 
                 danhSach.add(sinhVien);
             }
@@ -154,13 +153,13 @@ public class DatabaseConnection {
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, sv.MSSV);
-            pstmt.setString(2, sv.tenSinhVien);
-            pstmt.setString(3, sv.gioiTinh);
-            pstmt.setDate(4, sv.ngaySinh);
-            pstmt.setString(5, sv.diaChi);
-            pstmt.setString(6, sv.email);
-            pstmt.setString(7, sv.SDT);
+            pstmt.setString(1, sv.getMSSV());
+            pstmt.setString(2, sv.getTenSinhVien());
+            pstmt.setString(3, sv.getGioiTinh());
+            pstmt.setDate(4, sv.getNgaySinh());
+            pstmt.setString(5, sv.getDiaChi());
+            pstmt.setString(6, sv.getEmail());
+            pstmt.setString(7, sv.getSDT());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -176,13 +175,13 @@ public class DatabaseConnection {
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, sv.tenSinhVien);
-            pstmt.setString(2, sv.gioiTinh);
-            pstmt.setDate(3, sv.ngaySinh);
-            pstmt.setString(4, sv.diaChi);
-            pstmt.setString(5, sv.email);
-            pstmt.setString(6, sv.SDT);
-            pstmt.setString(7, sv.MSSV);
+            pstmt.setString(1, sv.getTenSinhVien());
+            pstmt.setString(2, sv.getGioiTinh());
+            pstmt.setDate(3, sv.getNgaySinh());
+            pstmt.setString(4, sv.getDiaChi());
+            pstmt.setString(5, sv.getEmail());
+            pstmt.setString(6, sv.getSDT());
+            pstmt.setString(7, sv.getMSSV());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -229,16 +228,16 @@ public class DatabaseConnection {
 
             while (rs.next()) {
                 Sach sach = new Sach();
-                sach.maSach = rs.getString("maSach");
-                sach.tenSach = rs.getString("tenSach");
-                sach.maTacGia = rs.getString("maTacGia");
-                sach.maTheLoai = rs.getString("maTheLoai");
-                sach.maNXB = rs.getString("maNXB");
-                sach.soLuong = rs.getInt("soLuong");
-                sach.ngayXuatBan = rs.getDate("ngayXuatBan");
-                sach.soTrang = rs.getInt("soTrang");
-                sach.moTa = rs.getString("moTa");
-                sach.anhBia = rs.getString("anhBia");
+                sach.setMaSach(rs.getString("maSach"));
+                sach.setTenSach(rs.getString("tenSach"));
+                sach.setMaTacGia(rs.getString("maTacGia"));
+                sach.setMaTheLoai(rs.getString("maTheLoai"));
+                sach.setMaNXB(rs.getString("maNXB"));
+                sach.setSoLuong(rs.getInt("soLuong"));
+                sach.setNgayXuatBan(rs.getDate("ngayXuatBan"));
+                sach.setSoTrang(rs.getInt("soTrang"));
+                sach.setMoTa(rs.getString("moTa"));
+                sach.setAnhBia(rs.getString("anhBia"));
                 danhSach.add(sach);
             }
         } catch (SQLException e) {

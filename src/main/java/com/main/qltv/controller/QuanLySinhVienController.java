@@ -104,13 +104,13 @@ public class QuanLySinhVienController {
         }
 
         SinhVien sv = new SinhVien();
-        sv.MSSV = txtMaSinhVien.getText();
-        sv.tenSinhVien = txtTenSinhVien.getText();
-        sv.gioiTinh = cbGioiTinh.getValue();
-        sv.ngaySinh = java.sql.Date.valueOf(dpNgaySinh.getValue());
-        sv.diaChi = txtDiaChi.getText();
-        sv.email = txtEmail.getText();
-        sv.SDT = txtSoDienThoai.getText();
+        sv.setMSSV(txtMaSinhVien.getText());
+        sv.setTenSinhVien(txtTenSinhVien.getText());
+        sv.setGioiTinh(cbGioiTinh.getValue());
+        sv.setNgaySinh(java.sql.Date.valueOf(dpNgaySinh.getValue()));
+        sv.setDiaChi(txtDiaChi.getText());
+        sv.setEmail(txtEmail.getText());
+        sv.setSDT(txtSoDienThoai.getText());
         if (DatabaseConnection.themSinhVien(sv)) {
             showAlert(Alert.AlertType.INFORMATION, "Thêm sinh viên thành công.");
             loadSinhVienTuDB();
@@ -129,13 +129,13 @@ public class QuanLySinhVienController {
         }
 
         SinhVien svMoi = new SinhVien();
-        svMoi.MSSV = txtMaSinhVien.getText();
-        svMoi.tenSinhVien = txtTenSinhVien.getText();
-        svMoi.gioiTinh = cbGioiTinh.getValue();
-        svMoi.ngaySinh = java.sql.Date.valueOf(dpNgaySinh.getValue());
-        svMoi.diaChi = txtDiaChi.getText();
-        svMoi.email = txtEmail.getText();
-        svMoi.SDT = txtSoDienThoai.getText();
+        svMoi.setMSSV(txtMaSinhVien.getText());
+        svMoi.setTenSinhVien(txtTenSinhVien.getText());
+        svMoi.setGioiTinh(cbGioiTinh.getValue());
+        svMoi.setNgaySinh(java.sql.Date.valueOf(dpNgaySinh.getValue()));
+        svMoi.setDiaChi(txtDiaChi.getText());
+        svMoi.setEmail(txtEmail.getText());
+        svMoi.setSDT(txtSoDienThoai.getText());
 
         if (selected.equals(svMoi)) {
             showAlert(Alert.AlertType.INFORMATION, "Không có thay đổi nào.");

@@ -29,8 +29,8 @@ public class Man_Hinh_Chinh_Controller {
     @FXML
     public void initialize() {
 
-        lBthongbao.setText("Xin chào, " + QLTVApplication.nguoidangnhap.tenDangNhap);
-        if(QLTVApplication.nguoidangnhap.loaiTK.equals("sinhvien"))
+        lBthongbao.setText("Xin chào, " + QLTVApplication.nguoidangnhap.getTenDangNhap());
+        if(QLTVApplication.nguoidangnhap.getLoaiTK().equals("sinhvien"))
         {
             btnQLSinhVien.setVisible(false);
             btnQLSinhVien.setManaged(false);

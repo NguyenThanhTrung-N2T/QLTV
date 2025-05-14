@@ -3,12 +3,13 @@ package com.main.qltv.model;
 import java.sql.Date;
 
 public class SinhVien {
-    public String MSSV;
-    public String tenSinhVien;
-    public String gioiTinh;
-    public Date ngaySinh;
-    public String diaChi;
-    public String email;
+    private String MSSV;
+    private String tenSinhVien;
+    private String gioiTinh;
+    private Date ngaySinh;
+    private String diaChi;
+    private String email;
+    private String SDT;
 
     public void setMSSV(String MSSV) {
         this.MSSV = MSSV;
@@ -38,7 +39,6 @@ public class SinhVien {
         this.SDT = SDT;
     }
 
-    public String SDT;
 
     public String getMSSV() { return MSSV; }
     public String getTenSinhVien() { return tenSinhVien; }

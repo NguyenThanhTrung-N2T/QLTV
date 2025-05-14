@@ -147,7 +147,7 @@ public class QuanLySachController {
             }
         });
 
-        if(QLTVApplication.nguoidangnhap.loaiTK.equals("sinhvien")){
+        if(QLTVApplication.nguoidangnhap.getLoaiTK().equals("sinhvien")){
             btnThem.setVisible(false);
             btnThem.setManaged(false);
             btnXoa.setVisible(false);

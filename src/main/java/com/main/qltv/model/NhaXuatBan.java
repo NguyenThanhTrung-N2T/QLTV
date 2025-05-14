@@ -1,8 +1,8 @@
 package com.main.qltv.model;
 
 public class NhaXuatBan {
-    public String maNXB;
-    public String tenNXB;
+    private String maNXB;
+    private String tenNXB;
 
     public String getMaNXB() {
         return maNXB;

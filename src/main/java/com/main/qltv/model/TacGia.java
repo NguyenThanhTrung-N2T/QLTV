@@ -1,8 +1,8 @@
 package com.main.qltv.model;
 
 public class TacGia {
-    public String maTacGia;
-    public String tenTacGia;
+    private String maTacGia;
+    private String tenTacGia;
 
     public String getMaTacGia() {
         return maTacGia;

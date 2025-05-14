@@ -1,11 +1,11 @@
 package com.main.qltv.model;
 
 public class TaiKhoan {
-    public String maTK;
-    public String tenDangNhap;
-    public String matKhauTK;
-    public String loaiTK;
-    public String MSSV;
+    private String maTK;
+    private String tenDangNhap;
+    private String matKhauTK;
+    private String loaiTK;
+    private String MSSV;
 
     public String getMaTK() { return maTK; }
     public String getTenDangNhap() { return tenDangNhap; }

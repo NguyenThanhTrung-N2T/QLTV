@@ -1,8 +1,8 @@
 package com.main.qltv.model;
 
 public class TheLoai {
-    public String maTheLoai;
-    public String tenTheLoai;
+    private String maTheLoai;
+    private String tenTheLoai;
 
     public String getMaTheLoai() {
         return maTheLoai;

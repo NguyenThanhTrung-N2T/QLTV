@@ -54,10 +54,10 @@ public class Dang_Ky_Controller {
 
         // Nếu hợp lệ thì tạo tài khoản mới
         TaiKhoan tk = new TaiKhoan();
-        tk.tenDangNhap = tenDangNhap;
-        tk.matKhauTK = matKhau;
-        tk.MSSV = maSinhVien;
-        tk.loaiTK = loaiNguoiDung;
+        tk.setTenDangNhap(tenDangNhap);
+        tk.setMaTK(matKhau);
+        tk.setMSSV(maSinhVien);
+        tk.setLoaiTK(loaiNguoiDung);
 
         boolean ketQua = DatabaseConnection.themTaiKhoan(tk);
         if (ketQua) {
