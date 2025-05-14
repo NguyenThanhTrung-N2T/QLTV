@@ -24,35 +24,35 @@
                     </padding>
 
                     <Label text="Mã sách:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                    <TextField fx:id="txtMaSach" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <TextField fx:id="txtMaSach" promptText="Nhập mã sách" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                     <Label text="Tên sách:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                    <TextField fx:id="txtTenSach" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <TextField fx:id="txtTenSach" promptText="Nhập tên sách" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
                     <Label text="Tác giả:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                    <ComboBox fx:id="cbTacGia" prefWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <ComboBox fx:id="cbTacGia" promptText="Chọn hoặc ghi tác giả" prefWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                     <Label text="Thể loại:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                    <ComboBox fx:id="cbTheLoai" prefWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <ComboBox fx:id="cbTheLoai" promptText="Chọn hoặc ghi thể loại" prefWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
                     <Label text="NXB:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                    <ComboBox fx:id="cbNXB" prefWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <ComboBox fx:id="cbNXB" promptText="Chọn hoặc ghi nhà xuất bản" prefWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
                     <Label text="Số lượng:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                    <TextField fx:id="txtSoLuong" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                    <TextField fx:id="txtSoLuong" promptText="Nhập số lượng sách" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
                     <Label text="Ngày xuất bản:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
                     <DatePicker fx:id="dpNgayXuatBan" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
                     <Label text="Số trang:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-                    <TextField fx:id="txtSoTrang" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                    <TextField fx:id="txtSoTrang" promptText="Nhập số trang" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
                     <Label text="Mô tả:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
-                    <TextArea fx:id="txtMoTa" prefRowCount="3" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                    <TextArea fx:id="txtMoTa" promptText="Nhập mô tả nội dung sách" prefRowCount="3" GridPane.columnIndex="1" GridPane.rowIndex="8" />
 
                     <Label text="Ảnh bìa:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
                     <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="9">
-                        <TextField fx:id="txtAnhBia" promptText="Đường dẫn ảnh (ví dụ: images/book.jpg)" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="txtAnhBia" promptText="Đường dẫn ảnh (URL)" HBox.hgrow="ALWAYS" />
                         <Button text="Chọn ảnh" visible="false" />
                     </HBox>
                 </GridPane>

@@ -711,6 +711,29 @@ public class DatabaseConnection {
         }
     }
 
+    public static ObservableList<TaiKhoan> LayDanhSachTaiKhoan() {
+        ObservableList<TaiKhoan> danhSach = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM TaiKhoan";
+
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                TaiKhoan taiKhoan = new TaiKhoan();
+                taiKhoan.setMaTK(rs.getString("maTaiKhoan"));
+                taiKhoan.setTenDangNhap(rs.getString("tenDangNhap"));
+                taiKhoan.setMatKhauTK(rs.getString("matKhau"));
+                taiKhoan.setLoaiTK(rs.getString("loaiNguoiDung"));
+                taiKhoan.setMSSV(rs.getString("maSinhVien"));
+
+                danhSach.add(taiKhoan);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return danhSach;
+    }
 
 
 

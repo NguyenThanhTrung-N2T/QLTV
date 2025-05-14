@@ -53,6 +53,8 @@ public class QuanLySachController {
 
     @FXML
     public void initialize(){
+
+        dpNgayXuatBan.setPromptText("Chọn ngày xuất bản");
         // load dữ liệu lên table view
         sachList = FXCollections.observableArrayList();
         tableSach.setItems(sachList);

@@ -32,6 +32,7 @@ public class QuanLySinhVienController {
 
     @FXML
     public void initialize() {
+        dpNgaySinh.setPromptText("Chọn ngày sinh");
         // danh sách sinh viên
         sinhVienList = FXCollections.observableArrayList(); // KHỞI TẠO ở đây
         tableSinhVien.setItems(sinhVienList);
