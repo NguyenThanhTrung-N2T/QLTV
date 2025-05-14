@@ -44,7 +44,7 @@ public class QuanLySinhVienController {
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colSoDienThoai.setCellValueFactory(new PropertyValueFactory<>("SDT"));
         // Đổ dữ liệu giới tính vào ComboBox
-        cbGioiTinh.setItems(FXCollections.observableArrayList("Nam", "Nữ",null));
+        cbGioiTinh.setItems(FXCollections.observableArrayList("Nam", "Nữ"));
         // Định dạng ngày
         colNgaySinh.setCellFactory(column -> new TableCell<>() {
             @Override

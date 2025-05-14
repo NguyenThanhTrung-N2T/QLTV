@@ -21,7 +21,7 @@
                 <VBox spacing="15">
                     <GridPane hgap="10" vgap="10">
                         <Label text="Mã TK:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                        <TextField fx:id="txtMaTaiKhoan" GridPane.columnIndex="1" GridPane.rowIndex="0" promptText="Mã tài khoản"/>
+                        <TextField fx:id="txtMaTaiKhoan" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="0" promptText="Mã tài khoản"/>
 
                         <Label text="Tên Đăng Nhập:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
                         <TextField fx:id="txtTenDangNhap" GridPane.columnIndex="3" GridPane.rowIndex="0" promptText="Tên đăng nhập"/>

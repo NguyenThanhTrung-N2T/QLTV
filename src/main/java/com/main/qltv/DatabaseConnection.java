@@ -108,7 +108,7 @@ public class DatabaseConnection {
             pstmt.setString(1, maTKMoi);
             pstmt.setString(2, tk.getTenDangNhap());
             pstmt.setString(3, tk.getMatKhauTK());
-            pstmt.setString(4, "sinhvien"); // Gán mặc định là "user"
+            pstmt.setString(4, tk.getLoaiTK());
             pstmt.setString(5, tk.getMSSV());
 
             int rows = pstmt.executeUpdate();

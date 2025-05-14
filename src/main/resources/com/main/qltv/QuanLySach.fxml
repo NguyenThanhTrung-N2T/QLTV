@@ -24,7 +24,7 @@
                     </padding>
 
                     <Label text="Mã sách:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                    <TextField fx:id="txtMaSach" promptText="Nhập mã sách" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <TextField fx:id="txtMaSach" promptText="Nhập mã sách" editable="false" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                     <Label text="Tên sách:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <TextField fx:id="txtTenSach" promptText="Nhập tên sách" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="1" />
