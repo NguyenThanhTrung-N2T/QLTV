@@ -5,6 +5,7 @@ public class TaiKhoan {
     private String tenDangNhap;
     private String matKhauTK;
     private String loaiTK;
+    private String maSoCB;
     private String MSSV;
 
     public String getMaTK() { return maTK; }
@@ -12,6 +13,14 @@ public class TaiKhoan {
     public String getMatKhauTK() { return matKhauTK; }
     public String getLoaiTK() { return loaiTK; }
     public String getMSSV() { return MSSV; }
+
+    public void setMaSoCB(String maSoCB) {
+        this.maSoCB = maSoCB;
+    }
+
+    public String getMaSoCB() {
+        return maSoCB;
+    }
 
     public void setMaTK(String maTK) {
         this.maTK = maTK;

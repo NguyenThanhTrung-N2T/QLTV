@@ -13,6 +13,7 @@ public class QuanLyTaiKhoanController {
     @FXML TextField txtMaTaiKhoan;
     @FXML TextField txtTenDangNhap;
     @FXML PasswordField txtMatKhau;
+    @FXML TextField txtMaSoCB;
     @FXML TextField txtMaSinhVien;
     @FXML ComboBox cbLoaiNguoiDung;
     @FXML Button btnThem;
@@ -24,6 +25,7 @@ public class QuanLyTaiKhoanController {
     @FXML TableColumn<TaiKhoan,String> colTenDangNhap;
     @FXML TableColumn<TaiKhoan,String> colMatKhau;
     @FXML TableColumn<TaiKhoan,String> colLoaiNguoiDung;
+    @FXML TableColumn<TaiKhoan,String> colMaSoCB;
     @FXML TableColumn<TaiKhoan,String> colMaSinhVien;
 
     private ObservableList<TaiKhoan> taiKhoanList;
@@ -43,6 +45,7 @@ public class QuanLyTaiKhoanController {
         colTenDangNhap.setCellValueFactory(new PropertyValueFactory<>("tenDangNhap"));
         colMatKhau.setCellValueFactory(new PropertyValueFactory<>("matKhauTK"));
         colLoaiNguoiDung.setCellValueFactory(new PropertyValueFactory<>("loaiTK"));
+        colMaSoCB.setCellValueFactory(new PropertyValueFactory<>("MaSoCB"));
         colMaSinhVien.setCellValueFactory(new PropertyValueFactory<>("MSSV"));
 
         // Tải dữ liệu
@@ -55,6 +58,7 @@ public class QuanLyTaiKhoanController {
                 txtMaTaiKhoan.setText(newSelection.getMaTK());
                 txtTenDangNhap.setText(newSelection.getTenDangNhap());
                 txtMatKhau.setText(newSelection.getMatKhauTK());
+                txtMaSoCB.setText(newSelection.getMaSoCB());
                 txtMaSinhVien.setText(newSelection.getMSSV());
                 cbLoaiNguoiDung.setValue(newSelection.getLoaiTK());
             }

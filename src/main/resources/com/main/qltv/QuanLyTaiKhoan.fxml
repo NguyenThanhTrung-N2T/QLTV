@@ -4,9 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.*?>
-
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
+
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.main.qltv.controller.QuanLyTaiKhoanController"
             prefHeight="500.0" prefWidth="800.0"
@@ -33,14 +33,20 @@
                         <ComboBox fx:id="cbLoaiNguoiDung" GridPane.columnIndex="3" GridPane.rowIndex="1" promptText="Chọn loại">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="sinhvien"/>
-                                    <String fx:value="quanly"/>
+                                    <String fx:value="Sinh viên"/>
+                                    <String fx:value="Cộng tác viên"/>
+                                    <String fx:value="Quản lý"/>
                                 </FXCollections>
                             </items>
                         </ComboBox>
 
-                        <Label text="Mã Sinh Viên:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                        <TextField fx:id="txtMaSinhVien" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="Mã sinh viên (nếu có)"/>
+                        <!-- Thêm Mã Số CBQL -->
+                        <Label text="Mã Số CBQL:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                        <TextField fx:id="txtMaSoCB" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="Mã số cán bộ quản lý"/>
+
+                        <!-- Mã Sinh Viên chuyển xuống rowIndex=3 -->
+                        <Label text="Mã Sinh Viên:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                        <TextField fx:id="txtMaSinhVien" GridPane.columnIndex="1" GridPane.rowIndex="3" promptText="Mã sinh viên (nếu có)"/>
                     </GridPane>
 
                     <HBox spacing="10" alignment="CENTER_RIGHT">
@@ -60,6 +66,7 @@
                         <TableColumn fx:id="colTenDangNhap" text="Tên Đăng Nhập" prefWidth="180"/>
                         <TableColumn fx:id="colMatKhau" text="Mật Khẩu" prefWidth="180"/>
                         <TableColumn fx:id="colLoaiNguoiDung" text="Loại Người Dùng" prefWidth="140"/>
+                        <TableColumn fx:id="colMaSoCB" text="Mã Số CBQL" prefWidth="120"/>
                         <TableColumn fx:id="colMaSinhVien" text="Mã SV" prefWidth="120"/>
                     </columns>
                 </TableView>

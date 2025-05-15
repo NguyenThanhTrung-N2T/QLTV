@@ -725,6 +725,7 @@ public class DatabaseConnection {
                 taiKhoan.setTenDangNhap(rs.getString("tenDangNhap"));
                 taiKhoan.setMatKhauTK(rs.getString("matKhau"));
                 taiKhoan.setLoaiTK(rs.getString("loaiNguoiDung"));
+                taiKhoan.setMaSoCB(rs.getString("maSoCB"));
                 taiKhoan.setMSSV(rs.getString("maSinhVien"));
 
                 danhSach.add(taiKhoan);
