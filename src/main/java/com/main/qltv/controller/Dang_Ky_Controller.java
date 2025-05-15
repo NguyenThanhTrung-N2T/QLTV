@@ -55,7 +55,7 @@ public class Dang_Ky_Controller {
         // Nếu hợp lệ thì tạo tài khoản mới
         TaiKhoan tk = new TaiKhoan();
         tk.setTenDangNhap(tenDangNhap);
-        tk.setMaTK(matKhau);
+        tk.setMatKhauTK(matKhau);
         tk.setMSSV(maSinhVien);
         tk.setMaSoCB(null);
         tk.setLoaiTK(loaiNguoiDung);

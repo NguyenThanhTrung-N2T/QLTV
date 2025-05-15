@@ -30,7 +30,7 @@ public class Man_Hinh_Chinh_Controller {
     public void initialize() {
 
         lBthongbao.setText("Xin chào, " + QLTVApplication.nguoidangnhap.getTenDangNhap());
-        if(QLTVApplication.nguoidangnhap.getLoaiTK().equals("sinhvien"))
+        if(QLTVApplication.nguoidangnhap.getLoaiTK().equals("Sinh viên"))
         {
             btnQLSinhVien.setVisible(false);
             btnQLSinhVien.setManaged(false);
