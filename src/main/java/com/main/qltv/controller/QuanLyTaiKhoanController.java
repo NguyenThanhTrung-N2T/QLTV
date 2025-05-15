@@ -81,10 +81,17 @@ public class QuanLyTaiKhoanController {
     @FXML
     private void themTaiKhoan(){
         if (txtTenDangNhap.getText().isEmpty() || txtMatKhau.getText().isEmpty() ||
-                cbLoaiNguoiDung.getValue() == null || (txtMaSinhVien.getText().isEmpty() && cbLoaiNguoiDung.getValue().toString().equals("sinhvien"))) {
-            showAlert(Alert.AlertType.WARNING, "Vui lòng nhập đầy đủ thông tin.");
+                cbLoaiNguoiDung.getValue() == null || (txtMaSinhVien.getText().isEmpty() && (cbLoaiNguoiDung.getValue().toString().equals("Sinh viên") || cbLoaiNguoiDung.getValue().toString().equals("Cộng tác viên")))) {
+            showAlert(Alert.AlertType.WARNING, "Vui lòng nhập đầy đủ thông tin tài khoản.");
             return;
         }
+
+        if(txtMaSinhVien.getText().isEmpty() && txtMaSoCB.getText().isEmpty())
+        {
+            showAlert(Alert.AlertType.WARNING,"Vui lòng nhập đầy đủ thông tin tài khoản.");
+            return;
+        }
+
 
         String maSV = txtMaSinhVien.getText();
         if (maSV != null && DatabaseConnection.kiemTraTaiKhoanDaTonTai(maSV)) {
@@ -92,7 +99,14 @@ public class QuanLyTaiKhoanController {
             return;
         }
 
-        if(txtMaSinhVien.getText().isEmpty() && cbLoaiNguoiDung.getValue().toString().equals("quanly"))
+        String maCB = txtMaSoCB.getText();
+        if(maCB != null && DatabaseConnection.kiemTraTaiKhoanDaTonTaiCuaCB(maCB)){
+            showAlert(Alert.AlertType.ERROR,"Tài khoản của cán bộ đã tồn tại.");
+            return;
+        }
+
+
+        if(txtMaSinhVien.getText().isEmpty() && cbLoaiNguoiDung.getValue().toString().equals("Quản lý"))
         {
             showAlert(Alert.AlertType.ERROR,"Không thể tạo tài khoản quản lý cho sinh viên.");
             return;

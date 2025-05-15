@@ -96,6 +96,23 @@ public class DatabaseConnection {
         return false;
     }
 
+    public static boolean kiemTraTaiKhoanDaTonTaiCuaCB(String maSoCB) {
+        String sql = "SELECT COUNT(*) FROM TaiKhoan WHERE maSoCB = ?";
+
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, maSoCB);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static boolean themTaiKhoan(TaiKhoan tk) {
         // Tự tạo maTaiKhoan mới
         String maTKMoi = "TK" + System.currentTimeMillis(); // Ví dụ đơn giản
