@@ -66,6 +66,7 @@ public class QuanLyTaiKhoanController {
         
         btnThem.setOnAction(e-> themTaiKhoan());
         btnLamMoi.setOnAction(e-> lamMoi());
+        btnXoa.setOnAction(e-> XoaTaiKhoan());
     }
 
     @FXML
@@ -141,6 +142,45 @@ public class QuanLyTaiKhoanController {
         alert.showAndWait();
     }
 
+    @FXML
+    private void XoaTaiKhoan() {
+        TaiKhoan selected = tableTaiKhoan.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert(Alert.AlertType.WARNING, "Vui lòng chọn tài khoản cần xóa.");
+            return;
+        }
+
+        // Xác nhận trước khi xóa
+        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmAlert.setTitle("Xác nhận xóa");
+        confirmAlert.setHeaderText(null);
+        confirmAlert.setContentText("Bạn có chắc chắn muốn xóa tài khoản này?");
+        if (confirmAlert.showAndWait().get() != ButtonType.OK) {
+            return;
+        }
+
+        if(selected.getMSSV()!=null)
+        {
+            // xóa tài khoản
+            if(DatabaseConnection.xoaTaiKhoan(selected.getMSSV())){
+                showAlert(Alert.AlertType.INFORMATION, "Xóa thành công.");
+                loadTaiKhoanTuDB();
+                lamMoi();
+            }
+            else {
+                showAlert(Alert.AlertType.ERROR, "Xóa thất bại.");
+            }
+        }else{
+            if(DatabaseConnection.xoaTaiKhoan(selected.getMaSoCB())){
+                showAlert(Alert.AlertType.INFORMATION, "Xóa thành công.");
+                loadTaiKhoanTuDB();
+                lamMoi();
+            }
+            else {
+                showAlert(Alert.AlertType.ERROR, "Xóa thất bại.");
+            }
+        }
+    }
 
 
 }
