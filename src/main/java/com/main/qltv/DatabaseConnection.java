@@ -100,7 +100,7 @@ public class DatabaseConnection {
         // Tự tạo maTaiKhoan mới
         String maTKMoi = "TK" + System.currentTimeMillis(); // Ví dụ đơn giản
 
-        String sql = "INSERT INTO TaiKhoan(maTaiKhoan, tenDangNhap, matKhau, loaiNguoiDung, maSinhVien) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO TaiKhoan(maTaiKhoan, tenDangNhap, matKhau, loaiNguoiDung, maSoCB, maSinhVien) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -109,7 +109,8 @@ public class DatabaseConnection {
             pstmt.setString(2, tk.getTenDangNhap());
             pstmt.setString(3, tk.getMatKhauTK());
             pstmt.setString(4, tk.getLoaiTK());
-            pstmt.setString(5, tk.getMSSV());
+            pstmt.setString(5,tk.getMaSoCB());
+            pstmt.setString(6, tk.getMSSV());
 
             int rows = pstmt.executeUpdate();
             return rows > 0;

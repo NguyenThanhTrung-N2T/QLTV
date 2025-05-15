@@ -27,7 +27,7 @@ public class Dang_Ky_Controller {
         String tenDangNhap = txtTenDangNhap.getText().trim();
         String matKhau = txtMatKhau.getText().trim();
         String maSinhVien = txtMaSinhVien.getText().trim();
-        String loaiNguoiDung = "sinhvien";
+        String loaiNguoiDung = "Sinh viên";
 
         if (tenDangNhap.isEmpty() || matKhau.isEmpty() || maSinhVien.isEmpty() || loaiNguoiDung == null) {
             lblThongBao.setText("Vui lòng điền đầy đủ thông tin.");
@@ -57,6 +57,7 @@ public class Dang_Ky_Controller {
         tk.setTenDangNhap(tenDangNhap);
         tk.setMaTK(matKhau);
         tk.setMSSV(maSinhVien);
+        tk.setMaSoCB(null);
         tk.setLoaiTK(loaiNguoiDung);
 
         boolean ketQua = DatabaseConnection.themTaiKhoan(tk);
