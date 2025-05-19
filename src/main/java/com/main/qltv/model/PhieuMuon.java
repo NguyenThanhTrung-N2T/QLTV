@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDate;
 
-public class PhieuMuon {
+public class PhieuMuon{
     private String maPhieu, maDocGia, tenDocGia, maSach, tenSach, trangThai;
     private LocalDate ngayMuon, ngayTra;
 
