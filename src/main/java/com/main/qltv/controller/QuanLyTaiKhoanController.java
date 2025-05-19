@@ -65,6 +65,7 @@ public class QuanLyTaiKhoanController {
         });
         
         btnThem.setOnAction(e-> themTaiKhoan());
+        btnSua.setOnAction(e -> SuaTaiKhoan());
         btnLamMoi.setOnAction(e-> lamMoi());
         btnXoa.setOnAction(e-> XoaTaiKhoan());
     }
@@ -75,6 +76,7 @@ public class QuanLyTaiKhoanController {
         txtMatKhau.clear();
         txtTenDangNhap.clear();
         txtMaSinhVien.clear();
+        txtMaSoCB.clear();
         cbLoaiNguoiDung.setValue(null);
         tableTaiKhoan.getSelectionModel().clearSelection();
     }
@@ -107,23 +109,30 @@ public class QuanLyTaiKhoanController {
         }
 
 
-        if(txtMaSinhVien.getText().isEmpty() && cbLoaiNguoiDung.getValue().toString().equals("Quản lý"))
+        if(cbLoaiNguoiDung.getValue().toString().equals("Quản lý") && txtMaSoCB.getText().isEmpty())
         {
             showAlert(Alert.AlertType.ERROR,"Không thể tạo tài khoản quản lý cho sinh viên.");
             return;
         }
 
-        if(txtMaSinhVien.getText() != null  && !DatabaseConnection.kiemTraSinhVienTonTai(txtMaSinhVien.getText())){
+        if(txtMaSinhVien.getText() != null  && !DatabaseConnection.kiemTraSinhVienTonTai(txtMaSinhVien.getText()) && txtMaSoCB.getText().isEmpty()){
             showAlert(Alert.AlertType.ERROR,"Sinh viên chưa được thêm vào cơ sở dữ liệu.");
             return;
         }
 
         TaiKhoan tk = new TaiKhoan();
-        tk.setMSSV(txtMaSinhVien.getText());
+        if( txtMaSinhVien.getText().isEmpty())
+            tk.setMSSV(null);
+        else
+            tk.setMSSV(txtMaSinhVien.getText());
         tk.setMaTK(txtMaTaiKhoan.getText());
         tk.setLoaiTK(cbLoaiNguoiDung.getValue().toString());
         tk.setMatKhauTK(txtMatKhau.getText());
         tk.setTenDangNhap(txtTenDangNhap.getText());
+        if (txtMaSoCB.getText().isEmpty())
+            tk.setMaSoCB(null);
+        else
+            tk.setMaSoCB(txtMaSoCB.getText());
 
         if (DatabaseConnection.themTaiKhoan(tk)) {
             showAlert(Alert.AlertType.INFORMATION, "Thêm tài khoản thành công.");
@@ -182,5 +191,41 @@ public class QuanLyTaiKhoanController {
         }
     }
 
+    @FXML
+    private void SuaTaiKhoan() {
+        TaiKhoan selected = tableTaiKhoan.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert(Alert.AlertType.WARNING, "Vui lòng chọn tài khoản cần sửa.");
+            return;
+        }
 
+        TaiKhoan tkMoi = new TaiKhoan();
+        tkMoi.setMaTK(txtMaTaiKhoan.getText());
+        tkMoi.setTenDangNhap(txtTenDangNhap.getText());
+        tkMoi.setMatKhauTK(txtMatKhau.getText());
+        tkMoi.setLoaiTK(cbLoaiNguoiDung.getValue().toString());
+        if (txtMaSinhVien != null) {
+            tkMoi.setMSSV(txtMaSinhVien.getText());
+        } else {
+            tkMoi.setMSSV(null);
+        }
+        if (txtMaSoCB != null) {
+            tkMoi.setMaSoCB(txtMaSoCB.getText());
+        } else {
+            tkMoi.setMaSoCB(null);
+        }
+
+        if (selected.equals(tkMoi)) {
+            showAlert(Alert.AlertType.INFORMATION, "Không có thay đổi nào.");
+            return;
+        }
+
+        if (DatabaseConnection.capNhatTaiKhoan(tkMoi)) {
+            showAlert(Alert.AlertType.INFORMATION, "Cập nhật tài khoản thành công.");
+            loadTaiKhoanTuDB();
+            lamMoi();
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Cập nhật tài khoản thất bại.");
+        }
+    }
 }

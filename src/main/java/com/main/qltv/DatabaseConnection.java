@@ -224,7 +224,19 @@ public class DatabaseConnection {
     }
 
     public static boolean xoaTaiKhoan(String maSinhVien) {
-        String sql = "DELETE FROM TaiKhoan WHERE maSinhVien = ?";
+        if(kiemTraSinhVienTonTai(maSinhVien)) {
+            String sql = "DELETE FROM TaiKhoan WHERE maSinhVien = ?";
+            try (Connection conn = connect();
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, maSinhVien);
+                stmt.executeUpdate();
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        String sql = "DELETE FROM TaiKhoan WHERE maSoCB = ?";
         try (Connection conn = connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, maSinhVien);
@@ -754,7 +766,25 @@ public class DatabaseConnection {
         return danhSach;
     }
 
+    public static boolean capNhatTaiKhoan(TaiKhoan tk) {
+        String sql = "UPDATE TaiKhoan SET tenDangNhap = ?, matKhau = ?, loaiNguoiDung = ?, maSoCB = ?, maSinhVien = ?" +
+                " WHERE maTaiKhoan = ?";
 
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, tk.getTenDangNhap());
+            pstmt.setString(2, tk.getMatKhauTK());
+            pstmt.setString(3, tk.getLoaiTK());
+            pstmt.setString(4, tk.getMaSoCB());
+            pstmt.setString(5, tk.getMSSV());
+            pstmt.setString(6, tk.getMaTK());
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 
 

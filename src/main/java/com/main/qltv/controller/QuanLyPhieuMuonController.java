@@ -12,35 +12,30 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class QuanLyPhieuMuonController {
+    // TextField và DatePicker
+    @FXML TextField txtNguoiMuon;
+    @FXML TextField txtMSSV;
+    @FXML TextField txtTenSach;
+    @FXML DatePicker dateMuon;
+    @FXML DatePicker dateTra;
+    @FXML  TextField txtTimKiem;
 
-    @FXML
-    private TableView<PhieuMuon> tablePhieuMuon;
-    @FXML
-    private TableColumn<PhieuMuon, String> colMaPhieu;
-    @FXML
-    private TableColumn<PhieuMuon, String> colMaDG;
-    @FXML
-    private TableColumn<PhieuMuon, String> colTenDG;
-    @FXML
-    private TableColumn<PhieuMuon, LocalDate> colNgayMuon;
-    @FXML
-    private TableColumn<PhieuMuon, LocalDate> colNgayTra;
-    @FXML
-    private TableColumn<PhieuMuon, String> colMaSach;
-    @FXML
-    private TableColumn<PhieuMuon, String> colTenSach;
-    @FXML
-    private TableColumn<PhieuMuon, String> colTrangThai;
+    // Các nút chức năng
+    @FXML Button btnMuon;
+    @FXML Button btnTra;
+    @FXML Button btnCapNhat;
+    @FXML Button btnLamMoi;
 
-    @FXML
-    private TextField tfMaPhieu, tfMaDG, tfTenDG, tfMaSach, tfTenSach;
-    @FXML
-    private DatePicker dpNgayMuon, dpNgayTra;
-    @FXML
-    private ComboBox<String> cbTrangThai;
+    // TableView và các cột
+    @FXML TableView<PhieuMuon> muonTraTable;
+    @FXML TableColumn<PhieuMuon, String> colMaPhieu;
+    @FXML TableColumn<PhieuMuon, String> colMSSV;
+    @FXML TableColumn<PhieuMuon, String> colTenNguoiMuon;
+    @FXML TableColumn<PhieuMuon, String> colTenSach;
+    @FXML TableColumn<PhieuMuon, String> colNgayMuon;
+    @FXML TableColumn<PhieuMuon, String> colNgayTra;
+    @FXML TableColumn<PhieuMuon, String> colTinhTrang;
 
-    @FXML
-    private Button btnThem, btnSua, btnXoa, btnLammoi;
-
-    private ObservableList<PhieuMuon> listPhieuMuon;
+    // Danh sách phiếu mượn
+     ObservableList<PhieuMuon> danhSachPhieuMuon = FXCollections.observableArrayList();
 }
