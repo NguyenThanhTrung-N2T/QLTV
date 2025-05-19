@@ -1,4 +1,4 @@
-package controller;
+package com.main.qltv.controller;
 
 import com.main.qltv.DatabaseConnection;
 import javafx.collections.FXCollections;

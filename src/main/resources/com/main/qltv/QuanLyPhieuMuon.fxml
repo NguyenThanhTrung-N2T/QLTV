@@ -3,22 +3,41 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane style="-fx-background-color: #f4f4f4;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12"
-            fx:controller="controller.QuanLyPhieuMuonController">
+<BorderPane style="-fx-background-color: linear-gradient(to bottom, #f8f9fa, #e9ecef);" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            xmlns="http://javafx.com/javafx/17.0.12"
+            fx:controller="com.main.qltv.controller.QuanLyPhieuMuonController">
 
-    <!-- Title -->
+    <!-- Title Section with enhanced styling -->
     <top>
-        <Label text="QUẢN LÝ PHIẾU MƯỢN SÁCH"
-               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"
-               BorderPane.alignment="CENTER"
-               padding="20"/>
+        <VBox alignment="CENTER" style="-fx-background-color: #3498db;">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            <Label text="QUẢN LÝ PHIẾU MƯỢN SÁCH"
+                   style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;">
+                <font>
+                    <Font name="System Bold" size="26.0"/>
+                </font>
+            </Label>
+        </VBox>
     </top>
 
-    <!-- Form nhập -->
+    <!-- Form Section with improved structure and visual separation -->
     <center>
-        <VBox spacing="10" padding="20">
-            <GridPane hgap="10" vgap="10">
+        <VBox spacing="20" style="-fx-background-color: white; -fx-background-radius: 5;">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            
+            <!-- Form Title -->
+            <Label text="Thông tin phiếu mượn" 
+                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+            
+            <!-- Form Fields -->
+            <GridPane hgap="15" vgap="15">
                 <columnConstraints>
                     <ColumnConstraints percentWidth="20"/>
                     <ColumnConstraints percentWidth="30"/>
@@ -27,58 +46,114 @@
                 </columnConstraints>
 
                 <!-- Row 1 -->
-                <Label text="Mã phiếu:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <TextField fx:id="tfMaPhieu" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="Mã phiếu:" GridPane.rowIndex="0" GridPane.columnIndex="0" 
+                       style="-fx-font-weight: bold;"/>
+                <TextField fx:id="tfMaPhieu" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                           style="-fx-background-radius: 3;"/>
 
-                <Label text="Mã độc giả:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-                <TextField fx:id="tfMaDG" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                <Label text="Mã độc giả:" GridPane.rowIndex="0" GridPane.columnIndex="2"
+                       style="-fx-font-weight: bold;"/>
+                <TextField fx:id="tfMaDG" GridPane.rowIndex="0" GridPane.columnIndex="3"
+                           style="-fx-background-radius: 3;"/>
 
                 <!-- Row 2 -->
-                <Label text="Tên độc giả:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <TextField fx:id="tfTenDG" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="Tên độc giả:" GridPane.rowIndex="1" GridPane.columnIndex="0"
+                       style="-fx-font-weight: bold;"/>
+                <TextField fx:id="tfTenDG" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                           style="-fx-background-radius: 3;"/>
 
-                <Label text="Ngày mượn:" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
-                <DatePicker fx:id="dpNgayMuon" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                <Label text="Ngày mượn:" GridPane.rowIndex="1" GridPane.columnIndex="2"
+                       style="-fx-font-weight: bold;"/>
+                <DatePicker fx:id="dpNgayMuon" GridPane.rowIndex="1" GridPane.columnIndex="3"
+                            style="-fx-background-radius: 3;" prefWidth="Infinity"/>
 
                 <!-- Row 3 -->
-                <Label text="Ngày trả:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <DatePicker fx:id="dpNgayTra" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label text="Ngày trả:" GridPane.rowIndex="2" GridPane.columnIndex="0"
+                       style="-fx-font-weight: bold;"/>
+                <DatePicker fx:id="dpNgayTra" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                            style="-fx-background-radius: 3;" prefWidth="Infinity"/>
 
-                <Label text="Trạng thái:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
-                <ComboBox fx:id="cbTrangThai" prefWidth="150"
-                          GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+                <Label text="Trạng thái:" GridPane.rowIndex="2" GridPane.columnIndex="2"
+                       style="-fx-font-weight: bold;"/>
+                <ComboBox fx:id="cbTrangThai" GridPane.rowIndex="2" GridPane.columnIndex="3"
+                          style="-fx-background-radius: 3;" prefWidth="Infinity"/>
 
                 <!-- Row 4 -->
-                <Label text="Mã sách:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <TextField fx:id="tfMaSach" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <Label text="Mã sách:" GridPane.rowIndex="3" GridPane.columnIndex="0"
+                       style="-fx-font-weight: bold;"/>
+                <TextField fx:id="tfMaSach" GridPane.rowIndex="3" GridPane.columnIndex="1"
+                           style="-fx-background-radius: 3;"/>
 
-                <Label text="Tên sách:" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
-                <TextField fx:id="tfTenSach" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+                <Label text="Tên sách:" GridPane.rowIndex="3" GridPane.columnIndex="2"
+                       style="-fx-font-weight: bold;"/>
+                <TextField fx:id="tfTenSach" GridPane.rowIndex="3" GridPane.columnIndex="3"
+                           style="-fx-background-radius: 3;"/>
             </GridPane>
 
-            <!-- Buttons -->
-            <HBox spacing="15" alignment="CENTER">
-                <Button text="Thêm" fx:id="btnThem" onAction="#handleThem" prefWidth="100"/>
-                <Button text="Sửa" fx:id="btnSua" onAction="#handleSua" prefWidth="100"/>
-                <Button text="Xoá" fx:id="btnXoa" onAction="#handleXoa" prefWidth="100"/>
-                <Button text="Làm mới" fx:id="btnLammoi" onAction="#handleLammoi" prefWidth="100"/>
+            <!-- Action Buttons with improved styling -->
+            <HBox spacing="15" alignment="CENTER" style="-fx-padding: 15 0 5 0;">
+                <Button text="Thêm" fx:id="btnThem" 
+                        style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 3;" 
+                        prefWidth="120" prefHeight="35"/>
+                        
+                <Button text="Sửa" fx:id="btnSua" 
+                        style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 3;" 
+                        prefWidth="120" prefHeight="35"/>
+                        
+                <Button text="Xoá" fx:id="btnXoa" 
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 3;" 
+                        prefWidth="120" prefHeight="35"/>
+                        
+                <Button text="Làm mới" fx:id="btnLammoi" 
+                        style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 3;" 
+                        prefWidth="120" prefHeight="35"/>
             </HBox>
         </VBox>
     </center>
 
-    <!-- Bảng dữ liệu -->
+    <!-- Table Section with improved styling -->
     <bottom>
-        <TableView fx:id="tablePhieuMuon" prefHeight="300">
-            <columns>
-                <TableColumn fx:id="colMaPhieu" text="Mã Phiếu" prefWidth="100"/>
-                <TableColumn fx:id="colMaDG" text="Mã Độc Giả" prefWidth="100"/>
-                <TableColumn fx:id="colTenDG" text="Tên Độc Giả" prefWidth="120"/>
-                <TableColumn fx:id="colNgayMuon" text="Ngày Mượn" prefWidth="100"/>
-                <TableColumn fx:id="colNgayTra" text="Ngày Trả" prefWidth="100"/>
-                <TableColumn fx:id="colMaSach" text="Mã Sách" prefWidth="100"/>
-                <TableColumn fx:id="colTenSach" text="Tên Sách" prefWidth="120"/>
-                <TableColumn fx:id="colTrangThai" text="Trạng Thái" prefWidth="100"/>
-            </columns>
-        </TableView>
+        <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 5;">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            
+            <!-- Table Title -->
+            <Label text="Danh sách phiếu mượn" 
+                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                   
+            <!-- Search Field -->
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Label text="Tìm kiếm:" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="tfTimKiem" prefWidth="250" promptText="Nhập thông tin cần tìm"
+                           style="-fx-background-radius: 3;"/>
+            </HBox>
+            
+            <!-- Data Table -->
+            <TableView fx:id="tablePhieuMuon" prefHeight="300" style="-fx-border-color: #e0e0e0; -fx-border-width: 1;">
+                <columns>
+                    <TableColumn fx:id="colMaPhieu" text="Mã Phiếu" prefWidth="100"/>
+                    <TableColumn fx:id="colMaDG" text="Mã Độc Giả" prefWidth="100"/>
+                    <TableColumn fx:id="colTenDG" text="Tên Độc Giả" prefWidth="150"/>
+                    <TableColumn fx:id="colNgayMuon" text="Ngày Mượn" prefWidth="120"/>
+                    <TableColumn fx:id="colNgayTra" text="Ngày Trả" prefWidth="120"/>
+                    <TableColumn fx:id="colMaSach" text="Mã Sách" prefWidth="100"/>
+                    <TableColumn fx:id="colTenSach" text="Tên Sách" prefWidth="180"/>
+                    <TableColumn fx:id="colTrangThai" text="Trạng Thái" prefWidth="120"/>
+                </columns>
+                <VBox.margin>
+                    <Insets top="10"/>
+                </VBox.margin>
+            </TableView>
+            
+            <!-- Status Bar -->
+            <HBox alignment="CENTER_LEFT" style="-fx-padding: 5 0 0 0;">
+                <Label fx:id="lblStatus" text="Tổng số phiếu mượn: 0" style="-fx-text-fill: #7f8c8d;"/>
+            </HBox>
+        </VBox>
     </bottom>
+    
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
 </BorderPane>
