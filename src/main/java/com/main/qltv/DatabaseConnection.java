@@ -849,4 +849,18 @@ public class DatabaseConnection {
         return danhSach;
     }
 
+    public static List<String> layDanhSachTenSach() {
+        List<String> ds = new ArrayList<>();
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement("SELECT tenSach FROM Sach");
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                ds.add(rs.getString("tenSach"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ds;
+    }
+
 }

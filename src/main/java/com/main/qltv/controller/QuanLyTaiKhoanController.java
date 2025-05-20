@@ -63,12 +63,9 @@ public class QuanLyTaiKhoanController {
             tableTaiKhoan.setItems(filteredList);
         });
 
-
-
         // Tải dữ liệu
         loadTaiKhoanTuDB();
 
-        // Sự kiện chọn dòng
         // Sự kiện khi chọn dòng
         tableTaiKhoan.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {

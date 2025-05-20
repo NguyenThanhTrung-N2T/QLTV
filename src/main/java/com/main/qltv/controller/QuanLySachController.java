@@ -324,7 +324,6 @@ public class QuanLySachController {
             });
         });
 
-
     }
 
     private void showAlert(Alert.AlertType type, String message) {

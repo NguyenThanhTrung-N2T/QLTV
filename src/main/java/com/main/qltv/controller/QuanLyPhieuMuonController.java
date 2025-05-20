@@ -2,8 +2,10 @@ package com.main.qltv.controller;
 
 import com.main.qltv.DatabaseConnection;
 import com.main.qltv.model.PhieuMuon;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -16,7 +18,7 @@ public class QuanLyPhieuMuonController {
     // TextField và DatePicker
     @FXML TextField txtNguoiMuon;
     @FXML TextField txtMSSV;
-    @FXML TextField txtTenSach;
+    @FXML ComboBox<String> comboTensach;
     @FXML DatePicker dateMuon;
     @FXML DatePicker dateTra;
     @FXML  TextField txtTimKiem;
@@ -118,11 +120,59 @@ public class QuanLyPhieuMuonController {
         colSoLuong.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
         colTinhTrang.setCellValueFactory(new PropertyValueFactory<>("tinhTrang"));
 
+        ObservableList<String> allItems = FXCollections.observableArrayList(DatabaseConnection.layDanhSachTenSach());
+        FilteredList<String> filteredItems = new FilteredList<>(allItems, s -> true);
+
+        comboTensach.setEditable(true);
+        comboTensach.setItems(filteredItems);
+
+        TextField editor = comboTensach.getEditor();
+
+        editor.textProperty().addListener((obs, oldValue, newValue) -> {
+            // Nếu người dùng chọn item rồi thì bỏ qua
+            if (comboTensach.getSelectionModel().getSelectedItem() != null &&
+                    comboTensach.getSelectionModel().getSelectedItem().equals(newValue)) {
+                return;
+            }
+
+            // Đặt toàn bộ logic lọc và hiển thị/ẩn vào Platform.runLater()
+            // Điều này đảm bảo rằng các thao tác UI được thực hiện an toàn trên luồng JavaFX Application Thread
+            Platform.runLater(() -> {
+                filteredItems.setPredicate(item -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    return item.toLowerCase().contains(lowerCaseFilter);
+                });
+
+                if (filteredItems.isEmpty()) {
+                    // Nếu không có kết quả lọc, ẩn ComboBox
+                    if (comboTensach.isShowing()) {
+                        comboTensach.hide();
+                    }
+                } else {
+                    // Nếu có kết quả, đảm bảo ComboBox hiển thị
+                    if (!comboTensach.isShowing()) {
+                        comboTensach.show();
+                    }
+                }
+                // Quan trọng: Đặt lại vị trí con trỏ về cuối văn bản sau khi show/hide
+                // Điều này giúp tránh lỗi IllegalArgumentException khi con trỏ bị sai vị trí
+                editor.positionCaret(editor.getText().length());
+            });
+        });
+
+
+
+
+
+
         // Sự kiện khi chọn dòng
         muonTraTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 txtMSSV.setText(newSelection.getMaSinhVien());
-                txtTenSach.setText(DatabaseConnection.layTenSach(newSelection.getMaSach()));
+                comboTensach.setValue(DatabaseConnection.layTenSach(newSelection.getMaSach()));
                 txtNguoiMuon.setText(DatabaseConnection.layTenSinhVien(newSelection.getMaSinhVien()));
                 dateMuon.setValue(newSelection.getNgayMuon().toLocalDate());
                 dateTra.setValue(newSelection.getNgayTra().toLocalDate());
@@ -141,12 +191,39 @@ public class QuanLyPhieuMuonController {
     private void lamMoi() {
         txtNguoiMuon.clear();
         txtMSSV.clear();
-        txtTenSach.clear();
+        comboTensach.setValue(null);
         spnSoLuong.getValueFactory().setValue(1);
         dateMuon.setValue(null);
         dateTra.setValue(null);
         muonTraTable.getSelectionModel().clearSelection();
     }
 
+//    @FXML
+//    private void MuonSach(){
+//        String maPhieuMuon =
+//        String maSach = txtTenSach.getText();
+//        String maSinhVien = txtMSSV.getText();
+//        LocalDate ngayMuon = dateMuon.getValue();
+//        LocalDate ngayTra = dateTra.getValue();
+//        int soLuong = spnSoLuong.getValue();
+//
+//        if (maSach.isEmpty() || maSinhVien.isEmpty() || ngayMuon == null || ngayTra == null) {
+//            Alert alert = new Alert(Alert.AlertType.WARNING, "Vui lòng nhập đầy đủ thông tin.");
+//            alert.showAndWait();
+//            return;
+//        }
+//
+//        PhieuMuon phieuMuon = new PhieuMuon(maPhieuMuon, maSinhVien, Date.valueOf(ngayMuon), Date.valueOf(ngayTra), "Chưa trả", maSach, maSach, soLuong);
+//        boolean ketQua = DatabaseConnection.themPhieuMuon(phieuMuon);
+//        if (ketQua) {
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Thêm phiếu mượn thành công.");
+//            alert.showAndWait();
+//            loadPhieuMUonTuDB();
+//            lamMoi();
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR, "Thêm phiếu mượn thất bại.");
+//            alert.showAndWait();
+//        }
+//    }
 
 }

@@ -23,7 +23,7 @@
             <TextField fx:id="txtMSSV" prefHeight="30" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
             <Label text="📘 Tên Sách:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <TextField fx:id="txtTenSach" prefHeight="30" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="comboTensach" editable="true" prefHeight="30" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
             <!-- Add after Tên Sách row, before Ngày Mượn -->
             <Label text="🔢 Số Lượng:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
