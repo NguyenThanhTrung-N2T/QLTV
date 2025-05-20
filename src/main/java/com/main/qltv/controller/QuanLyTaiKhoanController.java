@@ -5,11 +5,13 @@ import com.main.qltv.model.SinhVien;
 import com.main.qltv.model.TaiKhoan;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class QuanLyTaiKhoanController {
+    @FXML TextField txtTimKiem;
     @FXML TextField txtMaTaiKhoan;
     @FXML TextField txtTenDangNhap;
     @FXML PasswordField txtMatKhau;
@@ -47,6 +49,21 @@ public class QuanLyTaiKhoanController {
         colLoaiNguoiDung.setCellValueFactory(new PropertyValueFactory<>("loaiTK"));
         colMaSoCB.setCellValueFactory(new PropertyValueFactory<>("MaSoCB"));
         colMaSinhVien.setCellValueFactory(new PropertyValueFactory<>("MSSV"));
+
+        FilteredList<TaiKhoan> filteredList = new FilteredList<>(taiKhoanList, p -> true);
+        txtTimKiem.textProperty().addListener((obs, oldVal, newVal) -> {
+            String keyword = newVal.toLowerCase();
+            filteredList.setPredicate(tk -> {
+                if (keyword.isEmpty()) return true;
+                return tk.getMaTK().toLowerCase().contains(keyword)
+                        || tk.getTenDangNhap().toLowerCase().contains(keyword)
+                        || tk.getLoaiTK().toLowerCase().contains(keyword);
+            });
+
+            tableTaiKhoan.setItems(filteredList);
+        });
+
+
 
         // Tải dữ liệu
         loadTaiKhoanTuDB();
