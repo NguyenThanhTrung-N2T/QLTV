@@ -1,40 +1,88 @@
-package model;
-
-import java.time.LocalDate;
+package com.main.qltv.model;
+import java.sql.Date;
 
 public class PhieuMuon{
-    private String maPhieu, maDocGia, tenDocGia, maSach, tenSach, trangThai;
-    private LocalDate ngayMuon, ngayTra;
+    private String maPhieuMuon;
+    private String maSinhVien;
+    private Date ngayMuon;
+    private Date ngayTra;
+    private String tinhTrang;
+    private String maMuonSach;
+    private String maSach;
+    private int soLuong;
 
-    public PhieuMuon(String maPhieu, String maDocGia, String tenDocGia,
-                     LocalDate ngayMuon, LocalDate ngayTra,
-                     String maSach, String tenSach, String trangThai) {
-        this.maPhieu = maPhieu;
-        this.maDocGia = maDocGia;
-        this.tenDocGia = tenDocGia;
+    public PhieuMuon(String maPhieuMuon, String maSinhVien, Date ngayMuon, Date ngayTra, String tinhTrang, String maMuonSach, String maSach, int soLuong) {
+        this.maPhieuMuon = maPhieuMuon;
+        this.maSinhVien = maSinhVien;
         this.ngayMuon = ngayMuon;
         this.ngayTra = ngayTra;
+        this.tinhTrang = tinhTrang;
+        this.maMuonSach = maMuonSach;
         this.maSach = maSach;
-        this.tenSach = tenSach;
-        this.trangThai = trangThai;
+        this.soLuong = soLuong;
     }
 
-    // Getters + Setters
-    public String getMaPhieu() { return maPhieu; }
-    public String getMaDocGia() { return maDocGia; }
-    public String getTenDocGia() { return tenDocGia; }
-    public LocalDate getNgayMuon() { return ngayMuon; }
-    public LocalDate getNgayTra() { return ngayTra; }
-    public String getMaSach() { return maSach; }
-    public String getTenSach() { return tenSach; }
-    public String getTrangThai() { return trangThai; }
+    public String getMaPhieuMuon() {
+        return maPhieuMuon;
+    }
 
-    public void setMaPhieu(String maPhieu) { this.maPhieu = maPhieu; }
-    public void setMaDocGia(String maDocGia) { this.maDocGia = maDocGia; }
-    public void setTenDocGia(String tenDocGia) { this.tenDocGia = tenDocGia; }
-    public void setNgayMuon(LocalDate ngayMuon) { this.ngayMuon = ngayMuon; }
-    public void setNgayTra(LocalDate ngayTra) { this.ngayTra = ngayTra; }
-    public void setMaSach(String maSach) { this.maSach = maSach; }
-    public void setTenSach(String tenSach) { this.tenSach = tenSach; }
-    public void setTrangThai(String trangThai) { this.trangThai = trangThai; }
+    public void setMaPhieuMuon(String maPhieuMuon) {
+        this.maPhieuMuon = maPhieuMuon;
+    }
+
+    public String getMaSinhVien() {
+        return maSinhVien;
+    }
+
+    public void setMaSinhVien(String maSinhVien) {
+        this.maSinhVien = maSinhVien;
+    }
+
+    public Date getNgayMuon() {
+        return ngayMuon;
+    }
+
+    public void setNgayMuon(Date ngayMuon) {
+        this.ngayMuon = ngayMuon;
+    }
+
+    public Date getNgayTra() {
+        return ngayTra;
+    }
+
+    public void setNgayTra(Date ngayTra) {
+        this.ngayTra = ngayTra;
+    }
+
+    public String getTinhTrang() {
+        return tinhTrang;
+    }
+
+    public void setTinhTrang(String tinhTrang) {
+        this.tinhTrang = tinhTrang;
+    }
+
+    public String getMaMuonSach() {
+        return maMuonSach;
+    }
+
+    public void setMaMuonSach(String maMuonSach) {
+        this.maMuonSach = maMuonSach;
+    }
+
+    public String getMaSach() {
+        return maSach;
+    }
+
+    public void setMaSach(String maSach) {
+        this.maSach = maSach;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
 }
