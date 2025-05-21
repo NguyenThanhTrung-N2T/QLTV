@@ -194,7 +194,7 @@ public class QuanLySachController {
             String anhBia = txtAnhBia.getText().trim();
 
             // Kiểm tra rỗng
-            if (maSach.isEmpty() || tenSach.isEmpty() || tenTacGia == null || tenTheLoai == null || tenNXB == null
+            if (tenSach.isEmpty() || tenTacGia == null || tenTheLoai == null || tenNXB == null
                     || soLuongStr.isEmpty() || soTrangStr.isEmpty() || ngayXuatBan == null) {
                 showAlert(Alert.AlertType.WARNING, "Vui lòng nhập đầy đủ thông tin sách.");
                 return;
@@ -318,7 +318,7 @@ public class QuanLySachController {
                         loadSachTuDB(); // Tải lại danh sách sách trong bảng
                         lamMoi();
                     } else {
-                        showAlert(Alert.AlertType.ERROR, "Không thể xóa sách. Có thể sách đã được mượn hoặc lỗi hệ thống.");
+                        showAlert(Alert.AlertType.ERROR, "Không thể xóa. Có thể sách đã được mượn hoặc lỗi hệ thống.");
                     }
                 }
             });

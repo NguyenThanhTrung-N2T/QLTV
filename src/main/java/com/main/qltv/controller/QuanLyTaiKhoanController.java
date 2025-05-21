@@ -186,12 +186,14 @@ public class QuanLyTaiKhoanController {
         {
             // xóa tài khoản
             if(DatabaseConnection.xoaTaiKhoan(selected.getMSSV())){
+
+
                 showAlert(Alert.AlertType.INFORMATION, "Xóa thành công.");
                 loadTaiKhoanTuDB();
                 lamMoi();
             }
             else {
-                showAlert(Alert.AlertType.ERROR, "Xóa thất bại.");
+                showAlert(Alert.AlertType.ERROR, "Xóa thất bại. Tài khoản đang mượn sách hoặc lỗi hệ thống.");
             }
         }else{
             if(DatabaseConnection.xoaTaiKhoan(selected.getMaSoCB())){

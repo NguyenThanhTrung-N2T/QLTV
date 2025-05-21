@@ -63,7 +63,7 @@ public class DatabaseConnection {
     }
 
     public static boolean kiemTraSinhVienTonTai(String maSinhVien) {
-        String sql = "SELECT COUNT(*) FROM SinhVien WHERE maSinhVien = ?";
+        String sql = "SELECT COUNT(*) FROM SinhVien WHERE maSinhVien = ? COLLATE SQL_Latin1_General_CP1_CS_AS";
 
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -80,8 +80,7 @@ public class DatabaseConnection {
     }
 
     public static boolean kiemTraTaiKhoanDaTonTai(String maSinhVien) {
-        String sql = "SELECT COUNT(*) FROM TaiKhoan WHERE maSinhVien = ?";
-
+        String sql = "SELECT COUNT(*) FROM TaiKhoan WHERE maSinhVien = ? COLLATE SQL_Latin1_General_CP1_CS_AS";
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -209,14 +208,62 @@ public class DatabaseConnection {
     }
 
     public static boolean xoaSinhVien(String maSinhVien) {
-        String sql = "DELETE FROM SinhVien WHERE maSinhVien = ?";
+        String selectPhieuMuon = "SELECT maPhieuMuon FROM PhieuMuon WHERE maSinhVien = ?";
+        String deleteMuonSach = "DELETE FROM MuonSach WHERE maPhieuMuon = ?";
+        String deletePhieuMuon = "DELETE FROM PhieuMuon WHERE maPhieuMuon = ?";
+        String deleteTaiKhoan = "DELETE FROM TaiKhoan WHERE maSinhVien = ?";
+        String deleteSinhVien = "DELETE FROM SinhVien WHERE maSinhVien = ?";
 
-        try (Connection conn = connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        if(sinhVienConPhieuMuonChuaTra(maSinhVien)){
+            return false;
+        }
+        try (Connection conn = connect()) {
+            conn.setAutoCommit(false);
 
-            pstmt.setString(1, maSinhVien);
-            return pstmt.executeUpdate() > 0;
+            // 1. Get all loan slip IDs of the student
+            List<String> phieuMuonIds = new ArrayList<>();
+            try (PreparedStatement stmt = conn.prepareStatement(selectPhieuMuon)) {
+                stmt.setString(1, maSinhVien);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    phieuMuonIds.add(rs.getString("maPhieuMuon"));
+                }
+            }
 
+            // 2. Delete all MuonSach records for each loan slip
+            for (String maPhieuMuon : phieuMuonIds) {
+                try (PreparedStatement stmt = conn.prepareStatement(deleteMuonSach)) {
+                    stmt.setString(1, maPhieuMuon);
+                    stmt.executeUpdate();
+                }
+            }
+
+            // 3. Delete all PhieuMuon records
+            for (String maPhieuMuon : phieuMuonIds) {
+                try (PreparedStatement stmt = conn.prepareStatement(deletePhieuMuon)) {
+                    stmt.setString(1, maPhieuMuon);
+                    stmt.executeUpdate();
+                }
+            }
+
+            // 4. Delete account if exists
+            try (PreparedStatement stmt = conn.prepareStatement(deleteTaiKhoan)) {
+                stmt.setString(1, maSinhVien);
+                stmt.executeUpdate();
+            }
+
+            // 5. Delete the student
+            try (PreparedStatement stmt = conn.prepareStatement(deleteSinhVien)) {
+                stmt.setString(1, maSinhVien);
+                int affected = stmt.executeUpdate();
+                if (affected == 0) {
+                    conn.rollback();
+                    return false;
+                }
+            }
+
+            conn.commit();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -224,7 +271,10 @@ public class DatabaseConnection {
     }
 
     public static boolean xoaTaiKhoan(String maSinhVien) {
-        if(kiemTraSinhVienTonTai(maSinhVien)) {
+        if (kiemTraSinhVienTonTai(maSinhVien)) {
+            if (sinhVienConPhieuMuonChuaTra(maSinhVien)) {
+                return false;
+            }
             String sql = "DELETE FROM TaiKhoan WHERE maSinhVien = ?";
             try (Connection conn = connect();
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -687,8 +737,14 @@ public class DatabaseConnection {
     }
 
     public static boolean xoaSach(String maSach) {
-        String checkSql = "SELECT COUNT(*) FROM MuonSach WHERE maSach = ?";
-        String deleteSql = "DELETE FROM Sach WHERE maSach = ?";
+        // Prevent deletion if there are unreturned loans
+        if (sachConPhieuMuonChuaTra(maSach)) {
+            return false;
+        }
+
+        String deleteMuonSachSql = "DELETE FROM MuonSach WHERE maSach = ? AND maPhieuMuon IN (SELECT maPhieuMuon FROM PhieuMuon WHERE tinhTrang = N'Đã trả')";
+        String deletePhieuMuonSql = "DELETE FROM PhieuMuon WHERE maPhieuMuon NOT IN (SELECT maPhieuMuon FROM MuonSach)";
+        String deleteSachSql = "DELETE FROM Sach WHERE maSach = ?";
         String getTacGiaSql = "SELECT maTacGia FROM Sach WHERE maSach = ?";
         String getTheLoaiSql = "SELECT maTheLoai FROM Sach WHERE maSach = ?";
         String getNXBSql = "SELECT maNXB FROM Sach WHERE maSach = ?";
@@ -696,29 +752,33 @@ public class DatabaseConnection {
         try (Connection conn = connect()) {
             conn.setAutoCommit(false);
 
-            try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
-                checkStmt.setString(1, maSach);
-                ResultSet rs = checkStmt.executeQuery();
-                if (rs.next() && rs.getInt(1) > 0) {
-                    conn.rollback();
-                    return false;
-                }
+            // 1. Delete returned MuonSach records for this book
+            try (PreparedStatement stmt = conn.prepareStatement(deleteMuonSachSql)) {
+                stmt.setString(1, maSach);
+                stmt.executeUpdate();
             }
 
+            // 2. Delete PhieuMuon that no longer have any MuonSach
+            try (PreparedStatement stmt = conn.prepareStatement(deletePhieuMuonSql)) {
+                stmt.executeUpdate();
+            }
+
+            // 3. Get related info for cleanup
             String maTacGia = getStringField(conn, getTacGiaSql, maSach);
             String maTheLoai = getStringField(conn, getTheLoaiSql, maSach);
             String maNXB = getStringField(conn, getNXBSql, maSach);
 
-            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
-                deleteStmt.setString(1, maSach);
-                int rowsAffected = deleteStmt.executeUpdate();
+            // 4. Delete the book
+            try (PreparedStatement stmt = conn.prepareStatement(deleteSachSql)) {
+                stmt.setString(1, maSach);
+                int rowsAffected = stmt.executeUpdate();
                 if (rowsAffected == 0) {
                     conn.rollback();
                     return false;
                 }
             }
 
-            // ✅ Truyền conn vào để giữ nguyên transaction
+            // 5. Clean up unused TacGia, TheLoai, NXB
             xoaTacGiaNeuKhongDung(conn, maTacGia);
             xoaTheLoaiNeuKhongDung(conn, maTheLoai);
             xoaNXBNeuKhongDung(conn, maNXB);
@@ -727,7 +787,6 @@ public class DatabaseConnection {
             return true;
 
         } catch (Exception e) {
-            System.err.println("Lỗi khi xóa sách: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -999,6 +1058,37 @@ public class DatabaseConnection {
             return false;
         }
     }
+
+    private static boolean sinhVienConPhieuMuonChuaTra(String maSinhVien) {
+        String sql = "SELECT COUNT(*) FROM PhieuMuon WHERE maSinhVien = ? AND tinhTrang != N'Đã trả'";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, maSinhVien);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private static boolean sachConPhieuMuonChuaTra(String maSach) {
+        String sql = "SELECT COUNT(*) FROM MuonSach ms JOIN PhieuMuon pm ON ms.maPhieuMuon = pm.maPhieuMuon WHERE ms.maSach = ? AND pm.tinhTrang != N'Đã trả'";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, maSach);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
 
 

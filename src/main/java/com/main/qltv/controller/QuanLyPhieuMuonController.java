@@ -251,6 +251,19 @@ public class QuanLyPhieuMuonController {
         pm.setNgayTra(java.sql.Date.valueOf(ngayTra));
         pm.setSoLuong(soLuong);
         pm.setTinhTrang("Chưa trả");
+
+        // Kiểm tra ngày trả có hợp lệ không
+        if (ngayTra.isBefore(ngayMuon)) {
+            showAlert(Alert.AlertType.ERROR, "Ngày trả không hợp lệ.");
+            return;
+        }
+
+        // Kiem tra sinh vien co tai khoan chua
+        if (!DatabaseConnection.kiemTraTaiKhoanDaTonTai(mssv)) {
+            showAlert(Alert.AlertType.ERROR, "Sinh viên chưa có tài khoản.");
+            return;
+        }
+
         // Kiểm tra số lượng sách có đủ không
         if (DatabaseConnection.laySoLuongSach(maSach) < soLuong) {
             showAlert(Alert.AlertType.ERROR, "Số lượng sách không đủ.");

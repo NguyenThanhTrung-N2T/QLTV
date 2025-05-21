@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.util.List;
+
 public class QuanLySinhVienController {
     @FXML TableView<SinhVien> tableSinhVien;
     @FXML TableColumn<SinhVien, String> colMaSinhVien;
@@ -171,15 +173,19 @@ public class QuanLySinhVienController {
 
         // Xóa sinh viên
         if (DatabaseConnection.kiemTraTaiKhoanDaTonTai(selected.getMSSV())) {
-            // Nếu có tài khoản thì xóa tài khoản trước
-            DatabaseConnection.xoaTaiKhoan(selected.getMSSV());
-            // xóa sịnh viên
-            DatabaseConnection.xoaSinhVien(selected.getMSSV());
-            showAlert(Alert.AlertType.INFORMATION, "Xóa thành công.");
-            loadSinhVienTuDB();
-            LamMoi();
+            // Nếu tài khoản đã tồn tại thì xóa tài khoản trước
+            if (DatabaseConnection.xoaTaiKhoan(selected.getMSSV())){
+                // Nếu tài khoản đã xóa thành công thì xóa sinh viên
+                DatabaseConnection.xoaSinhVien(selected.getMSSV());
+                showAlert(Alert.AlertType.INFORMATION, "Xóa thành công.");
+                loadSinhVienTuDB();
+                LamMoi();
+            }
+            else {
+                showAlert(Alert.AlertType.ERROR, "Xóa thất bại. Tài khoản đang mượn sách hoặc lỗi hệ thống.");
+            }
         } else if(DatabaseConnection.kiemTraSinhVienTonTai(selected.getMSSV())) {
-            // xóa sịnh viên
+            // xóa sinh viên
             DatabaseConnection.xoaSinhVien(selected.getMSSV());
             showAlert(Alert.AlertType.INFORMATION, "Xóa thành công.");
             loadSinhVienTuDB();
