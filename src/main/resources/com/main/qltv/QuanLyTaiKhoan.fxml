@@ -1,70 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.text.*?>
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.main.qltv.controller.QuanLyTaiKhoanController"
-            prefHeight="600.0" prefWidth="850.0"
-            style="-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2); -fx-padding: 20;">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" style="-fx-padding: 20;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="com.main.qltv.controller.QuanLyTaiKhoanController">
 
-    <VBox spacing="10" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0">
+    <VBox spacing="10" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 
         <!-- Tiêu đề -->
-        <Label text=" 🧑‍💻 QUẢN LÝ TÀI KHOẢN"
-               style="-fx-font-size: 22px; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"
-               alignment="CENTER"
-               maxWidth="Infinity"/>
+        <Label alignment="CENTER" maxWidth="Infinity" style="-fx-font-size: 22px; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text=" 🧑‍💻 QUẢN LÝ TÀI KHOẢN" />
 
         <!-- Nội dung chính -->
-        <ScrollPane fitToWidth="true" fitToHeight="true" style="-fx-padding: 10;" VBox.vgrow="ALWAYS">
-            <BorderPane style="-fx-padding: 20;">
+        <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-padding: 10; -fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);" VBox.vgrow="ALWAYS">
+            <BorderPane style="-fx-padding: 20; -fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);">
 
                 <!-- Form nhập liệu -->
                 <top>
                     <VBox spacing="15">
                         <GridPane hgap="10" vgap="10">
-                            <Label text="Mã TK:" style="-fx-text-fill: #2C3E50;" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                            <TextField fx:id="txtMaTaiKhoan" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="0" promptText="Mã tài khoản"/>
+                            <Label style="-fx-text-fill: #2C3E50;" text="Mã TK:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <TextField fx:id="txtMaTaiKhoan" editable="false" promptText="Mã tài khoản" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                            <Label text="Tên Đăng Nhập:" style="-fx-text-fill: #2C3E50;" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-                            <TextField fx:id="txtTenDangNhap" GridPane.columnIndex="3" GridPane.rowIndex="0" promptText="Tên đăng nhập"/>
+                            <Label style="-fx-text-fill: #2C3E50;" text="Tên Đăng Nhập:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                            <TextField fx:id="txtTenDangNhap" promptText="Tên đăng nhập" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
-                            <Label text="Mật Khẩu:" style="-fx-text-fill: #2C3E50;" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                            <PasswordField fx:id="txtMatKhau" GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="Mật khẩu"/>
+                            <Label style="-fx-text-fill: #2C3E50;" text="Mật Khẩu:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                            <PasswordField fx:id="txtMatKhau" promptText="Mật khẩu" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                            <Label text="Loại Người Dùng:" style="-fx-text-fill: #2C3E50;" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-                            <ComboBox fx:id="cbLoaiNguoiDung" GridPane.columnIndex="3" GridPane.rowIndex="1" promptText="Chọn loại">
+                            <Label style="-fx-text-fill: #2C3E50;" text="Loại Người Dùng:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                            <ComboBox fx:id="cbLoaiNguoiDung" promptText="Chọn loại" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                 <items>
                                     <FXCollections fx:factory="observableArrayList">
-                                        <String fx:value="Sinh viên"/>
-                                        <String fx:value="Cộng tác viên"/>
-                                        <String fx:value="Quản lý"/>
+                                        <String fx:value="Sinh viên" />
+                                        <String fx:value="Cộng tác viên" />
+                                        <String fx:value="Quản lý" />
                                     </FXCollections>
                                 </items>
                             </ComboBox>
 
-                            <Label text="Mã Số CBQL:" style="-fx-text-fill: #2C3E50;" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                            <TextField fx:id="txtMaSoCB" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="Mã số cán bộ quản lý"/>
+                            <Label style="-fx-text-fill: #2C3E50;" text="Mã Số CBQL:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                            <TextField fx:id="txtMaSoCB" promptText="Mã số cán bộ quản lý" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                            <Label text="Mã Sinh Viên:" style="-fx-text-fill: #2C3E50;" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                            <TextField fx:id="txtMaSinhVien" GridPane.columnIndex="1" GridPane.rowIndex="3" promptText="Mã sinh viên (nếu có)"/>
+                            <Label style="-fx-text-fill: #2C3E50;" text="Mã Sinh Viên:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                            <TextField fx:id="txtMaSinhVien" promptText="Mã sinh viên (nếu có)" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                     </rowConstraints>
                         </GridPane>
 
                         <!-- Các nút chức năng -->
-                        <HBox spacing="10" alignment="CENTER_RIGHT">
-                            <Button fx:id="btnThem" text="➕ Thêm TK"
-                                    style="-fx-background-color: #27AE60; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';"/>
-                            <Button fx:id="btnSua" text="✏️Cập Nhật TK"
-                                    style="-fx-background-color: #F39C12; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';"/>
-                            <Button fx:id="btnXoa" text="🚮 Xóa TK"
-                                    style="-fx-background-color: #C0392B; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';"/>
-                            <Button fx:id="btnLamMoi" text="🔄 Làm Mới"
-                                    style="-fx-background-color: #7F8C8D; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';"/>
+                        <HBox alignment="CENTER_RIGHT" spacing="10">
+                            <Button fx:id="btnThem" style="-fx-background-color: #27AE60; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';" text="➕ Thêm TK" />
+                            <Button fx:id="btnSua" style="-fx-background-color: #F39C12; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';" text="✏️Cập Nhật TK" />
+                            <Button fx:id="btnXoa" style="-fx-background-color: #C0392B; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';" text="🚮 Xóa TK" />
+                            <Button fx:id="btnLamMoi" style="-fx-background-color: #7F8C8D; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';" text="🔄 Làm Mới" />
                         </HBox>
                     </VBox>
                 </top>
@@ -73,22 +73,20 @@
                 <center>
                     <VBox spacing="10">
                         <!-- Thanh tìm kiếm -->
-                        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10 0 10 0;">
-                            <Label text="🔍 Tìm kiếm:" style="-fx-text-fill: #2C3E50; -fx-font-weight: bold;"/>
-                            <TextField fx:id="txtTimKiem" promptText="Nhập từ khóa tìm kiếm..."
-                                       style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #BDC3C7; -fx-padding: 5;"/>
+                        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10 0 10 0;">
+                            <Label style="-fx-text-fill: #2C3E50; -fx-font-weight: bold;" text="🔍 Tìm kiếm:" />
+                            <TextField fx:id="txtTimKiem" promptText="Nhập từ khóa tìm kiếm..." style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #BDC3C7; -fx-padding: 5;" />
                         </HBox>
 
                         <!-- Bảng dữ liệu -->
-                        <TableView fx:id="tableTaiKhoan" prefHeight="350"
-                                   style="-fx-background-color: white; -fx-border-color: #BDC3C7; -fx-border-radius: 8; -fx-padding: 5;">
+                        <TableView fx:id="tableTaiKhoan" prefHeight="350" style="-fx-background-color: white; -fx-border-color: #BDC3C7; -fx-border-radius: 8; -fx-padding: 5;">
                             <columns>
-                                <TableColumn fx:id="colMaTaiKhoan" text="Mã TK" prefWidth="100"/>
-                                <TableColumn fx:id="colTenDangNhap" text="Tên Đăng Nhập" prefWidth="180"/>
-                                <TableColumn fx:id="colMatKhau" text="Mật Khẩu" prefWidth="180"/>
-                                <TableColumn fx:id="colLoaiNguoiDung" text="Loại Người Dùng" prefWidth="140"/>
-                                <TableColumn fx:id="colMaSoCB" text="Mã Số CBQL" prefWidth="120"/>
-                                <TableColumn fx:id="colMaSinhVien" text="Mã SV" prefWidth="120"/>
+                                <TableColumn fx:id="colMaTaiKhoan" prefWidth="100" text="Mã TK" />
+                                <TableColumn fx:id="colTenDangNhap" prefWidth="180" text="Tên Đăng Nhập" />
+                                <TableColumn fx:id="colMatKhau" prefWidth="180" text="Mật Khẩu" />
+                                <TableColumn fx:id="colLoaiNguoiDung" prefWidth="140" text="Loại Người Dùng" />
+                                <TableColumn fx:id="colMaSoCB" prefWidth="120" text="Mã Số CBQL" />
+                                <TableColumn fx:id="colMaSinhVien" prefWidth="120" text="Mã SV" />
                             </columns>
                         </TableView>
                     </VBox>

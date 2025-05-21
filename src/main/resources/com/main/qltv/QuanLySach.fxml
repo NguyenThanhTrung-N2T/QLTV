@@ -1,98 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane style="-fx-background-color: #f4f4f4;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="com.main.qltv.controller.QuanLySachController">
-    <ScrollPane fitToHeight="false" fitToWidth="true" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-        <VBox alignment="TOP_CENTER" maxWidth="800" spacing="15">
+<AnchorPane style="-fx-background-color: linear-gradient(to bottom, #fdfbfb, #ebedee);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.qltv.controller.QuanLySachController">
 
-            <!-- Tiêu đề form -->
-            <Label text="Thông tin sách" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+    <ScrollPane fitToHeight="false" fitToWidth="true" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+
+        <VBox alignment="TOP_CENTER" maxWidth="900" spacing="20" style="-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2); -fx-padding: 20;">
+
+            <!-- Title -->
+            <Label style="-fx-font-size: 22px; -fx-font-family: 'Segoe UI'; -fx-text-fill: #2c3e50;-fx-font-weight: bold;" text="📚 THÔNG TIN SÁCH" />
 
             <!-- Form nhập liệu -->
-            <VBox spacing="10" style="-fx-border-color: #ccc; -fx-border-radius: 5; -fx-padding: 10; -fx-background-color: #ffffff;">
-                <GridPane hgap="10" vgap="10">
+            <VBox spacing="15" style="-fx-border-color: #bbb; -fx-border-radius: 10; -fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20;">
+                <GridPane hgap="15" vgap="15">
                     <columnConstraints>
                         <ColumnConstraints percentWidth="30" />
                         <ColumnConstraints percentWidth="70" />
                     </columnConstraints>
-                    <padding>
-                        <Insets bottom="10" left="10" right="10" top="10" />
-                    </padding>
 
-                    <Label text="Mã sách:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                    <TextField fx:id="txtMaSach" promptText="Nhập mã sách" editable="false" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <Label style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px;" text="Mã sách:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="txtMaSach" editable="false" prefWidth="250" promptText="Nhập mã sách" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                    <Label text="Tên sách:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                    <TextField fx:id="txtTenSach" promptText="Nhập tên sách" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Label style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px;" text="Tên sách:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TextField fx:id="txtTenSach" promptText="Nhập tên sách" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                    <Label text="Tác giả:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                    <ComboBox fx:id="cbTacGia" promptText="Chọn hoặc ghi tác giả" prefWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Label style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px;" text="Tác giả:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <ComboBox fx:id="cbTacGia" promptText="Chọn hoặc ghi tác giả" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                    <Label text="Thể loại:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                    <ComboBox fx:id="cbTheLoai" promptText="Chọn hoặc ghi thể loại" prefWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Label style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px;" text="Thể loại:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                    <ComboBox fx:id="cbTheLoai" promptText="Chọn hoặc ghi thể loại" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                    <Label text="NXB:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                    <ComboBox fx:id="cbNXB" promptText="Chọn hoặc ghi nhà xuất bản" prefWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <Label style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px;" text="NXB:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                    <ComboBox fx:id="cbNXB" promptText="Chọn hoặc ghi nhà xuất bản" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-                    <Label text="Số lượng:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                    <TextField fx:id="txtSoLuong" promptText="Nhập số lượng sách" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                    <Label style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px;" text="Số lượng:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                    <TextField fx:id="txtSoLuong" promptText="Nhập số lượng sách" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-                    <Label text="Ngày xuất bản:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                    <Label style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px;" text="Ngày xuất bản:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
                     <DatePicker fx:id="dpNgayXuatBan" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
-                    <Label text="Số trang:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-                    <TextField fx:id="txtSoTrang" promptText="Nhập số trang" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                    <Label style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px;" text="Số trang:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                    <TextField fx:id="txtSoTrang" promptText="Nhập số trang" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
-                    <Label text="Mô tả:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
-                    <TextArea fx:id="txtMoTa" promptText="Nhập mô tả nội dung sách" prefRowCount="3" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                    <Label style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px;" text="Mô tả:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                    <TextArea fx:id="txtMoTa" prefRowCount="3" promptText="Nhập mô tả nội dung sách" GridPane.columnIndex="1" GridPane.rowIndex="8" />
 
-                    <Label text="Ảnh bìa:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+                    <Label style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px;" text="Ảnh bìa:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
                     <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="9">
                         <TextField fx:id="txtAnhBia" promptText="Đường dẫn ảnh (URL)" HBox.hgrow="ALWAYS" />
                         <Button text="Chọn ảnh" visible="false" />
                     </HBox>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
                 </GridPane>
             </VBox>
 
-            <!-- Ảnh bìa hiển thị căn giữa và đẹp -->
+            <!-- Ảnh bìa hiển thị -->
             <HBox alignment="CENTER">
-                <ImageView fx:id="imgBia"
-                           fitHeight="160" fitWidth="120"
-                           preserveRatio="true"
-                           smooth="true"
-                           style="-fx-border-color: black; -fx-effect: dropshadow(gaussian, gray, 5, 0.3, 2, 2);" />
+                <ImageView fx:id="imgBia" fitHeight="160" fitWidth="120" preserveRatio="true" smooth="true" style="-fx-border-color: black; -fx-effect: dropshadow(gaussian, gray, 5, 0.3, 2, 2);" />
             </HBox>
 
             <!-- Nút thao tác -->
-            <HBox alignment="CENTER" spacing="15">
-                <Button fx:id="btnTimKiem" style="-fx-background-color: #FF9800; -fx-text-fill: white;" text="Tìm kiếm" />
-                <Button fx:id="btnThem" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Thêm" />
-                <Button fx:id="btnSua" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Sửa" />
-                <Button fx:id="btnXoa" style="-fx-background-color: #F44336; -fx-text-fill: white;" text="Xóa" />
-                <Button fx:id="btnLammoi" onAction="#lamMoi" style="-fx-background-color: #9E9E9E; -fx-text-fill: white;" text="Làm mới" />
+            <HBox alignment="CENTER" spacing="20">
+                <Button fx:id="btnTimKiem" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;" text="Tìm kiếm" />
+                <Button fx:id="btnThem" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;" text="Thêm Sách" />
+                <Button fx:id="btnSua" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;" text="Sửa Thông Tin" />
+                <Button fx:id="btnXoa" style="-fx-background-color: #F44336; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;" text="Xóa Sách" />
+                <Button fx:id="btnLammoi" onAction="#lamMoi" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;" text="Làm mới" />
             </HBox>
 
             <!-- Bảng hiển thị -->
-            <TableView fx:id="tableSach"
-                       maxWidth="800" prefHeight="400"
-                       VBox.vgrow="ALWAYS"
-                       style="-fx-background-color: white;"
-                       editable="false">
+            <TableView fx:id="tableSach" maxWidth="900" prefHeight="400" style="-fx-background-color: white; -fx-font-family: 'Segoe UI';" VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn fx:id="colMaSach" text="Mã sách" />
-                    <TableColumn fx:id="colTenSach" text="Tên sách" />
-                    <TableColumn fx:id="colTacGia" text="Tác giả" />
-                    <TableColumn fx:id="colTheLoai" text="Thể loại" />
-                    <TableColumn fx:id="colNXB" text="NXB" />
-                    <TableColumn fx:id="colSoLuong" text="Số lượng" />
-                    <TableColumn fx:id="colNgayXuatBan" text="Ngày XB" />
-                    <TableColumn fx:id="colSoTrang" text="Số trang" />
+                    <TableColumn fx:id="colMaSach" prefWidth="94.99999541044235" text="Mã sách" />
+                    <TableColumn fx:id="colTenSach" prefWidth="89.59998321533203" text="Tên sách" />
+                    <TableColumn fx:id="colTacGia" prefWidth="87.00001525878906" text="Tác giả" />
+                    <TableColumn fx:id="colTheLoai" prefWidth="78.5999755859375" text="Thể loại" />
+                    <TableColumn fx:id="colNXB" prefWidth="80.20001220703125" text="NXB" />
+                    <TableColumn fx:id="colSoLuong" prefWidth="80.19998168945312" text="Số lượng" />
+                    <TableColumn fx:id="colNgayXuatBan" prefWidth="103.20001220703125" text="Ngày XB" />
+                    <TableColumn fx:id="colSoTrang" prefWidth="87.20001220703125" text="Số trang" />
                 </columns>
             </TableView>
+
         </VBox>
     </ScrollPane>
 </AnchorPane>

@@ -7,7 +7,7 @@
     <VBox alignment="TOP_CENTER" spacing="15">
 
         <!-- Tiêu đề -->
-        <Label style="-fx-font-size: 22px; -fx-font-family: 'Segoe UI'; -fx-text-fill: #2c3e50;" text="📖 QUẢN LÝ MƯỢN TRẢ SÁCH" />
+        <Label style="-fx-font-size: 22px; -fx-font-family: 'Segoe UI'; -fx-text-fill: #2c3e50;-fx-font-weight: bold;"  text="📖 QUẢN LÝ MƯỢN TRẢ SÁCH" />
 
         <!-- Nhập liệu -->
         <GridPane alignment="CENTER" hgap="10" style="-fx-background-color: #ffffff; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);" vgap="10">
