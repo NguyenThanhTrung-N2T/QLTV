@@ -51,7 +51,7 @@
         <HBox alignment="CENTER" spacing="12">
             <Button fx:id="btnMuon" prefWidth="110" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="📚 Mượn Sách" />
             <Button fx:id="btnTra" prefWidth="110" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="✅ Trả Sách" />
-            <Button fx:id="btnCapNhat" prefWidth="110" style="-fx-background-color: #f1c40f; -fx-text-fill: white;" text="🔄 Cập Nhật" />
+            <Button fx:id="btnGiaHan" prefWidth="110" style="-fx-background-color: #f1c40f; -fx-text-fill: white;" text="📅 Gia Hạn" />
             <Button fx:id="btnLamMoi" prefWidth="110" style="-fx-background-color: #e67e22; -fx-text-fill: white;" text="🔃 Làm Mới" />
         </HBox>
 

@@ -945,6 +945,60 @@ public class DatabaseConnection {
         }
     }
 
+    public static boolean capNhatTinhTrangPhieuMuon(String maPhieuMuon, String tinhTrang) {
+        String updatePhieu = "UPDATE PhieuMuon SET tinhTrang = ? WHERE maPhieuMuon = ?";
+        String selectMuonSach = "SELECT maSach, soLuong FROM MuonSach WHERE maPhieuMuon = ?";
+        String updateSach = "UPDATE Sach SET soLuong = soLuong + ? WHERE maSach = ?";
+        try (Connection conn = connect()) {
+            conn.setAutoCommit(false);
+
+            // Update status
+            try (PreparedStatement pstmt = conn.prepareStatement(updatePhieu)) {
+                pstmt.setString(1, tinhTrang);
+                pstmt.setString(2, maPhieuMuon);
+                if (pstmt.executeUpdate() == 0) {
+                    conn.rollback();
+                    return false;
+                }
+            }
+
+            // If returning, increase book quantity
+            if ("Đã trả".equals(tinhTrang)) {
+                try (PreparedStatement pstmt = conn.prepareStatement(selectMuonSach)) {
+                    pstmt.setString(1, maPhieuMuon);
+                    ResultSet rs = pstmt.executeQuery();
+                    while (rs.next()) {
+                        String maSach = rs.getString("maSach");
+                        int soLuong = rs.getInt("soLuong");
+                        try (PreparedStatement updateStmt = conn.prepareStatement(updateSach)) {
+                            updateStmt.setInt(1, soLuong);
+                            updateStmt.setString(2, maSach);
+                            updateStmt.executeUpdate();
+                        }
+                    }
+                }
+            }
+
+            conn.commit();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean giaHanPhieuMuon(String maPhieuMuon, Date ngayTraMoi) {
+        String sql = "UPDATE PhieuMuon SET ngayTra = ? WHERE maPhieuMuon = ?";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setDate(1, ngayTraMoi);
+            pstmt.setString(2, maPhieuMuon);
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 
 
