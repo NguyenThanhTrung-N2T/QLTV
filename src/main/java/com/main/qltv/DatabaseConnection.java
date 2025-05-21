@@ -863,4 +863,89 @@ public class DatabaseConnection {
         return ds;
     }
 
+    public static String layMaSachTheoTen(String tenSach) {
+        String sql = "SELECT maSach FROM Sach WHERE tenSach = ?";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, tenSach);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("maSach");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static int laySoLuongSach(String maSach) {
+        String sql = "SELECT soLuong FROM Sach WHERE maSach = ?";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, maSach);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("soLuong");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static boolean themPhieuMuon(PhieuMuon pm) {
+        String insertPhieuMuon = "INSERT INTO PhieuMuon (maPhieuMuon, maSinhVien, ngayMuon, ngayTra, tinhTrang) VALUES (?, ?, ?, ?, ?)";
+        String insertMuonSach = "INSERT INTO MuonSach (maMuonSach, maPhieuMuon, maSach, soLuong) VALUES (?, ?, ?, ?)";
+        String updateSoLuongSach = "UPDATE Sach SET soLuong = soLuong - ? WHERE maSach = ? AND soLuong >= ?";
+        try (Connection conn = connect()) {
+            conn.setAutoCommit(false);
+
+            // 1. Thêm phiếu mượn
+            String maPhieuMuon = pm.getMaPhieuMuon();
+            if (maPhieuMuon == null || maPhieuMuon.isEmpty()) {
+                maPhieuMuon = "PM" + System.currentTimeMillis(); // Hoặc sinh mã theo ý bạn
+            }
+            try (PreparedStatement stmt = conn.prepareStatement(insertPhieuMuon)) {
+                stmt.setString(1, maPhieuMuon);
+                stmt.setString(2, pm.getMaSinhVien());
+                stmt.setDate(3, pm.getNgayMuon());
+                stmt.setDate(4, pm.getNgayTra());
+                stmt.setString(5, pm.getTinhTrang());
+                stmt.executeUpdate();
+            }
+
+            // 2. Thêm mượn sách
+            String maMuonSach = "MS" + System.currentTimeMillis(); // Hoặc sinh mã theo ý bạn
+            try (PreparedStatement stmt = conn.prepareStatement(insertMuonSach)) {
+                stmt.setString(1, maMuonSach);
+                stmt.setString(2, maPhieuMuon);
+                stmt.setString(3, pm.getMaSach());
+                stmt.setInt(4, pm.getSoLuong());
+                stmt.executeUpdate();
+            }
+
+            // 3. Trừ số lượng sách
+            try (PreparedStatement stmt = conn.prepareStatement(updateSoLuongSach)) {
+                stmt.setInt(1, pm.getSoLuong());
+                stmt.setString(2, pm.getMaSach());
+                stmt.setInt(3, pm.getSoLuong());
+                int updated = stmt.executeUpdate();
+                if (updated == 0) {
+                    conn.rollback();
+                    return false;
+                }
+            }
+
+            conn.commit();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
+
 }

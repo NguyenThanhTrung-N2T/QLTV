@@ -22,6 +22,8 @@ public class PhieuMuon{
         this.soLuong = soLuong;
     }
 
+    public PhieuMuon() {
+    }
     public String getMaPhieuMuon() {
         return maPhieuMuon;
     }

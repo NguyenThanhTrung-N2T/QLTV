@@ -183,7 +183,7 @@ public class QuanLyPhieuMuonController {
 
 
 
-
+        btnMuon.setOnAction(e-> muonSach());
         btnLamMoi.setOnAction(e-> lamMoi());
     }
 
@@ -198,31 +198,103 @@ public class QuanLyPhieuMuonController {
         muonTraTable.getSelectionModel().clearSelection();
     }
 
+    private void showAlert(Alert.AlertType type, String message) {
+        Alert alert = new Alert(type);
+        alert.setContentText(message);
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    }
+
+    // Borrow book
+    @FXML
+    private void muonSach() {
+        String mssv = txtMSSV.getText();
+        String tenSach = comboTensach.getValue();
+        Integer soLuong = (Integer) spnSoLuong.getValue();
+        LocalDate ngayMuon = dateMuon.getValue();
+        LocalDate ngayTra = dateTra.getValue();
+
+        if (mssv.isEmpty() || tenSach == null || soLuong == null || ngayMuon == null || ngayTra == null) {
+            showAlert(Alert.AlertType.WARNING, "Vui lòng nhập đầy đủ thông tin.");
+            return;
+        }
+        if (!DatabaseConnection.kiemTraTaiKhoanDaTonTai(mssv)) {
+            showAlert(Alert.AlertType.ERROR, "Sinh viên chưa có tài khoản, không thể mượn sách.");
+            return;
+        }
+        String maSach = DatabaseConnection.layMaSachTheoTen(tenSach);
+        PhieuMuon pm = new PhieuMuon();
+        pm.setMaSinhVien(txtMSSV.getText());
+        pm.setMaSach(maSach);
+        pm.setNgayMuon(java.sql.Date.valueOf(ngayMuon));
+        pm.setNgayTra(java.sql.Date.valueOf(ngayTra));
+        pm.setSoLuong(soLuong);
+        pm.setTinhTrang("Chưa trả");
+        // Kiểm tra số lượng sách có đủ không
+        if (DatabaseConnection.laySoLuongSach(maSach) < soLuong) {
+            showAlert(Alert.AlertType.ERROR, "Số lượng sách không đủ.");
+            return;
+        }
+        if (DatabaseConnection.themPhieuMuon(pm)) {
+            showAlert(Alert.AlertType.INFORMATION, "Mượn sách thành công.");
+            loadPhieuMUonTuDB();
+            lamMoi();
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Mượn sách thất bại.");
+        }
+    }
+
+    // Return book
 //    @FXML
-//    private void MuonSach(){
-//        String maPhieuMuon =
-//        String maSach = txtTenSach.getText();
-//        String maSinhVien = txtMSSV.getText();
-//        LocalDate ngayMuon = dateMuon.getValue();
-//        LocalDate ngayTra = dateTra.getValue();
-//        int soLuong = spnSoLuong.getValue();
-//
-//        if (maSach.isEmpty() || maSinhVien.isEmpty() || ngayMuon == null || ngayTra == null) {
-//            Alert alert = new Alert(Alert.AlertType.WARNING, "Vui lòng nhập đầy đủ thông tin.");
-//            alert.showAndWait();
+//    private void traSach() {
+//        PhieuMuon selected = muonTraTable.getSelectionModel().getSelectedItem();
+//        if (selected == null) {
+//            showAlert(Alert.AlertType.WARNING, "Vui lòng chọn phiếu mượn để trả sách.");
 //            return;
 //        }
-//
-//        PhieuMuon phieuMuon = new PhieuMuon(maPhieuMuon, maSinhVien, Date.valueOf(ngayMuon), Date.valueOf(ngayTra), "Chưa trả", maSach, maSach, soLuong);
-//        boolean ketQua = DatabaseConnection.themPhieuMuon(phieuMuon);
-//        if (ketQua) {
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Thêm phiếu mượn thành công.");
-//            alert.showAndWait();
+//        if (!DatabaseConnection.kiemTraTaiKhoanDaTonTai(selected.getMaSinhVien())) {
+//            showAlert(Alert.AlertType.ERROR, "Sinh viên chưa có tài khoản, không thể trả sách.");
+//            return;
+//        }
+//        if (DatabaseConnection.capNhatTinhTrangPhieuMuon(selected.getMaPhieuMuon(), "Đã trả")) {
+//            showAlert(Alert.AlertType.INFORMATION, "Trả sách thành công.");
 //            loadPhieuMUonTuDB();
 //            lamMoi();
 //        } else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR, "Thêm phiếu mượn thất bại.");
-//            alert.showAndWait();
+//            showAlert(Alert.AlertType.ERROR, "Trả sách thất bại.");
+//        }
+//    }
+
+    // Update loan
+//    @FXML
+//    private void capNhatPhieuMuon() {
+//        PhieuMuon selected = muonTraTable.getSelectionModel().getSelectedItem();
+//        if (selected == null) {
+//            showAlert(Alert.AlertType.WARNING, "Vui lòng chọn phiếu mượn để cập nhật.");
+//            return;
+//        }
+//        String mssv = txtMSSV.getText();
+//        String tenSach = comboTensach.getValue();
+//        Integer soLuong = (Integer) spnSoLuong.getValue();
+//        LocalDate ngayMuon = dateMuon.getValue();
+//        LocalDate ngayTra = dateTra.getValue();
+//
+//        if (mssv.isEmpty() || tenSach == null || soLuong == null || ngayMuon == null || ngayTra == null) {
+//            showAlert(Alert.AlertType.WARNING, "Vui lòng nhập đầy đủ thông tin.");
+//            return;
+//        }
+//        if (!DatabaseConnection.kiemTraTaiKhoanDaTonTai(mssv)) {
+//            showAlert(Alert.AlertType.ERROR, "Sinh viên chưa có tài khoản, không thể cập nhật phiếu mượn.");
+//            return;
+//        }
+//        String maSach = DatabaseConnection.layMaSachTuTen(tenSach);
+//        PhieuMuon pm = new PhieuMuon(selected.getMaPhieuMuon(), mssv, maSach, java.sql.Date.valueOf(ngayMuon), java.sql.Date.valueOf(ngayTra), soLuong, selected.getTinhTrang());
+//        if (DatabaseConnection.capNhatPhieuMuon(pm)) {
+//            showAlert(Alert.AlertType.INFORMATION, "Cập nhật phiếu mượn thành công.");
+//            loadPhieuMUonTuDB();
+//            lamMoi();
+//        } else {
+//            showAlert(Alert.AlertType.ERROR, "Cập nhật phiếu mượn thất bại.");
 //        }
 //    }
 
