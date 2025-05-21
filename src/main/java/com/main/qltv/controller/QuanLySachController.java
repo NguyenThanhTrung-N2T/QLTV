@@ -3,8 +3,10 @@ package com.main.qltv.controller;
 import com.main.qltv.DatabaseConnection;
 import com.main.qltv.QLTVApplication;
 import com.main.qltv.model.*;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -117,12 +119,97 @@ public class QuanLySachController {
                 }
             }
         });
-        cbTacGia.setItems(FXCollections.observableArrayList(DatabaseConnection.layDanhSachTenTacGia()));
-        cbTheLoai.setItems(FXCollections.observableArrayList(DatabaseConnection.layDanhSachTenTheLoai()));
-        cbNXB.setItems(FXCollections.observableArrayList(DatabaseConnection.layDanhSachTenNXB()));
         cbTacGia.setEditable(true);
         cbTheLoai.setEditable(true);
         cbNXB.setEditable(true);
+
+        // Tác giả
+        ObservableList<String> allTacGia = FXCollections.observableArrayList(DatabaseConnection.layDanhSachTenTacGia());
+        FilteredList<String> filteredTacGia = new FilteredList<>(allTacGia, s -> true);
+        cbTacGia.setEditable(true);
+        cbTacGia.setItems(filteredTacGia);
+        cbTacGia.setOnShowing(e -> {
+            // Khi ComboBox được mở, đặt lại bộ lọc để hiển thị tất cả các mục
+            filteredTacGia.setPredicate(s -> true);
+        });
+        TextField editorTacGia = cbTacGia.getEditor();
+        editorTacGia.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (cbTacGia.getSelectionModel().getSelectedItem() != null &&
+                    cbTacGia.getSelectionModel().getSelectedItem().equals(newValue)) {
+                return;
+            }
+            Platform.runLater(() -> {
+                filteredTacGia.setPredicate(item -> {
+                    if (newValue == null || newValue.isEmpty()) return true;
+                    return item.toLowerCase().contains(newValue.toLowerCase());
+                });
+                if (filteredTacGia.isEmpty()) {
+                    if (cbTacGia.isShowing()) cbTacGia.hide();
+                } else {
+                    if (!cbTacGia.isShowing() && editorTacGia.isFocused()) cbTacGia.show();
+                }
+                editorTacGia.positionCaret(editorTacGia.getText().length());
+            });
+        });
+
+        // Thể loại
+        ObservableList<String> allTheLoai = FXCollections.observableArrayList(DatabaseConnection.layDanhSachTenTheLoai());
+        FilteredList<String> filteredTheLoai = new FilteredList<>(allTheLoai, s -> true);
+        cbTheLoai.setEditable(true);
+        cbTheLoai.setItems(filteredTheLoai);
+        cbTheLoai.setOnShowing(e -> {
+            // Khi ComboBox được mở, đặt lại bộ lọc để hiển thị tất cả các mục
+            filteredTheLoai.setPredicate(s -> true);
+        });
+        TextField editorTheLoai = cbTheLoai.getEditor();
+        editorTheLoai.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (cbTheLoai.getSelectionModel().getSelectedItem() != null &&
+                    cbTheLoai.getSelectionModel().getSelectedItem().equals(newValue)) {
+                return;
+            }
+            Platform.runLater(() -> {
+                filteredTheLoai.setPredicate(item -> {
+                    if (newValue == null || newValue.isEmpty()) return true;
+                    return item.toLowerCase().contains(newValue.toLowerCase());
+                });
+                if (filteredTheLoai.isEmpty()) {
+                    if (cbTheLoai.isShowing()) cbTheLoai.hide();
+                } else {
+                    if (!cbTheLoai.isShowing() && editorTheLoai.isFocused()) cbTheLoai.show();
+                }
+                editorTheLoai.positionCaret(editorTheLoai.getText().length());
+            });
+        });
+
+        // Nhà xuất bản
+        ObservableList<String> allNXB = FXCollections.observableArrayList(DatabaseConnection.layDanhSachTenNXB());
+        FilteredList<String> filteredNXB = new FilteredList<>(allNXB, s -> true);
+        cbNXB.setEditable(true);
+        cbNXB.setItems(filteredNXB);
+        cbNXB.setOnShowing(e -> {
+            // Khi ComboBox được mở, đặt lại bộ lọc để hiển thị tất cả các mục
+            filteredNXB.setPredicate(s -> true);
+        });
+
+        TextField editorNXB = cbNXB.getEditor();
+        editorNXB.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (cbNXB.getSelectionModel().getSelectedItem() != null &&
+                    cbNXB.getSelectionModel().getSelectedItem().equals(newValue)) {
+                return;
+            }
+            Platform.runLater(() -> {
+                filteredNXB.setPredicate(item -> {
+                    if (newValue == null || newValue.isEmpty()) return true;
+                    return item.toLowerCase().contains(newValue.toLowerCase());
+                });
+                if (filteredNXB.isEmpty()) {
+                    if (cbNXB.isShowing()) cbNXB.hide();
+                } else {
+                    if (!cbNXB.isShowing() && editorNXB.isFocused()) cbNXB.show();
+                }
+                editorNXB.positionCaret(editorNXB.getText().length());
+            });
+        });
 
         // Sự kiện khi chọn dòng
         tableSach.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -226,6 +313,10 @@ public class QuanLySachController {
                     if (thanhCong) {
                         showAlert(Alert.AlertType.INFORMATION, "Thêm sách thành công.");
                         loadSachTuDB();
+                        allTacGia.setAll(DatabaseConnection.layDanhSachTenTacGia());
+                        allTheLoai.setAll(DatabaseConnection.layDanhSachTenTheLoai());
+                        allNXB.setAll(DatabaseConnection.layDanhSachTenNXB());
+
                     } else {
                         showAlert(Alert.AlertType.ERROR, "Thêm sách thất bại!");
                     }
@@ -284,6 +375,9 @@ public class QuanLySachController {
                 if (thanhCong) {
                     showAlert(Alert.AlertType.INFORMATION, "Cập nhật sách thành công.");
                     loadSachTuDB();
+                    allTacGia.setAll(DatabaseConnection.layDanhSachTenTacGia());
+                    allTheLoai.setAll(DatabaseConnection.layDanhSachTenTheLoai());
+                    allNXB.setAll(DatabaseConnection.layDanhSachTenNXB());
                 } else {
                     showAlert(Alert.AlertType.ERROR, "Cập nhật sách thất bại!");
                 }
@@ -316,6 +410,9 @@ public class QuanLySachController {
                     if (result) {
                         showAlert(Alert.AlertType.INFORMATION, "Xóa sách thành công!");
                         loadSachTuDB(); // Tải lại danh sách sách trong bảng
+                        allTacGia.setAll(DatabaseConnection.layDanhSachTenTacGia());
+                        allTheLoai.setAll(DatabaseConnection.layDanhSachTenTheLoai());
+                        allNXB.setAll(DatabaseConnection.layDanhSachTenNXB());
                         lamMoi();
                     } else {
                         showAlert(Alert.AlertType.ERROR, "Không thể xóa. Có thể sách đã được mượn hoặc lỗi hệ thống.");

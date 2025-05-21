@@ -50,6 +50,7 @@ public class QuanLyTaiKhoanController {
         colMaSoCB.setCellValueFactory(new PropertyValueFactory<>("MaSoCB"));
         colMaSinhVien.setCellValueFactory(new PropertyValueFactory<>("MSSV"));
 
+        // tìm kiếm
         FilteredList<TaiKhoan> filteredList = new FilteredList<>(taiKhoanList, p -> true);
         txtTimKiem.textProperty().addListener((obs, oldVal, newVal) -> {
             String keyword = newVal.toLowerCase();
@@ -57,7 +58,8 @@ public class QuanLyTaiKhoanController {
                 if (keyword.isEmpty()) return true;
                 return tk.getMaTK().toLowerCase().contains(keyword)
                         || tk.getTenDangNhap().toLowerCase().contains(keyword)
-                        || tk.getLoaiTK().toLowerCase().contains(keyword);
+                        || tk.getLoaiTK().toLowerCase().contains(keyword)||(tk.getMSSV()!= null && tk.getMSSV().toLowerCase().contains(keyword))
+                        || (tk.getMaSoCB()!= null && tk.getMaSoCB().toLowerCase().contains(keyword));
             });
 
             tableTaiKhoan.setItems(filteredList);

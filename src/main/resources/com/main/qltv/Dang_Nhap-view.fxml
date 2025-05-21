@@ -31,7 +31,7 @@
         </VBox>
 
         <!-- Nút đăng nhập -->
-        <Button fx:id="btnDangNhap" onAction="#DanhNhap" prefWidth="150" style="-fx-background-color: #00796b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Đăng nhập" />
+        <Button fx:id="btnDangNhap" onAction="#DanhNhap" prefWidth="150" style="-fx-background-color: #00796b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Đăng Nhập" />
     </VBox>
 
 </AnchorPane>

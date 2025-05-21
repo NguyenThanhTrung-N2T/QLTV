@@ -23,7 +23,7 @@
                <PasswordField fx:id="txtMatKhau" promptText="Mật khẩu" />
                <PasswordField fx:id="txtXacNhanMatKhau" promptText="Xác nhận mật khẩu" />
       
-               <Button fx:id="btnDangKy" onAction="#DangKy" prefWidth="150" style="-fx-background-color: #2a9d8f; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Đăng ký" />
+               <Button fx:id="btnDangKy" onAction="#DangKy" prefWidth="150" style="-fx-background-color: #2a9d8f; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Đăng Ký" />
       
                <Label fx:id="lblThongBao" textFill="red" />
            </VBox>

@@ -126,6 +126,10 @@ public class QuanLyPhieuMuonController {
 
         comboTensach.setEditable(true);
         comboTensach.setItems(filteredItems);
+        comboTensach.setOnShowing(e -> {
+            // Khi ComboBox được mở, đặt lại bộ lọc để hiển thị tất cả các mục
+            filteredItems.setPredicate(s -> true);
+        });
 
         TextField editor = comboTensach.getEditor();
 
@@ -154,7 +158,7 @@ public class QuanLyPhieuMuonController {
                     }
                 } else {
                     // Nếu có kết quả, đảm bảo ComboBox hiển thị
-                    if (!comboTensach.isShowing()) {
+                    if (!comboTensach.isShowing() && editor.isFocused()) {
                         comboTensach.show();
                     }
                 }
@@ -163,13 +167,6 @@ public class QuanLyPhieuMuonController {
                 editor.positionCaret(editor.getText().length());
             });
         });
-
-
-
-
-
-
-
 
         // Sự kiện khi chọn dòng
         muonTraTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -200,8 +197,6 @@ public class QuanLyPhieuMuonController {
             }
             danhSachPhieuMuon.setAll(ketQuaTimKiem);
         });
-
-
 
         btnMuon.setOnAction(e-> muonSach());
         btnTra.setOnAction(e-> traSach());

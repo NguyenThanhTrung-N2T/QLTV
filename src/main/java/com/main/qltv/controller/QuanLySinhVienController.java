@@ -1,6 +1,7 @@
 package com.main.qltv.controller;
 
 import com.main.qltv.DatabaseConnection;
+import com.main.qltv.model.PhieuMuon;
 import com.main.qltv.model.SinhVien;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,7 +22,7 @@ public class QuanLySinhVienController {
     @FXML TableColumn<SinhVien, String> colSoDienThoai;
     @FXML ComboBox<String> cbGioiTinh;
     @FXML DatePicker dpNgaySinh;
-    @FXML TextField txtMaSinhVien, txtTenSinhVien, txtDiaChi, txtEmail, txtSoDienThoai;
+    @FXML TextField txtMaSinhVien, txtTenSinhVien, txtDiaChi, txtEmail, txtSoDienThoai,txtTimKiem;
     @FXML Button btnThem, btnSua, btnXoa, btnLamMoi;
 
     private ObservableList<SinhVien> sinhVienList;
@@ -80,6 +81,20 @@ public class QuanLySinhVienController {
         btnXoa.setOnAction(e -> XoaSinhVien());
         btnLamMoi.setOnAction(e -> LamMoi());
 
+        txtTimKiem.textProperty().addListener((obs, oldValue, newValue) -> {
+            String keyword = newValue.toLowerCase().trim();
+            ObservableList<SinhVien> ketQuaTimKiem = FXCollections.observableArrayList();
+
+            for (SinhVien sv : DatabaseConnection.LayDanhSachSinhVien()) {
+                if (sv.getMSSV().toLowerCase().contains(keyword) ||
+                        sv.getTenSinhVien().toLowerCase().contains(keyword) ||
+                        sv.getEmail().toLowerCase().contains(keyword) ||
+                        sv.getSDT().toLowerCase().contains(keyword)) {
+                    ketQuaTimKiem.add(sv);
+                }
+            }
+            sinhVienList.setAll(ketQuaTimKiem);
+        });
 
     }
 
