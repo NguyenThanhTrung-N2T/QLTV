@@ -46,10 +46,10 @@
             <Button text="💾 Lưu thay đổi"
                     fx:id="btnLuu"
                     onAction="#LuuThongTin"
-                    style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-background-color: #28a745; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 10 20;"/>
+                    style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-background-color: #28a745; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 20;"/>
             <Button text="❌ Hủy"
                     fx:id="btnHuy"
-                    style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-background-color: #dc3545; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 10 20;"/>
+                    style="-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-background-color: #dc3545; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 20;"/>
         </HBox>
 
     </VBox>

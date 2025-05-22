@@ -22,7 +22,7 @@ public class QuanLyPhieuMuonController {
     @FXML DatePicker dateMuon;
     @FXML DatePicker dateTra;
     @FXML  TextField txtTimKiem;
-    @FXML Spinner spnSoLuong;
+    @FXML Spinner<Integer> spnSoLuong;
 
     // Các nút chức năng
     @FXML Button btnMuon;
@@ -53,6 +53,8 @@ public class QuanLyPhieuMuonController {
     // Hàm khởi tạo
     @FXML
     public void initialize() {
+
+        spnSoLuong.setEditable(true);
         // load dữ liệu lên table view
         danhSachPhieuMuon = FXCollections.observableArrayList();
         muonTraTable.setItems(danhSachPhieuMuon);

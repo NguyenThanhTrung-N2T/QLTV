@@ -23,9 +23,9 @@ public class QuanLySachController {
     @FXML ComboBox<String> cbTacGia;
     @FXML ComboBox<String> cbTheLoai;
     @FXML ComboBox<String> cbNXB;
-    @FXML TextField txtSoLuong;
+    @FXML Spinner<Integer> spnSoLuong;
     @FXML DatePicker dpNgayXuatBan;
-    @FXML TextField txtSoTrang;
+    @FXML Spinner<Integer> spnSoTrang;
     @FXML TextArea txtMoTa;
     @FXML TextField txtAnhBia;
     @FXML ImageView imgBia;
@@ -55,6 +55,9 @@ public class QuanLySachController {
 
     @FXML
     public void initialize(){
+
+        spnSoLuong.setEditable(true);
+        spnSoTrang.setEditable(true);
 
         dpNgayXuatBan.setPromptText("Chọn ngày xuất bản");
         // load dữ liệu lên table view
@@ -216,8 +219,8 @@ public class QuanLySachController {
             if (newSelection != null) {
                 txtMaSach.setText(newSelection.getMaSach());
                 txtTenSach.setText(newSelection.getTenSach());
-                txtSoLuong.setText(String.valueOf(newSelection.getSoLuong()));
-                txtSoTrang.setText(String.valueOf(newSelection.getSoTrang()));
+                spnSoLuong.getValueFactory().setValue(newSelection.getSoLuong());
+                spnSoTrang.getValueFactory().setValue(newSelection.getSoTrang());
                 dpNgayXuatBan.setValue(newSelection.getNgayXuatBan().toLocalDate());
                 txtMoTa.setText(newSelection.getMoTa());
                 txtAnhBia.setText(newSelection.getAnhBia());
@@ -274,15 +277,14 @@ public class QuanLySachController {
             String tenTacGia = cbTacGia.getValue();
             String tenTheLoai = cbTheLoai.getValue();
             String tenNXB = cbNXB.getValue();
-            String soLuongStr = txtSoLuong.getText().trim();
-            String soTrangStr = txtSoTrang.getText().trim();
+            int soLuongStr = spnSoLuong.getValue();
+            int soTrangStr = spnSoTrang.getValue();
             java.time.LocalDate ngayXuatBan = dpNgayXuatBan.getValue();
             String moTa = txtMoTa.getText().trim();
             String anhBia = txtAnhBia.getText().trim();
 
             // Kiểm tra rỗng
-            if (tenSach.isEmpty() || tenTacGia == null || tenTheLoai == null || tenNXB == null
-                    || soLuongStr.isEmpty() || soTrangStr.isEmpty() || ngayXuatBan == null) {
+            if (tenSach.isEmpty() || tenTacGia == null || tenTheLoai == null || tenNXB == null || ngayXuatBan == null) {
                 showAlert(Alert.AlertType.WARNING, "Vui lòng nhập đầy đủ thông tin sách.");
                 return;
             }
@@ -294,17 +296,14 @@ public class QuanLySachController {
             }
 
             try {
-                int soLuong = Integer.parseInt(soLuongStr);
-                int soTrang = Integer.parseInt(soTrangStr);
-
                 // Lấy mã từ tên (nếu cần)
                 try {
                     String maTacGia = DatabaseConnection.layMaTacGiaTheoTen(tenTacGia);
                     String maTheLoai = DatabaseConnection.layMaTheLoaiTheoTen(tenTheLoai);
                     String maNXB = DatabaseConnection.layMaNXBTheoTen(tenNXB);
 
-                    Sach sachMoi = new Sach(maSach, tenSach, maTacGia, maTheLoai, maNXB, soLuong,
-                            Date.valueOf(ngayXuatBan), soTrang, moTa, anhBia);
+                    Sach sachMoi = new Sach(maSach, tenSach, maTacGia, maTheLoai, maNXB, soLuongStr,
+                            Date.valueOf(ngayXuatBan), soTrangStr, moTa, anhBia);
                     TacGia tacgiamoi = new TacGia(maTacGia, tenTacGia);
                     TheLoai theloaimoi = new TheLoai(maTheLoai, tenTheLoai);
                     NhaXuatBan nxbmoi = new NhaXuatBan(maNXB, tenNXB);
@@ -338,14 +337,13 @@ public class QuanLySachController {
             String tenTacGia = cbTacGia.getValue();
             String tenTheLoai = cbTheLoai.getValue();
             String tenNXB = cbNXB.getValue();
-            String soLuongStr = txtSoLuong.getText().trim();
-            String soTrangStr = txtSoTrang.getText().trim();
+            int soLuongStr = spnSoLuong.getValue();
+            int soTrangStr = spnSoTrang.getValue();
             LocalDate ngayXuatBan = dpNgayXuatBan.getValue();
             String moTa = txtMoTa.getText().trim();
             String anhBia = txtAnhBia.getText().trim();
 
-            if (maSach.isEmpty() || tenSach.isEmpty() || tenTacGia == null || tenTheLoai == null || tenNXB == null
-                    || soLuongStr.isEmpty() || soTrangStr.isEmpty() || ngayXuatBan == null) {
+            if (maSach.isEmpty() || tenSach.isEmpty() || tenTacGia == null || tenTheLoai == null || tenNXB == null || ngayXuatBan == null) {
                 showAlert(Alert.AlertType.WARNING, "Vui lòng nhập đầy đủ thông tin sách.");
                 return;
             }
@@ -356,16 +354,14 @@ public class QuanLySachController {
             }
 
             try {
-                int soLuong = Integer.parseInt(soLuongStr);
-                int soTrang = Integer.parseInt(soTrangStr);
                 java.sql.Date sqlNgayXuatBan = java.sql.Date.valueOf(ngayXuatBan);
 
                 String maTacGia = DatabaseConnection.layMaTacGiaTheoTen(tenTacGia);
                 String maTheLoai = DatabaseConnection.layMaTheLoaiTheoTen(tenTheLoai);
                 String maNXB = DatabaseConnection.layMaNXBTheoTen(tenNXB);
 
-                Sach sachSua = new Sach(maSach, tenSach, maTacGia, maTheLoai, maNXB, soLuong,
-                        sqlNgayXuatBan, soTrang, moTa, anhBia);
+                Sach sachSua = new Sach(maSach, tenSach, maTacGia, maTheLoai, maNXB, soLuongStr,
+                        sqlNgayXuatBan, soTrangStr, moTa, anhBia);
 
                 TacGia tacgiamoi = new TacGia(maTacGia, tenTacGia);
                 TheLoai theloaimoi = new TheLoai(maTheLoai, tenTheLoai);
@@ -437,8 +433,8 @@ public class QuanLySachController {
         cbTacGia.setValue(null);
         cbTheLoai.setValue(null);
         cbNXB.setValue(null);
-        txtSoLuong.clear();
-        txtSoTrang.clear();
+        spnSoLuong.getValueFactory().setValue(1);
+        spnSoTrang.getValueFactory().setValue(1);
         dpNgayXuatBan.setValue(null);
         txtMoTa.clear();
         txtAnhBia.clear();

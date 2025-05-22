@@ -19,32 +19,32 @@
 
         <Button fx:id="btnQLSinhVien" text="👤 Quản lý Sinh Viên"
                 styleClass="menu-button"
-                style="-fx-background-color: #3498DB; -fx-text-fill: white;"
+                style="-fx-background-color: #3498DB; -fx-text-fill: white;-fx-background-radius: 10"
                 prefWidth="180" prefHeight="50"/>
 
         <Button fx:id="btnQLSach" text="📘 Quản lý Sách"
                 styleClass="menu-button"
-                style="-fx-background-color: #1ABC9C; -fx-text-fill: white;"
+                style="-fx-background-color: #1ABC9C; -fx-text-fill: white;-fx-background-radius: 10"
                 prefWidth="180" prefHeight="50"/>
 
         <Button fx:id="btnQLPhieuMuon" text="📄 Quản lý Phiếu Mượn"
                 styleClass="menu-button"
-                style="-fx-background-color: #F39C12; -fx-text-fill: white;"
+                style="-fx-background-color: #F39C12; -fx-text-fill: white;-fx-background-radius: 10"
                 prefWidth="180" prefHeight="50"/>
 
         <Button fx:id="btnQLTaiKhoan" text="👥 Quản lý Tài khoản"
                 styleClass="menu-button"
-                style="-fx-background-color: #E67E22; -fx-text-fill: white;"
+                style="-fx-background-color: #E67E22; -fx-text-fill: white;-fx-background-radius: 10"
                 prefWidth="180" prefHeight="50"/>
 
         <Button fx:id="btnTaiKhoan" text="🔑 Tài khoản"
                 styleClass="menu-button"
-                style="-fx-background-color: #9B59B6; -fx-text-fill: white;"
+                style="-fx-background-color: #9B59B6; -fx-text-fill: white;-fx-background-radius: 10"
                 prefWidth="180" prefHeight="50"/>
 
         <Button fx:id="btnDangXuat" text="🚪 Đăng xuất"
                 styleClass="menu-button"
-                style="-fx-background-color: #E74C3C; -fx-text-fill: white;"
+                style="-fx-background-color: #E74C3C; -fx-text-fill: white;-fx-background-radius: 10"
                 prefWidth="180" prefHeight="50"/>
     </VBox>
 

@@ -61,10 +61,10 @@
 
                         <!-- Các nút chức năng -->
                         <HBox alignment="CENTER_RIGHT" spacing="10">
-                            <Button fx:id="btnThem" style="-fx-background-color: #27AE60; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';" text="➕ Thêm TK" />
-                            <Button fx:id="btnSua" style="-fx-background-color: #F39C12; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';" text="✏️Cập Nhật TK" />
-                            <Button fx:id="btnXoa" style="-fx-background-color: #C0392B; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';" text="🚮 Xóa TK" />
-                            <Button fx:id="btnLamMoi" style="-fx-background-color: #7F8C8D; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';" text="🔄 Làm Mới" />
+                            <Button fx:id="btnThem" style="-fx-background-color: #27AE60; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';-fx-background-radius: 10" text="➕ Thêm TK" />
+                            <Button fx:id="btnSua" style="-fx-background-color: #F39C12; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';-fx-background-radius: 10" text="✏️Cập Nhật TK" />
+                            <Button fx:id="btnXoa" style="-fx-background-color: #C0392B; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';-fx-background-radius: 10" text="🚮 Xóa TK" />
+                            <Button fx:id="btnLamMoi" style="-fx-background-color: #7F8C8D; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';-fx-background-radius: 10" text="🔄 Làm Mới" />
                         </HBox>
                     </VBox>
                 </top>
@@ -75,7 +75,7 @@
                         <!-- Thanh tìm kiếm -->
                         <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10 0 10 0;">
                             <Label style="-fx-text-fill: #2C3E50; -fx-font-weight: bold;" text="🔍 Tìm kiếm:" />
-                            <TextField fx:id="txtTimKiem" promptText="Nhập từ khóa tìm kiếm..." style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #BDC3C7; -fx-padding: 5;" />
+                            <TextField fx:id="txtTimKiem" promptText="Nhập từ khóa tìm kiếm..." style="-fx-background-radius: 10; -fx-border-radius: 5; -fx-border-color: #BDC3C7; -fx-padding: 5;" />
                         </HBox>
 
                         <!-- Bảng dữ liệu -->

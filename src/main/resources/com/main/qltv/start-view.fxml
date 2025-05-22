@@ -23,9 +23,9 @@
 
         <HBox prefHeight="26.0" prefWidth="262.0" spacing="10">
          <children>
-               <Button fx:id="DangNhap" onAction="#DangNhap" prefWidth="100" text="Đăng Nhập" />
-               <Button fx:id="DangKy" onAction="#DangKy" prefWidth="100" text="Đăng Ký" />
-               <Button fx:id="Exit" onAction="#Exit" prefWidth="100" text="Thoát" />
+               <Button fx:id="DangNhap" style="-fx-background-radius: 10" onAction="#DangNhap" prefWidth="100" text="Đăng Nhập" />
+               <Button fx:id="DangKy" style="-fx-background-radius: 10" onAction="#DangKy" prefWidth="100" text="Đăng Ký" />
+               <Button fx:id="Exit" style="-fx-background-radius: 10" onAction="#Exit" prefWidth="100" text="Thoát" />
          </children></HBox>
     </VBox>
 </AnchorPane>
