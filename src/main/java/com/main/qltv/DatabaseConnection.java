@@ -1137,6 +1137,33 @@ public class DatabaseConnection {
         return danhSach;
     }
 
+    public static boolean kiemTraMatKhau(String maTaiKhoan, String matKhauNhap) {
+        String sql = "SELECT 1 FROM TaiKhoan WHERE maTaiKhoan = ? AND matKhau = ?";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, maTaiKhoan);
+            stmt.setString(2, matKhauNhap);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean capNhatTaiKhoan(String maTaiKhoan, String tenDangNhapMoi, String matKhauMoi) {
+        String sql = "UPDATE TaiKhoan SET tenDangNhap = ?, matKhau = ? WHERE maTaiKhoan = ?";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, tenDangNhapMoi);
+            stmt.setString(2, matKhauMoi);
+            stmt.setString(3, maTaiKhoan);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 
 }

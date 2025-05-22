@@ -136,7 +136,7 @@ public class TaiKhoanController {
     private void capNhatThongTin() {
         try {
             // Load FXML cửa sổ cập nhật
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/main/qltv/view/CapNhatTaiKhoan.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/main/qltv/CapNhatTaiKhoan.fxml"));
             Parent root = loader.load();
 
             // Lấy controller của cửa sổ cập nhật
@@ -154,7 +154,7 @@ public class TaiKhoanController {
             stage.setTitle("Cập nhật thông tin tài khoản");
             stage.setScene(new Scene(root));
             stage.setResizable(false);
-            stage.showAndWait(); // Chờ cập nhật xong mới quay lại
+            stage.show();
 
             // Sau khi cửa sổ đóng, có thể reload thông tin nếu cần
             // Ví dụ: loadThongTinMoi(); // bạn có thể viết hàm này nếu cập nhật DB
