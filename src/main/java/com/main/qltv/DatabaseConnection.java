@@ -55,6 +55,7 @@ public class DatabaseConnection {
                 nguoidung.setMatKhauTK(rs.getString("matKhau"));
                 nguoidung.setLoaiTK(rs.getString("loaiNguoiDung"));
                 nguoidung.setMSSV(rs.getString("maSinhVien"));
+                nguoidung.setMaSoCB(rs.getString("maSoCB"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1089,6 +1090,52 @@ public class DatabaseConnection {
         return false;
     }
 
+    public static ObservableList<PhieuMuon> layDanhSachPhieuMuonTheoNguoiDung(String maSinhVien, String maSoCB) {
+        ObservableList<PhieuMuon> danhSach = FXCollections.observableArrayList();
+        StringBuilder sql = new StringBuilder(
+                "SELECT pm.maPhieuMuon, pm.maSinhVien, pm.ngayMuon, pm.ngayTra, pm.tinhTrang, " +
+                        "ms.maMuonSach, ms.maSach, ms.soLuong, s.tenSach " +
+                        "FROM PhieuMuon pm " +
+                        "JOIN MuonSach ms ON pm.maPhieuMuon = ms.maPhieuMuon " +
+                        "JOIN Sach s ON ms.maSach = s.maSach "
+        );
+
+        if (maSinhVien != null && !maSinhVien.isEmpty()) {
+            sql.append("WHERE pm.maSinhVien = ?");
+        } else if (maSoCB != null && !maSoCB.isEmpty()) {
+            sql.append("JOIN TaiKhoan tk ON pm.maSinhVien = tk.maSinhVien WHERE tk.maSoCB = ?");
+        } else {
+            return danhSach;
+        }
+
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
+
+            if (maSinhVien != null && !maSinhVien.isEmpty()) {
+                stmt.setString(1, maSinhVien);
+            } else {
+                stmt.setString(1, maSoCB);
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                PhieuMuon pm = new PhieuMuon(
+                        rs.getString("maPhieuMuon"),
+                        rs.getString("maSinhVien"),
+                        rs.getDate("ngayMuon"),
+                        rs.getDate("ngayTra"),
+                        rs.getString("tinhTrang"),
+                        rs.getString("maMuonSach"),
+                        rs.getString("maSach"),
+                        rs.getInt("soLuong")
+                );
+                danhSach.add(pm);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return danhSach;
+    }
 
 
 

@@ -85,14 +85,14 @@
             <!-- Bảng hiển thị -->
             <TableView fx:id="tableSach" maxWidth="900" prefHeight="400" style="-fx-background-color: white; -fx-font-family: 'Segoe UI';" VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn fx:id="colMaSach" prefWidth="94.99999541044235" text="Mã sách" />
-                    <TableColumn fx:id="colTenSach" prefWidth="89.59998321533203" text="Tên sách" />
-                    <TableColumn fx:id="colTacGia" prefWidth="87.00001525878906" text="Tác giả" />
-                    <TableColumn fx:id="colTheLoai" prefWidth="78.5999755859375" text="Thể loại" />
-                    <TableColumn fx:id="colNXB" prefWidth="80.20001220703125" text="NXB" />
-                    <TableColumn fx:id="colSoLuong" prefWidth="80.19998168945312" text="Số lượng" />
-                    <TableColumn fx:id="colNgayXuatBan" prefWidth="103.20001220703125" text="Ngày XB" />
-                    <TableColumn fx:id="colSoTrang" prefWidth="87.20001220703125" text="Số trang" />
+                    <TableColumn fx:id="colMaSach" prefWidth="94.99999541044235" text="Mã sách" style="-fx-alignment: CENTER" />
+                    <TableColumn fx:id="colTenSach" prefWidth="89.59998321533203" text="Tên sách" style="-fx-alignment: CENTER"/>
+                    <TableColumn fx:id="colTacGia" prefWidth="87.00001525878906" text="Tác giả" style="-fx-alignment: CENTER"/>
+                    <TableColumn fx:id="colTheLoai" prefWidth="78.5999755859375" text="Thể loại" style="-fx-alignment: CENTER"/>
+                    <TableColumn fx:id="colNXB" prefWidth="80.20001220703125" text="NXB" style="-fx-alignment: CENTER"/>
+                    <TableColumn fx:id="colSoLuong" prefWidth="80.19998168945312" text="Số lượng" style="-fx-alignment: CENTER"/>
+                    <TableColumn fx:id="colNgayXuatBan" prefWidth="103.20001220703125" text="Ngày XB" style="-fx-alignment: CENTER"/>
+                    <TableColumn fx:id="colSoTrang" prefWidth="87.20001220703125" text="Số trang" style="-fx-alignment: CENTER"/>
                 </columns>
             </TableView>
 

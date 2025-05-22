@@ -63,15 +63,15 @@
             </HBox>
 
             <!-- TableView -->
-            <TableView fx:id="tableSinhVien" style="-fx-background-color: #FBFCFC; -fx-border-color: #BDC3C7; -fx-border-radius: 8; -fx-padding: 5;">
+            <TableView fx:id="tableSinhVien" style="-fx-background-color: #FBFCFC; -fx-border-color: #BDC3C7; -fx-border-radius: 8">
                 <columns>
-                    <TableColumn fx:id="colMaSinhVien" prefWidth="100" text="Mã SV" />
-                    <TableColumn fx:id="colTenSinhVien" prefWidth="150" text="Tên SV" />
-                    <TableColumn fx:id="colGioiTinh" prefWidth="100" text="Giới Tính" />
-                    <TableColumn fx:id="colNgaySinh" prefWidth="120" text="Ngày Sinh" />
-                    <TableColumn fx:id="colDiaChi" prefWidth="200" text="Địa Chỉ" />
-                    <TableColumn fx:id="colEmail" prefWidth="150" text="Email" />
-                    <TableColumn fx:id="colSoDienThoai" prefWidth="120" text="SĐT" />
+                    <TableColumn fx:id="colMaSinhVien" prefWidth="100" text="Mã SV" style="-fx-alignment: CENTER" />
+                    <TableColumn fx:id="colTenSinhVien" prefWidth="150" text="Tên SV" style="-fx-alignment: CENTER"/>
+                    <TableColumn fx:id="colGioiTinh" prefWidth="100" text="Giới Tính" style="-fx-alignment: CENTER" />
+                    <TableColumn fx:id="colNgaySinh" prefWidth="120" text="Ngày Sinh" style="-fx-alignment: CENTER" />
+                    <TableColumn fx:id="colDiaChi" prefWidth="200" text="Địa Chỉ" style="-fx-alignment: CENTER"/>
+                    <TableColumn fx:id="colEmail" prefWidth="150" text="Email" style="-fx-alignment: CENTER" />
+                    <TableColumn fx:id="colSoDienThoai" prefWidth="120" text="SĐT" style="-fx-alignment: CENTER"/>
                 </columns>
             </TableView>
         </VBox>

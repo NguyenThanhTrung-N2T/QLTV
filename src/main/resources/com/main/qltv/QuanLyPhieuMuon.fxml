@@ -64,14 +64,14 @@
         <!-- Bảng dữ liệu phiếu mượn -->
         <TableView fx:id="muonTraTable" prefHeight="280" prefWidth="750" style="-fx-background-color: white; -fx-border-radius: 8; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 4);">
             <columns>
-                <TableColumn fx:id="colMaPhieu" prefWidth="88.00000381469727" text="Mã Phiếu" />
-                <TableColumn fx:id="colMSSV" prefWidth="87.0" text="MSSV" />
-                <TableColumn fx:id="colTenNguoiMuon" prefWidth="115.40000915527344" text="Người Mượn" />
-                <TableColumn fx:id="colTenSach" prefWidth="136.4000244140625" text="Tên Sách" />
-                <TableColumn fx:id="colNgayMuon" prefWidth="99.4000244140625" text="Ngày Mượn" />
-                <TableColumn fx:id="colNgayTra" prefWidth="100.20001220703125" text="Ngày Trả" />
-                <TableColumn fx:id="colSoLuong" prefWidth="80" text="Số Lượng" />
-                <TableColumn fx:id="colTinhTrang" prefWidth="115.0" text="Tình Trạng" />
+                <TableColumn fx:id="colMaPhieu" prefWidth="88.00000381469727" text="Mã Phiếu" style="-fx-alignment: CENTER"/>
+                <TableColumn fx:id="colMSSV" prefWidth="87.0" text="MSSV" style="-fx-alignment: CENTER"/>
+                <TableColumn fx:id="colTenNguoiMuon" prefWidth="115.40000915527344" text="Người Mượn" style="-fx-alignment: CENTER"/>
+                <TableColumn fx:id="colTenSach" prefWidth="136.4000244140625" text="Tên Sách" style="-fx-alignment: CENTER"/>
+                <TableColumn fx:id="colNgayMuon" prefWidth="99.4000244140625" text="Ngày Mượn" style="-fx-alignment: CENTER" />
+                <TableColumn fx:id="colNgayTra" prefWidth="100.20001220703125" text="Ngày Trả" style="-fx-alignment: CENTER"/>
+                <TableColumn fx:id="colSoLuong" prefWidth="80" text="Số Lượng" style="-fx-alignment: CENTER"/>
+                <TableColumn fx:id="colTinhTrang" prefWidth="115.0" text="Tình Trạng" style="-fx-alignment: CENTER"/>
             </columns>
         </TableView>
 

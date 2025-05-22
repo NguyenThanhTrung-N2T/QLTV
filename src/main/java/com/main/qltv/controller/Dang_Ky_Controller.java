@@ -29,7 +29,7 @@ public class Dang_Ky_Controller {
         String maSinhVien = txtMaSinhVien.getText().trim();
         String loaiNguoiDung = "Sinh viên";
 
-        if (tenDangNhap.isEmpty() || matKhau.isEmpty() || maSinhVien.isEmpty() || loaiNguoiDung == null) {
+        if (tenDangNhap.isEmpty() || matKhau.isEmpty() || maSinhVien.isEmpty()) {
             lblThongBao.setText("Vui lòng điền đầy đủ thông tin.");
             return;
         }

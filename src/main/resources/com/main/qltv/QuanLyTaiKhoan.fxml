@@ -81,12 +81,12 @@
                         <!-- Bảng dữ liệu -->
                         <TableView fx:id="tableTaiKhoan" prefHeight="350" style="-fx-background-color: white; -fx-border-color: #BDC3C7; -fx-border-radius: 8; -fx-padding: 5;">
                             <columns>
-                                <TableColumn fx:id="colMaTaiKhoan" prefWidth="100" text="Mã TK" />
-                                <TableColumn fx:id="colTenDangNhap" prefWidth="180" text="Tên Đăng Nhập" />
-                                <TableColumn fx:id="colMatKhau" prefWidth="180" text="Mật Khẩu" />
-                                <TableColumn fx:id="colLoaiNguoiDung" prefWidth="140" text="Loại Người Dùng" />
-                                <TableColumn fx:id="colMaSoCB" prefWidth="120" text="Mã Số CBQL" />
-                                <TableColumn fx:id="colMaSinhVien" prefWidth="120" text="Mã SV" />
+                                <TableColumn fx:id="colMaTaiKhoan" prefWidth="100" text="Mã TK" style="-fx-alignment: CENTER"  />
+                                <TableColumn fx:id="colTenDangNhap" prefWidth="180" text="Tên Đăng Nhập" style="-fx-alignment: CENTER"  />
+                                <TableColumn fx:id="colMatKhau" prefWidth="180" text="Mật Khẩu"  style="-fx-alignment: CENTER"  />
+                                <TableColumn fx:id="colLoaiNguoiDung" prefWidth="140" text="Loại Người Dùng" style="-fx-alignment: CENTER" />
+                                <TableColumn fx:id="colMaSoCB" prefWidth="120" text="Mã Số CBQL" style="-fx-alignment: CENTER" />
+                                <TableColumn fx:id="colMaSinhVien" prefWidth="120" text="Mã SV" style="-fx-alignment: CENTER" />
                             </columns>
                         </TableView>
                     </VBox>
