@@ -75,11 +75,11 @@
 
             <!-- Nút thao tác -->
             <HBox alignment="CENTER" spacing="20">
-                <Button fx:id="btnTimKiem" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;-fx-background-radius: 10" text="Tìm kiếm" />
-                <Button fx:id="btnThem" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;-fx-background-radius: 10" text="Thêm Sách" />
-                <Button fx:id="btnSua" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;-fx-background-radius: 10" text="Sửa Thông Tin" />
-                <Button fx:id="btnXoa" style="-fx-background-color: #F44336; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;-fx-background-radius: 10" text="Xóa Sách" />
-                <Button fx:id="btnLammoi" onAction="#lamMoi" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;-fx-background-radius: 10" text="Làm mới" />
+                <Button fx:id="btnTimKiem" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;-fx-background-radius: 10" text="🔍 Tìm kiếm" />
+                <Button fx:id="btnThem" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;-fx-background-radius: 10" text="➕ Thêm Sách" />
+                <Button fx:id="btnSua" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;-fx-background-radius: 10" text="📝 Sửa Thông Tin" />
+                <Button fx:id="btnXoa" style="-fx-background-color: #F44336; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;-fx-background-radius: 10" text="🚮 Xóa Sách" />
+                <Button fx:id="btnLammoi" onAction="#lamMoi" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;-fx-background-radius: 10" text="🔁 Làm mới" />
             </HBox>
 
             <!-- Bảng hiển thị -->

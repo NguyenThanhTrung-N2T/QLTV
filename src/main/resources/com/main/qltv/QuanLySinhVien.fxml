@@ -56,9 +56,9 @@
 
             <!-- Nút chức năng -->
             <HBox alignment="CENTER_RIGHT" spacing="10">
-                <Button fx:id="btnThem" style="-fx-background-color: #2ECC71; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 20;" text="Thêm" />
-                <Button fx:id="btnSua" style="-fx-background-color: #F1C40F; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 20;" text="Sửa" />
-                <Button fx:id="btnXoa" style="-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 20;" text="Xóa" />
+                <Button fx:id="btnThem" style="-fx-background-color: #2ECC71; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 20;" text="Thêm Sinh Viên" />
+                <Button fx:id="btnSua" style="-fx-background-color: #F1C40F; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 20;" text="Sửa Thông Tin" />
+                <Button fx:id="btnXoa" style="-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 20;" text="Xóa Sinh Viên" />
                 <Button fx:id="btnLamMoi" style="-fx-background-color: #95A5A6; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 20;" text="Làm Mới" />
             </HBox>
 
