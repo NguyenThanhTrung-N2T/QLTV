@@ -29,7 +29,6 @@ public class Man_Hinh_Chinh_Controller {
     @FXML
     public void initialize() {
 
-        lBthongbao.setText("Xin chào, " + QLTVApplication.nguoidangnhap.getTenDangNhap());
         if(QLTVApplication.nguoidangnhap.getLoaiTK().equals("Sinh viên"))
         {
             btnQLSinhVien.setVisible(false);
@@ -37,7 +36,13 @@ public class Man_Hinh_Chinh_Controller {
             btnQLTaiKhoan.setVisible(false);
             btnQLTaiKhoan.setManaged(false);
         }
+        else if(QLTVApplication.nguoidangnhap.getLoaiTK().equals("Cộng tác viên"))
+        {
+            btnQLSinhVien.setVisible(false);
+            btnQLSinhVien.setManaged(false);
+        }
 
+        lBthongbao.setText("Xin chào, " + QLTVApplication.nguoidangnhap.getTenDangNhap());
         // Gán sự kiện cho từng nút
         btnQLSinhVien.setOnAction(event -> loadContent("/com/main/qltv/QuanLySinhVien.fxml"));
         btnQLSach.setOnAction(event -> loadContent("/com/main/qltv/QuanLySach.fxml"));

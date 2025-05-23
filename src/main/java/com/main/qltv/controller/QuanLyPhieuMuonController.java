@@ -1,6 +1,7 @@
 package com.main.qltv.controller;
 
 import com.main.qltv.DatabaseConnection;
+import com.main.qltv.QLTVApplication;
 import com.main.qltv.model.PhieuMuon;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -58,8 +59,16 @@ public class QuanLyPhieuMuonController {
         // load dữ liệu lên table view
         danhSachPhieuMuon = FXCollections.observableArrayList();
         muonTraTable.setItems(danhSachPhieuMuon);
-        // Tải dữ liệu
-        loadPhieuMUonTuDB();
+
+        // tải dữ liệu phiếu mượn
+        if (QLTVApplication.nguoidangnhap.getLoaiTK().equals("Sinh viên")) {
+            danhSachPhieuMuon.clear();
+            danhSachPhieuMuon.addAll(DatabaseConnection.layDanhSachPhieuMuonTheoNguoiDung(QLTVApplication.nguoidangnhap.getMSSV(),QLTVApplication.nguoidangnhap.getMaSoCB()));
+            muonTraTable.refresh();
+        }
+        else
+            loadPhieuMUonTuDB();
+
         colMaPhieu.setCellValueFactory(new PropertyValueFactory<>("maPhieuMuon"));
         colMSSV.setCellValueFactory(new PropertyValueFactory<>("maSinhVien"));
 
@@ -236,6 +245,12 @@ public class QuanLyPhieuMuonController {
             showAlert(Alert.AlertType.WARNING, "Vui lòng nhập đầy đủ thông tin.");
             return;
         }
+
+        if(QLTVApplication.nguoidangnhap.getLoaiTK().equals("Sinh viên") && !mssv.equals(QLTVApplication.nguoidangnhap.getMSSV())){
+            showAlert(Alert.AlertType.ERROR, "Bạn không có quyền mượn sách cho sinh viên khác.");
+            return;
+        }
+
         if (!DatabaseConnection.kiemTraTaiKhoanDaTonTai(mssv)) {
             showAlert(Alert.AlertType.ERROR, "Sinh viên chưa có tài khoản, không thể mượn sách.");
             return;
@@ -268,7 +283,14 @@ public class QuanLyPhieuMuonController {
         }
         if (DatabaseConnection.themPhieuMuon(pm)) {
             showAlert(Alert.AlertType.INFORMATION, "Mượn sách thành công.");
-            loadPhieuMUonTuDB();
+            // tải dữ liệu phiếu mượn
+            if (QLTVApplication.nguoidangnhap.getLoaiTK().equals("Sinh viên")) {
+                danhSachPhieuMuon.clear();
+                danhSachPhieuMuon.addAll(DatabaseConnection.layDanhSachPhieuMuonTheoNguoiDung(QLTVApplication.nguoidangnhap.getMSSV(),QLTVApplication.nguoidangnhap.getMaSoCB()));
+                muonTraTable.refresh();
+            }
+            else
+                loadPhieuMUonTuDB();
             lamMoi();
         } else {
             showAlert(Alert.AlertType.ERROR, "Mượn sách thất bại.");
@@ -292,7 +314,14 @@ public class QuanLyPhieuMuonController {
 
         if (DatabaseConnection.capNhatTinhTrangPhieuMuon(selected.getMaPhieuMuon(), "Đã trả")) {
             showAlert(Alert.AlertType.INFORMATION, "Trả sách thành công.");
-            loadPhieuMUonTuDB();
+            // tải dữ liệu phiếu mượn
+            if (QLTVApplication.nguoidangnhap.getLoaiTK().equals("Sinh viên")) {
+                danhSachPhieuMuon.clear();
+                danhSachPhieuMuon.addAll(DatabaseConnection.layDanhSachPhieuMuonTheoNguoiDung(QLTVApplication.nguoidangnhap.getMSSV(),QLTVApplication.nguoidangnhap.getMaSoCB()));
+                muonTraTable.refresh();
+            }
+            else
+                loadPhieuMUonTuDB();
             lamMoi();
         } else {
             showAlert(Alert.AlertType.ERROR, "Trả sách thất bại.");
@@ -325,7 +354,14 @@ public class QuanLyPhieuMuonController {
         }
         if (DatabaseConnection.giaHanPhieuMuon(selected.getMaPhieuMuon(), java.sql.Date.valueOf(ngayTraMoi))) {
             showAlert(Alert.AlertType.INFORMATION, "Gia hạn phiếu mượn thành công.");
-            loadPhieuMUonTuDB();
+            // tải dữ liệu phiếu mượn
+            if (QLTVApplication.nguoidangnhap.getLoaiTK().equals("Sinh viên")) {
+                danhSachPhieuMuon.clear();
+                danhSachPhieuMuon.addAll(DatabaseConnection.layDanhSachPhieuMuonTheoNguoiDung(QLTVApplication.nguoidangnhap.getMSSV(),QLTVApplication.nguoidangnhap.getMaSoCB()));
+                muonTraTable.refresh();
+            }
+            else
+                loadPhieuMUonTuDB();
             lamMoi();
         } else {
             showAlert(Alert.AlertType.ERROR, "Gia hạn phiếu mượn thất bại.");

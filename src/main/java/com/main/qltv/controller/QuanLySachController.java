@@ -56,6 +56,19 @@ public class QuanLySachController {
     @FXML
     public void initialize(){
 
+        if(QLTVApplication.nguoidangnhap.getLoaiTK().equals("Sinh viên")){
+            btnThem.setVisible(false);
+            btnThem.setManaged(false);
+            btnXoa.setVisible(false);
+            btnXoa.setManaged(false);
+            btnSua.setVisible(false);
+            btnSua.setManaged(false);
+        }
+        else if (QLTVApplication.nguoidangnhap.getLoaiTK().equals("Cộng tác viên") ){
+            btnXoa.setVisible(false);
+            btnXoa.setManaged(false);
+        }
+
         spnSoLuong.setEditable(true);
         spnSoTrang.setEditable(true);
 
