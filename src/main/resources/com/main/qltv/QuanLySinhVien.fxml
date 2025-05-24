@@ -63,7 +63,7 @@
             </HBox>
 
             <!-- TableView -->
-            <TableView fx:id="tableSinhVien" style="-fx-background-color: #FBFCFC; -fx-border-color: #BDC3C7; -fx-border-radius: 8">
+            <TableView fx:id="tableSinhVien" style="-fx-background-color: #FBFCFC; -fx-border-color: #BDC3C7; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 5; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 6, 0, 0, 4);">
                 <columns>
                     <TableColumn fx:id="colMaSinhVien" prefWidth="100" text="Mã SV" style="-fx-alignment: CENTER" />
                     <TableColumn fx:id="colTenSinhVien" prefWidth="150" text="Tên SV" style="-fx-alignment: CENTER"/>

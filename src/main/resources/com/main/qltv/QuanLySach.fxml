@@ -83,7 +83,7 @@
             </HBox>
 
             <!-- Bảng hiển thị -->
-            <TableView fx:id="tableSach" maxWidth="900" prefHeight="400" style="-fx-background-color: white; -fx-font-family: 'Segoe UI';" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tableSach" maxWidth="900" prefHeight="400" style="-fx-background-color: white; -fx-font-family: 'Segoe UI';-fx-padding : 5 ; -fx-border-radius: 8; -fx-background-radius: 8" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="colMaSach" prefWidth="94.99999541044235" style="-fx-alignment: CENTER" text="Mã sách" />
                     <TableColumn fx:id="colTenSach" prefWidth="89.59998321533203" style="-fx-alignment: CENTER" text="Tên sách" />
